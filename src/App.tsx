@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { MobileStickyCTA } from './components/layout/MobileStickyCTA';
-import { WhatsAppButton } from './components/layout/WhatsAppButton';
+import { FloatingContact } from './components/layout/FloatingContact';
 import { HomePage } from './pages/HomePage';
 import { DienstenPage } from './pages/DienstenPage';
 import { OverOnsPage } from './pages/OverOnsPage';
@@ -16,7 +15,7 @@ function App() {
     <HelmetProvider>
       <Router basename="/parkstadthuiszorg">
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-white dark:bg-[#1a2420]">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-[#02191c]">
         <Navbar />
         
         <main className="flex-grow">
@@ -30,8 +29,7 @@ function App() {
         </main>
         
         <Footer />
-        <MobileStickyCTA />
-        <WhatsAppButton />
+        <FloatingContact />
       </div>
       </Router>
     </HelmetProvider>

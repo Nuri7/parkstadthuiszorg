@@ -5,41 +5,41 @@
    =========================== */
 
 @theme {
-  /* Primary - Sage Green */
-  --color-sage-50: #f0f5f1;
-  --color-sage-100: #dce8de;
-  --color-sage-200: #b8d1bc;
-  --color-sage-300: #94ba9a;
-  --color-sage-400: #7c9a82;
-  --color-sage-500: #5b7f63;
-  --color-sage-600: #476550;
-  --color-sage-700: #394f40;
-  --color-sage-800: #2d3b2d;
-  --color-sage-900: #1a2420;
+  /* Primary - Soft Teal */
+  --color-sage-50: #e5f2f4;
+  --color-sage-100: #c1e0e5;
+  --color-sage-200: #93c9d3;
+  --color-sage-300: #5cb0bd;
+  --color-sage-400: #2995a5;
+  --color-sage-500: #0a7c8c;
+  --color-sage-600: #086370;
+  --color-sage-700: #064a54;
+  --color-sage-800: #043138;
+  --color-sage-900: #02191c;
 
-  /* Warm Beige */
-  --color-beige-50: #fdfbf7;
-  --color-beige-100: #f9f5ed;
+  /* Warm Beige & Cream */
+  --color-beige-50: #fefdfc;
+  --color-beige-100: #fbf9f6;
   --color-beige-200: #f5f0e8;
-  --color-beige-300: #ede7db;
-  --color-beige-400: #ddd3c2;
-  --color-beige-500: #c4b89f;
-  --color-beige-600: #a99d86;
-  --color-beige-700: #8a806c;
-  --color-beige-800: #6b6354;
-  --color-beige-900: #4a443b;
+  --color-beige-300: #eaddc7;
+  --color-beige-400: #dfc8a5;
+  --color-beige-500: #d0b080;
+  --color-beige-600: #b8935c;
+  --color-beige-700: #93754a;
+  --color-beige-800: #6d5837;
+  --color-beige-900: #493b25;
 
-  /* Terracotta Accent */
-  --color-terra-50: #fdf4ef;
-  --color-terra-100: #fbe6d8;
-  --color-terra-200: #f5c9a8;
-  --color-terra-300: #e6a67a;
-  --color-terra-400: #b8623e;
-  --color-terra-500: #9c4f30;
-  --color-terra-600: #7d3f27;
-  --color-terra-700: #7d3f27;
-  --color-terra-800: #5e2f1e;
-  --color-terra-900: #3f1f14;
+  /* Accent Green */
+  --color-terra-50: #ecf5f0;
+  --color-terra-100: #d0e7da;
+  --color-terra-200: #a9d4bf;
+  --color-terra-300: #7ebf9f;
+  --color-terra-400: #59a982;
+  --color-terra-500: #4a9c6e;
+  --color-terra-600: #3b7c58;
+  --color-terra-700: #2c5d42;
+  --color-terra-800: #1d3e2c;
+  --color-terra-900: #0f1f16;
 
   /* Typography */
   --font-heading: 'DM Serif Display', Georgia, serif;
@@ -74,8 +74,8 @@
   --bg-card: #ffffff;
   --bg-hero: linear-gradient(135deg, var(--color-beige-50) 0%, var(--color-sage-50) 50%, var(--color-beige-100) 100%);
   --text-primary: var(--color-sage-800);
-  --text-secondary: #6B7B6B;
-  --text-muted: #8a9a8a;
+  --text-secondary: #4f6b6f;
+  --text-muted: #8ab0b6;
   --text-on-dark: #ffffff;
   --border-color: var(--color-beige-300);
   --border-subtle: var(--color-beige-200);
@@ -83,15 +83,15 @@
 
 .dark {
   --bg-primary: var(--color-sage-900);
-  --bg-secondary: #1e2e25;
-  --bg-card: #243029;
-  --bg-hero: linear-gradient(135deg, var(--color-sage-900) 0%, #1e2e25 50%, #1a2820 100%);
+  --bg-secondary: #032227;
+  --bg-card: #043138;
+  --bg-hero: linear-gradient(135deg, var(--color-sage-900) 0%, #032227 50%, #02191c 100%);
   --text-primary: var(--color-beige-100);
   --text-secondary: var(--color-beige-400);
   --text-muted: var(--color-beige-500);
   --text-on-dark: #ffffff;
-  --border-color: #344a3c;
-  --border-subtle: #2d3d33;
+  --border-color: #086370;
+  --border-subtle: #064a54;
 }
 
 /* ===========================

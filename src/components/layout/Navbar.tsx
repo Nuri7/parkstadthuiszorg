@@ -7,6 +7,7 @@ import { Button } from '../ui/Button';
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const location = useLocation();
 
   useEffect(() => {
@@ -24,17 +25,71 @@ export function Navbar() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Diensten', path: '/diensten' },
-    { name: 'Over Ons', path: '/over-ons' },
-    { name: 'Vergoedingen', path: '/vergoedingen' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Diensten', path: '/#diensten' },
+    { name: 'Hoe het Werkt', path: '/#hoe-werkt-het' },
+    { name: 'Over Ons', path: '/#over-ons' },
+    { name: 'Contact', path: '/#contact' },
   ];
+
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+    
+    // Intersection Observer for scroll-spy
+    const observers = navLinks.map(link => {
+      if (!link.path.startsWith('/#')) return null;
+      const id = link.path.substring(2);
+      const element = document.getElementById(id);
+      if (!element) return null;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setActiveSection(link.path);
+          }
+        },
+        { rootMargin: '-10% 0px -80% 0px' }
+      );
+      observer.observe(element);
+      return observer;
+    });
+    
+    // Reset active section if at top
+    const handleTopScroll = () => {
+      if (window.scrollY < 100) setActiveSection('/');
+    };
+    window.addEventListener('scroll', handleTopScroll);
+
+    return () => {
+      observers.forEach(obs => obs?.disconnect());
+      window.removeEventListener('scroll', handleTopScroll);
+    }
+  }, [location.pathname]);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    if (path.startsWith('/#') && location.pathname === '/') {
+      e.preventDefault();
+      const id = path.substring(2);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', path);
+        setActiveSection(path);
+      }
+      setIsMobileMenuOpen(false);
+    } else if (path === '/' && location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', '/');
+      setActiveSection('/');
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/90 dark:bg-[#1a2420]/90 backdrop-blur-md shadow-sm border-b border-[#ede7db] dark:border-[#344a3c] py-3'
+          ? 'bg-white/90 dark:bg-[#02191c]/90 backdrop-blur-md shadow-sm border-b border-[#ede7db] dark:border-[#086370] py-3'
           : 'bg-transparent py-5'
       }`}
     >
@@ -46,37 +101,48 @@ export function Navbar() {
             <div className="bg-[#7c9a82] dark:bg-[#5b7f63] text-white p-2 rounded-xl group-hover:bg-[#5b7f63] transition-colors">
               <HeartPulse className="w-6 h-6" />
             </div>
-            <span className="font-heading text-xl md:text-2xl text-[#2d3b2d] dark:text-[#fdfbf7] font-semibold">
+            <span className="font-heading text-xl md:text-2xl text-[#064a54] dark:text-[#fefdfc] font-semibold">
               Parkstad Thuiszorg
             </span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  location.pathname === link.path
-                    ? 'text-[#C67D5B] font-semibold'
-                    : 'text-[#5b7f63] dark:text-[#94ba9a] hover:text-[#2d3b2d] dark:hover:text-[#fdfbf7] hover:bg-[#f0f5f1] dark:hover:bg-[#243029]'
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              // Determine active state - either by path matching (for separate pages) or scroll-spy matched hash
+              const isActive = (location.pathname !== '/' && location.pathname === link.path) || 
+                               (location.pathname === '/' && activeSection === link.path);
+              
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={(e) => handleNavClick(e, link.path)}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
+                    isActive
+                      ? 'text-[#0A7C8C] font-semibold tracking-wide'
+                      : 'text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] hover:text-[#0A7C8C] hover:bg-[#e5f2f4] dark:hover:bg-[#02191c]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
             <ThemeToggle />
-            <a href="tel:+31612345678" className="text-[#5b7f63] dark:text-[#94ba9a] hover:text-[#2d3b2d] dark:hover:text-[#fdfbf7] transition-colors flex items-center gap-2 font-medium">
-              <Phone className="w-4 h-4" />
-              <span>06 1234 5678</span>
-            </a>
-            <Button asChild variant="primary" size="sm">
-              <Link to="/contact">Intake Aanvragen</Link>
+            <Button asChild variant="outline" size="sm" className="hidden lg:flex border-[#0A7C8C] text-[#0A7C8C]">
+              <a href="tel:+31612345678" className="font-semibold">
+                <Phone className="w-4 h-4 mr-2" />
+                Bel direct
+              </a>
+            </Button>
+            <Button asChild variant="whatsapp" size="sm">
+              <a href="https://wa.me/31612345678" target="_blank" rel="noopener noreferrer" className="font-semibold px-4 min-w-[140px] text-center">
+                WhatsApp ons
+              </a>
             </Button>
           </div>
 
@@ -85,7 +151,7 @@ export function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 -mr-2 text-[#5b7f63] dark:text-[#94ba9a]"
+              className="p-2 -mr-2 text-[#5b7f63] dark:text-[#5cb0bd]"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -96,23 +162,29 @@ export function Navbar() {
 
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-[#1a2420] shadow-lg border-b border-[#ede7db] dark:border-[#344a3c]">
+        <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-[#02191c] shadow-lg border-b border-[#ede7db] dark:border-[#086370]">
           <div className="px-4 pt-2 pb-6 space-y-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`block px-3 py-3 rounded-md text-base font-medium ${
-                  location.pathname === link.path
-                    ? 'text-[#C67D5B] bg-[#fdf4ef] dark:bg-[#3f1f14]'
-                    : 'text-[#5b7f63] dark:text-[#94ba9a] hover:bg-[#f0f5f1] dark:hover:bg-[#243029]'
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = (location.pathname !== '/' && location.pathname === link.path) || 
+                               (location.pathname === '/' && activeSection === link.path);
+              
+              return (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={(e) => handleNavClick(e, link.path)}
+                  className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
+                    isActive
+                      ? 'text-[#0A7C8C] bg-[#e5f2f4] dark:bg-[#02191c]'
+                      : 'text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] hover:bg-[#e5f2f4] dark:hover:bg-[#043138]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
             <div className="mt-6 space-y-3 px-3">
-              <a href="tel:+31612345678" className="flex items-center justify-center gap-2 w-full p-3 rounded-xl border border-[#7c9a82] text-[#5b7f63] dark:text-[#94ba9a] font-medium">
+              <a href="tel:+31612345678" className="flex items-center justify-center gap-2 w-full p-3 rounded-xl border border-[#7c9a82] text-[#5b7f63] dark:text-[#5cb0bd] font-medium">
                 <Phone className="w-5 h-5" />
                 Bel 06 1234 5678
               </a>

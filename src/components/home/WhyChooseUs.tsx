@@ -26,7 +26,7 @@ export function WhyChooseUs() {
   ];
 
   return (
-    <section className="section-padding bg-[#f0f5f1] dark:bg-[#1a2420] relative overflow-hidden">
+    <section id="waarom-ons" className="section-padding bg-[#e5f2f4] dark:bg-[#02191c] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[100%] rounded-full bg-white/40 dark:bg-black/10 blur-3xl" />
       
@@ -35,11 +35,11 @@ export function WhyChooseUs() {
           
           <div className="w-full lg:w-5/12">
             <AnimatedSection>
-              <h2 className="text-[#C67D5B] font-semibold tracking-wider text-sm uppercase mb-3">Waarom Parkstad Thuiszorg</h2>
-              <h3 className="text-3xl md:text-4xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7] mb-6">
+              <h2 className="text-[#4A9C6E] font-semibold tracking-wider text-sm uppercase mb-3">Waarom Parkstad Thuiszorg</h2>
+              <h3 className="text-3xl md:text-4xl font-heading text-[#064a54] dark:text-[#fefdfc] mb-6">
                 Persoonlijk, warm en betrouwbaar
               </h3>
-              <p className="text-[#6B7B6B] dark:text-[#94ba9a] text-lg mb-8">
+              <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg mb-8">
                 Grote zorgorganisaties voelen vaak onpersoonlijk. Wij doen het anders. Wij zien de mens achter de cliënt en stemmen onze zorg af op úw ritme, niet andersom.
               </p>
               
@@ -50,8 +50,8 @@ export function WhyChooseUs() {
                       <benefit.icon className="w-6 h-6 text-[#7c9a82] dark:text-[#5b7f63]" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-semibold text-[#2d3b2d] dark:text-[#fdfbf7] mb-2">{benefit.title}</h4>
-                      <p className="text-[#6B7B6B] dark:text-[#94ba9a]">{benefit.description}</p>
+                      <h4 className="text-xl font-semibold text-[#064a54] dark:text-[#fefdfc] mb-2">{benefit.title}</h4>
+                      <p className="text-[#4f6b6f] dark:text-[#5cb0bd]">{benefit.description}</p>
                     </div>
                   </div>
                 ))}
@@ -70,14 +70,14 @@ export function WhyChooseUs() {
             
             {/* Decorative offset card */}
              <AnimatedSection delay={0.4} className="absolute -bottom-8 -left-8 md:bottom-12 md:-left-12 z-20 hidden sm:block">
-              <div className="bg-white dark:bg-[#2d3b2d] p-6 rounded-2xl shadow-xl border border-[#ede7db] dark:border-[#344a3c] max-w-[280px]">
+              <div className="bg-white dark:bg-[#064a54] p-6 rounded-2xl shadow-xl border border-[#ede7db] dark:border-[#086370] max-w-[280px]">
                 <div className="flex gap-4">
                  <div className="w-10 h-10 rounded-full bg-[#fdf4ef] dark:bg-[#3f1f14] flex-shrink-0 flex items-center justify-center">
-                   <Clock className="w-5 h-5 text-[#C67D5B]" />
+                   <Clock className="w-5 h-5 text-[#4A9C6E]" />
                  </div>
                  <div>
-                   <div className="font-bold text-[#2d3b2d] dark:text-[#fdfbf7]">Snel Zorg Nodig?</div>
-                   <div className="text-sm text-[#6B7B6B] dark:text-[#94ba9a] mt-1">Start de aanvraag online en wij nemen binnen 24 uur contact op.</div>
+                   <div className="font-bold text-[#064a54] dark:text-[#fefdfc]">Snel Zorg Nodig?</div>
+                   <div className="text-sm text-[#4f6b6f] dark:text-[#5cb0bd] mt-1">Start de aanvraag online en wij nemen binnen 24 uur contact op.</div>
                  </div>
                 </div>
               </div>

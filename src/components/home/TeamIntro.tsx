@@ -5,15 +5,15 @@ import { AnimatedSection } from '../ui/AnimatedSection';
 
 export function TeamIntro() {
   return (
-    <section className="section-padding bg-[#f4f1eb] dark:bg-[#1a2420]">
+    <section id="over-ons" className="section-padding bg-[#fefdfc] dark:bg-[#02191c]">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <AnimatedSection className="max-w-2xl">
-            <h2 className="text-[#C67D5B] font-semibold tracking-wider text-sm uppercase mb-3">Ons Zorgteam</h2>
-            <h3 className="text-3xl md:text-4xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7] mb-4">
+            <h2 className="text-[#4A9C6E] font-semibold tracking-wider text-sm uppercase mb-3">Ons Zorgteam</h2>
+            <h3 className="text-3xl md:text-4xl font-heading text-[#064a54] dark:text-[#fefdfc] mb-4">
               Lokaal talent, landelijke kwaliteit
             </h3>
-            <p className="text-[#6B7B6B] dark:text-[#94ba9a] text-lg">
+            <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg">
               Wij geloven dat goede zorg begint bij goede mensen. Ons team bestaat uit gediplomeerde, gepassioneerde zorgverleners uit de regio Parkstad.
             </p>
           </AnimatedSection>
@@ -21,7 +21,7 @@ export function TeamIntro() {
           <AnimatedSection delay={0.2}>
             <Link 
               to="/over-ons" 
-              className="inline-flex items-center text-[#5b7f63] dark:text-[#94ba9a] font-medium hover:text-[#C67D5B] transition-colors group"
+              className="inline-flex items-center text-[#5b7f63] dark:text-[#5cb0bd] font-medium hover:text-[#4A9C6E] transition-colors group"
             >
               Maak kennis met ons hele team 
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -40,7 +40,7 @@ export function TeamIntro() {
                 />
                 
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1a2420]/90 via-[#1a2420]/30 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#02191c]/90 via-[#02191c]/30 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
                 
                 {/* Content */}
                 <div className="absolute bottom-0 w-full p-6 text-white text-left transition-transform duration-300 flex flex-col justify-end translate-y-8 group-hover:translate-y-0">

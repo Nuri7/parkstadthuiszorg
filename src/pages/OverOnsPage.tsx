@@ -16,13 +16,13 @@ export function OverOnsPage() {
         <div className="flex flex-col lg:flex-row gap-16 items-center mb-24">
           <div className="w-full lg:w-1/2">
             <AnimatedSection>
-              <h1 className="text-4xl md:text-5xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7] mb-6">
+              <h1 className="text-4xl md:text-5xl font-heading text-[#064a54] dark:text-[#fefdfc] mb-6">
                 Zorg met <span className="text-gradient">aandacht</span>. Zorg met een <span className="text-gradient">Limburgs hart</span>.
               </h1>
-              <p className="text-[#6B7B6B] dark:text-[#94ba9a] text-lg mb-6 leading-relaxed">
+              <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg mb-6 leading-relaxed">
                 Parkstad Thuiszorg is ontstaan uit de wens om de zorg weer menselijk te maken. Geen stopwatch aan het bed, geen continu wisselende gezichten, maar échte aandacht voor de cliënt.
               </p>
-              <p className="text-[#6B7B6B] dark:text-[#94ba9a] text-lg leading-relaxed">
+              <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg leading-relaxed">
                 Als klein, lokaal team in de regio (Kerkrade, Heerlen, Landgraaf) kennen we de cultuur en mentaliteit. We maken tijd voor een praatje, kennen de families en bouwen een vertrouwensband op.
               </p>
             </AnimatedSection>
@@ -42,42 +42,42 @@ export function OverOnsPage() {
         {/* Mission/Vision grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
           <AnimatedSection delay={0.1}>
-            <div className="bg-white dark:bg-[#243029] p-8 rounded-3xl h-full shadow-lg border border-[#ede7db] dark:border-[#344a3c] text-center hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 mx-auto bg-[#f0f5f1] dark:bg-[#1a2420] rounded-2xl flex items-center justify-center mb-6 text-[#5b7f63]">
+            <div className="bg-white dark:bg-[#243029] p-8 rounded-3xl h-full shadow-lg border border-[#ede7db] dark:border-[#086370] text-center hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-16 h-16 mx-auto bg-[#e5f2f4] dark:bg-[#02191c] rounded-2xl flex items-center justify-center mb-6 text-[#5b7f63]">
                 <Target className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7] mb-4">Onze Missie</h3>
-              <p className="text-[#6B7B6B] dark:text-[#94ba9a]">Kwalitatieve, persoonsgerichte zorg bieden waardoor mensen langer, veiliger en gelukkiger in hun eigen vertrouwde omgeving kunnen blijven wonen.</p>
+              <h3 className="text-xl font-heading text-[#064a54] dark:text-[#fefdfc] mb-4">Onze Missie</h3>
+              <p className="text-[#4f6b6f] dark:text-[#5cb0bd]">Kwalitatieve, persoonsgerichte zorg bieden waardoor mensen langer, veiliger en gelukkiger in hun eigen vertrouwde omgeving kunnen blijven wonen.</p>
             </div>
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <div className="bg-[#f0f5f1] dark:bg-[#1a2420] p-8 rounded-3xl h-full shadow-lg border border-[#dce8de] dark:border-[#344a3c] text-center hover:-translate-y-2 transition-transform duration-300 transform scale-105 z-10 relative">
-              <div className="w-16 h-16 mx-auto bg-white dark:bg-[#243029] rounded-2xl flex items-center justify-center mb-6 text-[#C67D5B]">
+            <div className="bg-[#e5f2f4] dark:bg-[#02191c] p-8 rounded-3xl h-full shadow-lg border border-[#dce8de] dark:border-[#086370] text-center hover:-translate-y-2 transition-transform duration-300 transform scale-105 z-10 relative">
+              <div className="w-16 h-16 mx-auto bg-white dark:bg-[#243029] rounded-2xl flex items-center justify-center mb-6 text-[#4A9C6E]">
                 <HeartPulse className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7] mb-4">Onze Visie</h3>
-              <p className="text-[#6B7B6B] dark:text-[#94ba9a]">Wij geloven dat zorg om ménsen draait. Medisch handelen is belangrijk, maar het gevoel van veiligheid, gehoord worden en respectvolle benadering is cruciaal.</p>
+              <h3 className="text-xl font-heading text-[#064a54] dark:text-[#fefdfc] mb-4">Onze Visie</h3>
+              <p className="text-[#4f6b6f] dark:text-[#5cb0bd]">Wij geloven dat zorg om ménsen draait. Medisch handelen is belangrijk, maar het gevoel van veiligheid, gehoord worden en respectvolle benadering is cruciaal.</p>
             </div>
           </AnimatedSection>
 
           <AnimatedSection delay={0.3}>
-            <div className="bg-white dark:bg-[#243029] p-8 rounded-3xl h-full shadow-lg border border-[#ede7db] dark:border-[#344a3c] text-center hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 mx-auto bg-[#f0f5f1] dark:bg-[#1a2420] rounded-2xl flex items-center justify-center mb-6 text-[#5b7f63]">
+            <div className="bg-white dark:bg-[#243029] p-8 rounded-3xl h-full shadow-lg border border-[#ede7db] dark:border-[#086370] text-center hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-16 h-16 mx-auto bg-[#e5f2f4] dark:bg-[#02191c] rounded-2xl flex items-center justify-center mb-6 text-[#5b7f63]">
                 <ShieldCheck className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7] mb-4">Kwaliteit</h3>
-              <p className="text-[#6B7B6B] dark:text-[#94ba9a]">100% BIG-geregistreerd personeel, continue bijscholing en werken volgens de nieuwste kwaliteitskaders in de wijkverpleging.</p>
+              <h3 className="text-xl font-heading text-[#064a54] dark:text-[#fefdfc] mb-4">Kwaliteit</h3>
+              <p className="text-[#4f6b6f] dark:text-[#5cb0bd]">100% BIG-geregistreerd personeel, continue bijscholing en werken volgens de nieuwste kwaliteitskaders in de wijkverpleging.</p>
             </div>
           </AnimatedSection>
         </div>
 
         {/* Full Team Section */}
         <AnimatedSection className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7]">
+          <h2 className="text-3xl md:text-4xl font-heading text-[#064a54] dark:text-[#fefdfc]">
             Ontmoet Ons Team
           </h2>
-          <p className="text-[#6B7B6B] dark:text-[#94ba9a] mt-4 max-w-2xl mx-auto">
+          <p className="text-[#4f6b6f] dark:text-[#5cb0bd] mt-4 max-w-2xl mx-auto">
             Gepassioneerde professionals met hart voor de zorg en de regio.
           </p>
         </AnimatedSection>
@@ -85,14 +85,14 @@ export function OverOnsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {team.map((member, index) => (
              <AnimatedSection key={member.id} delay={index * 0.1}>
-              <div className="bg-white dark:bg-[#243029] rounded-2xl overflow-hidden shadow-lg border border-[#ede7db] dark:border-[#344a3c]">
+              <div className="bg-white dark:bg-[#243029] rounded-2xl overflow-hidden shadow-lg border border-[#ede7db] dark:border-[#086370]">
                 <div className="aspect-square relative overflow-hidden">
                   <img src={`${import.meta.env.BASE_URL}${member.image.substring(1)}`} alt={member.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6 text-center">
-                  <h4 className="text-xl font-bold text-[#2d3b2d] dark:text-[#fdfbf7] mb-1">{member.name}</h4>
-                  <p className="text-[#C67D5B] text-sm font-medium mb-4">{member.role}</p>
-                  <p className="text-[#6B7B6B] dark:text-[#94ba9a] text-sm italic">"{member.quote}"</p>
+                  <h4 className="text-xl font-bold text-[#064a54] dark:text-[#fefdfc] mb-1">{member.name}</h4>
+                  <p className="text-[#4A9C6E] text-sm font-medium mb-4">{member.role}</p>
+                  <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-sm italic">"{member.quote}"</p>
                 </div>
               </div>
              </AnimatedSection>

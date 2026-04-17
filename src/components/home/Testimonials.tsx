@@ -15,11 +15,11 @@ export function Testimonials() {
   };
 
   return (
-    <section className="section-padding bg-white dark:bg-[#243029]">
+    <section id="ervaringen" className="section-padding bg-white dark:bg-[#243029]">
       <div className="max-w-4xl mx-auto">
         <AnimatedSection className="text-center mb-12">
-          <h2 className="text-[#C67D5B] font-semibold tracking-wider text-sm uppercase mb-3">Ervaringen</h2>
-          <h3 className="text-3xl md:text-4xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7]">
+          <h2 className="text-[#4A9C6E] font-semibold tracking-wider text-sm uppercase mb-3">Ervaringen</h2>
+          <h3 className="text-3xl md:text-4xl font-heading text-[#064a54] dark:text-[#fefdfc]">
             Wat cliënten over ons zeggen
           </h3>
         </AnimatedSection>
@@ -33,8 +33,8 @@ export function Testimonials() {
                     idx === currentIndex ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full pointer-events-none'
                   }`}
                 >
-                  <Quote className="w-12 h-12 text-[#b8d1bc] dark:text-[#344a3c] mb-6 opacity-50" />
-                  <p className="text-xl md:text-2xl text-[#2d3b2d] dark:text-[#e2e8e2] font-medium leading-relaxed mb-8">
+                  <Quote className="w-12 h-12 text-[#b8d1bc] dark:text-[#086370] mb-6 opacity-50" />
+                  <p className="text-xl md:text-2xl text-[#064a54] dark:text-[#e2e8e2] font-medium leading-relaxed mb-8">
                     "{testimonial.quote}"
                   </p>
                   <div className="flex gap-1 mb-4">
@@ -43,8 +43,8 @@ export function Testimonials() {
                     ))}
                   </div>
                   <div>
-                    <div className="font-bold text-[#5b7f63] dark:text-[#94ba9a] text-lg">{testimonial.author}</div>
-                    <div className="text-sm text-[#6B7B6B] dark:text-[#a0afa0]">{testimonial.relation}</div>
+                    <div className="font-bold text-[#5b7f63] dark:text-[#5cb0bd] text-lg">{testimonial.author}</div>
+                    <div className="text-sm text-[#4f6b6f] dark:text-[#a0afa0]">{testimonial.relation}</div>
                   </div>
                 </div>
              ))}
@@ -53,14 +53,14 @@ export function Testimonials() {
           <div className="flex justify-center gap-4 mt-8 absolute top-[calc(50%-2rem)] -left-4 -right-4 md:-left-12 md:-right-12 z-10 w-[calc(100%+2rem)] md:w-[calc(100%+6rem)] justify-between pointer-events-none">
             <button 
               onClick={prev}
-              className="pointer-events-auto p-3 rounded-full bg-white dark:bg-[#1a2420] shadow-md border border-[#ede7db] dark:border-[#344a3c] text-[#5b7f63] hover:bg-[#f0f5f1] dark:hover:bg-[#2d3b2d] transition-colors"
+              className="pointer-events-auto p-3 rounded-full bg-white dark:bg-[#02191c] shadow-md border border-[#ede7db] dark:border-[#086370] text-[#5b7f63] hover:bg-[#e5f2f4] dark:hover:bg-[#064a54] transition-colors"
               aria-label="Vorige review"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button 
               onClick={next}
-              className="pointer-events-auto p-3 rounded-full bg-white dark:bg-[#1a2420] shadow-md border border-[#ede7db] dark:border-[#344a3c] text-[#5b7f63] hover:bg-[#f0f5f1] dark:hover:bg-[#2d3b2d] transition-colors"
+              className="pointer-events-auto p-3 rounded-full bg-white dark:bg-[#02191c] shadow-md border border-[#ede7db] dark:border-[#086370] text-[#5b7f63] hover:bg-[#e5f2f4] dark:hover:bg-[#064a54] transition-colors"
               aria-label="Volgende review"
             >
               <ChevronRight className="w-6 h-6" />
@@ -73,7 +73,7 @@ export function Testimonials() {
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
                 className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                  idx === currentIndex ? 'bg-[#C67D5B]' : 'bg-[#dce8de] dark:bg-[#476550]'
+                  idx === currentIndex ? 'bg-[#4A9C6E]' : 'bg-[#dce8de] dark:bg-[#476550]'
                 }`}
                 aria-label={`Ga naar review ${idx + 1}`}
               />

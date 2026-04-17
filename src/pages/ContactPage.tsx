@@ -13,10 +13,10 @@ export function ContactPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16">
-          <h1 className="text-4xl md:text-5xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7] mb-6">
+          <h1 className="text-4xl md:text-5xl font-heading text-[#064a54] dark:text-[#fefdfc] mb-6">
             Neem Contact Op / <span className="text-gradient">Intake Aanvragen</span>
           </h1>
-          <p className="text-[#6B7B6B] dark:text-[#94ba9a] text-lg">
+          <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg">
             Heeft u vragen of wilt u direct zorg aanvragen? Vul het onderstaande formulier in of neem telefonisch contact met op voor een vrijblijvend gesprek.
           </p>
         </AnimatedSection>
@@ -25,7 +25,7 @@ export function ContactPage() {
           
           <div className="w-full lg:w-5/12">
             <AnimatedSection>
-              <div className="bg-[#2d3b2d] dark:bg-[#1a2420] text-white p-8 md:p-10 rounded-3xl shadow-xl h-full relative overflow-hidden">
+              <div className="bg-[#064a54] dark:bg-[#02191c] text-white p-8 md:p-10 rounded-3xl shadow-xl h-full relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#394f40] dark:bg-[#1e2e25] rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
                 
                 <h3 className="text-2xl font-heading mb-8 relative z-10">Onze Gegevens</h3>
@@ -37,8 +37,8 @@ export function ContactPage() {
                     </div>
                     <div>
                       <h4 className="text-[#b8d1bc] text-sm font-semibold mb-1 uppercase tracking-wider">Telefoon</h4>
-                      <a href="tel:+31612345678" className="text-xl font-medium hover:text-[#C67D5B] transition-colors block">06 1234 5678</a>
-                      <p className="text-[#94ba9a] text-sm mt-1">24/7 bereikbaar voor spoed</p>
+                      <a href="tel:+31612345678" className="text-xl font-medium hover:text-[#4A9C6E] transition-colors block">06 1234 5678</a>
+                      <p className="text-[#5cb0bd] text-sm mt-1">24/7 bereikbaar voor spoed</p>
                     </div>
                   </li>
                   
@@ -48,7 +48,7 @@ export function ContactPage() {
                     </div>
                     <div>
                       <h4 className="text-[#b8d1bc] text-sm font-semibold mb-1 uppercase tracking-wider">E-mail</h4>
-                      <a href="mailto:info@parkstadthuiszorg.nl" className="text-lg font-medium hover:text-[#C67D5B] transition-colors break-all">info@parkstadthuiszorg.nl</a>
+                      <a href="mailto:info@parkstadthuiszorg.nl" className="text-lg font-medium hover:text-[#4A9C6E] transition-colors break-all">info@parkstadthuiszorg.nl</a>
                     </div>
                   </li>
                   
@@ -62,7 +62,7 @@ export function ContactPage() {
                         Hoofdstraat 1<br />
                         6461 AB Kerkrade
                       </p>
-                      <p className="text-[#94ba9a] text-sm mt-1">Regio Parkstad (Landgraaf, Heerlen, Kerkrade)</p>
+                      <p className="text-[#5cb0bd] text-sm mt-1">Regio Parkstad (Landgraaf, Heerlen, Kerkrade)</p>
                     </div>
                   </li>
                   
@@ -75,7 +75,7 @@ export function ContactPage() {
                       <p className="text-lg font-medium leading-relaxed">
                         Ma - Vr: 08:30 - 17:00<br />
                       </p>
-                      <p className="text-[#94ba9a] text-sm mt-1">Buiten kantoortijden doorschakeling voor cliënten.</p>
+                      <p className="text-[#5cb0bd] text-sm mt-1">Buiten kantoortijden doorschakeling voor cliënten.</p>
                     </div>
                   </li>
                 </ul>

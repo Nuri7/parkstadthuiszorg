@@ -8,7 +8,7 @@ function cn(...inputs: ClassValue[]) {
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp';
   size?: 'sm' | 'md' | 'lg';
   asChild?: boolean;
 }
@@ -19,10 +19,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = 'inline-flex items-center justify-center rounded-full font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
     
     const variants = {
-      primary: 'bg-[#B8623E] text-white hover:bg-[#9C4F30] hover:shadow-lg hover:-translate-y-0.5 focus-visible:ring-[#B8623E]',
-      secondary: 'bg-[#7C9A82] text-white hover:bg-[#5B7F63] hover:shadow-lg focus-visible:ring-[#7C9A82]',
-      outline: 'border-2 border-[#7C9A82] text-[#5B7F63] dark:text-[#94ba9a] hover:bg-[#7C9A82] hover:text-white focus-visible:ring-[#7C9A82]',
-      ghost: 'text-[#5B7F63] dark:text-[#94ba9a] hover:bg-[#f0f5f1] dark:hover:bg-[#1a2420] focus-visible:ring-[#7C9A82]',
+      primary: 'bg-[var(--color-sage-500)] text-white hover:bg-[var(--color-sage-600)] hover:shadow-lg hover:-translate-y-0.5 focus-visible:ring-[var(--color-sage-500)]',
+      secondary: 'bg-[var(--color-terra-400)] text-white hover:bg-[var(--color-terra-500)] hover:shadow-lg hover:-translate-y-0.5 focus-visible:ring-[var(--color-terra-400)]',
+      outline: 'border-2 border-[var(--color-sage-500)] text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] hover:bg-[var(--color-sage-50)] dark:hover:bg-[var(--color-sage-900)] focus-visible:ring-[var(--color-sage-500)]',
+      ghost: 'text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] hover:bg-[var(--color-sage-50)] dark:hover:bg-[var(--color-sage-900)] focus-visible:ring-[var(--color-sage-500)]',
+      whatsapp: 'bg-[#25D366] text-white hover:bg-[#128C7E] hover:shadow-lg hover:-translate-y-0.5 focus-visible:ring-[#25D366]',
     };
 
     const sizes = {

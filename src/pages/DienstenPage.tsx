@@ -22,10 +22,10 @@ export function DienstenPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-20">
-          <h1 className="text-4xl md:text-5xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7] mb-6">
+          <h1 className="text-4xl md:text-5xl font-heading text-[#064a54] dark:text-[#fefdfc] mb-6">
             Onze <span className="text-gradient">Zorgvormen</span>
           </h1>
-          <p className="text-[#6B7B6B] dark:text-[#94ba9a] text-lg md:text-xl">
+          <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg md:text-xl">
             Bij Parkstad Thuiszorg bieden we een breed pakket aan diensten. Altijd afgestemd op uw persoonlijke behoeften, ritme en wensen. Lees hieronder meer over wat we voor u kunnen betekenen.
           </p>
         </AnimatedSection>
@@ -42,21 +42,21 @@ export function DienstenPage() {
                  className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center`}
                >
                  <div className="w-full lg:w-1/2">
-                    <div className="bg-white dark:bg-[#243029] p-8 md:p-10 rounded-[2rem] shadow-xl border border-[#ede7db] dark:border-[#344a3c] relative">
-                      <div className="w-16 h-16 rounded-2xl bg-[#f0f5f1] dark:bg-[#1a2420] flex items-center justify-center mb-6 absolute -top-8 -left-4 md:-left-8 shadow-lg">
+                    <div className="bg-white dark:bg-[#243029] p-8 md:p-10 rounded-[2rem] shadow-xl border border-[#ede7db] dark:border-[#086370] relative">
+                      <div className="w-16 h-16 rounded-2xl bg-[#e5f2f4] dark:bg-[#02191c] flex items-center justify-center mb-6 absolute -top-8 -left-4 md:-left-8 shadow-lg">
                         <IconComponent className="w-8 h-8 text-[#5b7f63] dark:text-[#7c9a82]" />
                       </div>
                       
-                      <h2 className="text-3xl font-heading text-[#2d3b2d] dark:text-[#fdfbf7] mb-4 mt-4">{service.title}</h2>
-                      <p className="text-[#6B7B6B] dark:text-[#94ba9a] text-lg mb-8 leading-relaxed">
+                      <h2 className="text-3xl font-heading text-[#064a54] dark:text-[#fefdfc] mb-4 mt-4">{service.title}</h2>
+                      <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg mb-8 leading-relaxed">
                         {service.fullDescription}
                       </p>
                       
-                      <h3 className="font-semibold text-[#2d3b2d] dark:text-[#dce8de] mb-4">Wat kunt u verwachten?</h3>
+                      <h3 className="font-semibold text-[#064a54] dark:text-[#dce8de] mb-4">Wat kunt u verwachten?</h3>
                       <ul className="space-y-3">
                         {service.benefits.map((benefit, bIdx) => (
-                          <li key={bIdx} className="flex items-start gap-3 text-[#6B7B6B] dark:text-[#94ba9a]">
-                            <CheckCircle2 className="w-5 h-5 text-[#C67D5B] shrink-0 mt-0.5" />
+                          <li key={bIdx} className="flex items-start gap-3 text-[#4f6b6f] dark:text-[#5cb0bd]">
+                            <CheckCircle2 className="w-5 h-5 text-[#4A9C6E] shrink-0 mt-0.5" />
                             <span>{benefit}</span>
                           </li>
                         ))}
@@ -66,11 +66,11 @@ export function DienstenPage() {
                  
                  <div className="w-full lg:w-1/2 flex justify-center">
                     {/* Abstract design representation instead of generic images for every service to save loading time/requests */}
-                    <div className="w-full max-w-md aspect-square bg-[#f0f5f1] dark:bg-[#1a2420] rounded-[3rem] relative overflow-hidden flex items-center justify-center border-4 border-white dark:border-[#243029] shadow-2xl">
+                    <div className="w-full max-w-md aspect-square bg-[#e5f2f4] dark:bg-[#02191c] rounded-[3rem] relative overflow-hidden flex items-center justify-center border-4 border-white dark:border-[#243029] shadow-2xl">
                       <div className="absolute inset-0 opacity-10 dark:opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #5b7f63 1px, transparent 0)', backgroundSize: '24px 24px' }}></div>
-                      <IconComponent className="w-32 h-32 text-[#b8d1bc] dark:text-[#344a3c] opacity-50 relative z-10" />
+                      <IconComponent className="w-32 h-32 text-[#b8d1bc] dark:text-[#086370] opacity-50 relative z-10" />
                       
-                      <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#C67D5B]/20 rounded-full blur-3xl"></div>
+                      <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#4A9C6E]/20 rounded-full blur-3xl"></div>
                       <div className="absolute -top-10 -left-10 w-40 h-40 bg-[#5b7f63]/20 rounded-full blur-3xl"></div>
                     </div>
                  </div>
