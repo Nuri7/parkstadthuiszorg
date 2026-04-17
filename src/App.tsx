@@ -14,7 +14,7 @@ import { ScrollToTop } from './components/utils/ScrollToTop';
 function App() {
   return (
     <HelmetProvider>
-      <Router>
+      <Router basename="/parkstadthuiszorg">
       <ScrollToTop />
       <div className="min-h-screen flex flex-col bg-white dark:bg-[#1a2420]">
         <Navbar />
