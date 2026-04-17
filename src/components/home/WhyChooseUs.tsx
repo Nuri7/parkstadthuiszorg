@@ -62,7 +62,7 @@ export function WhyChooseUs() {
           <div className="w-full lg:w-7/12 relative">
             <AnimatedSection delay={0.2} className="relative z-10 rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl">
               <img 
-                src="/images/team-group.webp" 
+                src={`${import.meta.env.BASE_URL}images/team-group.webp`} 
                 alt="Het team van Parkstad Thuiszorg lacht in een tuin" 
                 className="w-full h-full object-cover"
               />
