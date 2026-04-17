@@ -87,7 +87,7 @@ export function OverOnsPage() {
              <AnimatedSection key={member.id} delay={index * 0.1}>
               <div className="bg-white dark:bg-[#243029] rounded-2xl overflow-hidden shadow-lg border border-[#ede7db] dark:border-[#344a3c]">
                 <div className="aspect-square relative overflow-hidden">
-                  <img src={`${import.meta.env.BASE_URL}${member.image.replace(/^\\//, '')}`} alt={member.name} className="w-full h-full object-cover" />
+                  <img src={`${import.meta.env.BASE_URL}${member.image.substring(1)}`} alt={member.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6 text-center">
                   <h4 className="text-xl font-bold text-[#2d3b2d] dark:text-[#fdfbf7] mb-1">{member.name}</h4>
