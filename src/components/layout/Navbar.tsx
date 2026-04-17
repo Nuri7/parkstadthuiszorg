@@ -24,10 +24,10 @@ export function Navbar() {
   }, [location.pathname]);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Diensten', path: '/#diensten' },
-    { name: 'Hoe het Werkt', path: '/#hoe-werkt-het' },
-    { name: 'Over Ons', path: '/#over-ons' },
+    { name: 'Zorgvormen', path: '/#diensten' },
+    { name: 'Waarom Wij', path: '/#waarom-ons' },
+    { name: 'Ervaringen', path: '/#ervaringen' },
+    { name: 'Ons Team', path: '/#over-ons' },
     { name: 'Contact', path: '/#contact' },
   ];
 
@@ -133,7 +133,11 @@ export function Navbar() {
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
             <ThemeToggle />
-            <Button asChild variant="outline" size="sm" className="hidden lg:flex border-[#0A7C8C] text-[#0A7C8C]">
+            <a href="tel:+31612345678" className="hidden xl:flex items-center gap-2 text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] font-medium text-sm hover:text-[var(--color-sage-500)] transition-colors">
+              <Phone className="w-4 h-4" />
+              <span>06-12 34 56 78</span>
+            </a>
+            <Button asChild variant="cta" size="sm">
               <a href="tel:+31612345678" className="font-semibold">
                 <Phone className="w-4 h-4 mr-2" />
                 Bel direct
@@ -184,12 +188,12 @@ export function Navbar() {
               );
             })}
             <div className="mt-6 space-y-3 px-3">
-              <a href="tel:+31612345678" className="flex items-center justify-center gap-2 w-full p-3 rounded-xl border border-[#7c9a82] text-[#5b7f63] dark:text-[#5cb0bd] font-medium">
+              <a href="tel:+31612345678" className="flex items-center justify-center gap-2 w-full p-3 rounded-xl border border-[var(--color-sage-400)] text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] font-medium">
                 <Phone className="w-5 h-5" />
-                Bel 06 1234 5678
+                Bel 06-12 34 56 78
               </a>
-              <Button asChild variant="primary" className="w-full justify-center">
-                <Link to="/contact">Gratis Intakegesprek</Link>
+              <Button asChild variant="whatsapp" className="w-full justify-center">
+                <a href="https://wa.me/31612345678" target="_blank" rel="noopener noreferrer">WhatsApp ons</a>
               </Button>
             </div>
           </div>

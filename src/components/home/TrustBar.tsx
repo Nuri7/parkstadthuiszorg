@@ -21,7 +21,7 @@ export function TrustBar() {
           {trustItems.map((item, index) => (
             <div key={index} className="flex flex-col items-center text-center px-2">
               <div className="w-10 h-10 rounded-full bg-[#e5f2f4] dark:bg-[#1e2e25] flex items-center justify-center mb-3">
-                <item.icon className="w-5 h-5 text-[#5b7f63] dark:text-[#7c9a82]" />
+                <item.icon className="w-5 h-5 text-[var(--color-sage-500)] dark:text-[var(--color-sage-400)]" />
               </div>
               <h3 className="text-sm md:text-base font-bold text-[#064a54] dark:text-[#fefdfc]">{item.text}</h3>
               <p className="text-xs md:text-sm text-[#4f6b6f] dark:text-[#5cb0bd] mt-1">{item.subtext}</p>

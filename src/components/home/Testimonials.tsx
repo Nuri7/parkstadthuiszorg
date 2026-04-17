@@ -15,7 +15,7 @@ export function Testimonials() {
   };
 
   return (
-    <section id="ervaringen" className="section-padding bg-white dark:bg-[#243029]">
+    <section id="ervaringen" className="section-padding bg-white dark:bg-[var(--color-sage-900)]">
       <div className="max-w-4xl mx-auto">
         <AnimatedSection className="text-center mb-12">
           <h2 className="text-[#4A9C6E] font-semibold tracking-wider text-sm uppercase mb-3">Ervaringen</h2>

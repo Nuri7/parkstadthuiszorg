@@ -16,7 +16,7 @@ export function VergoedingenSummary() {
             >
               <div className="absolute inset-0 p-8 lg:p-12 flex flex-col justify-center text-white">
                 <h3 className="text-3xl font-heading mb-6">Volledig vergoed door uw zorgverzekeraar</h3>
-                <p className="text-lg opacity-90 mb-8">Wij hebben contracten met vrijwel alle zorgverzekeraars. Wijkverpleging valt onder het basispakket, wat betekent dat u geen eigen risico betaalt.</p>
+                <p className="text-lg font-medium mb-8">Wij hebben contracten met vrijwel alle zorgverzekeraars. Wijkverpleging valt onder het basispakket, wat betekent dat u geen eigen risico betaalt.</p>
                 <ul className="space-y-4">
                   {['Zorgverzekeringswet (Zvw)', 'Wet langdurige zorg (Wlz)', 'Persoonsgebonden budget (Pgb)', 'Geen eigen risico via Zvw'].map((item) => (
                     <li key={item} className="flex items-center gap-3">

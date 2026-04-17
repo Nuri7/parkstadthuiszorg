@@ -64,7 +64,7 @@ export function ProcessTimeline() {
                     </div>
                   </div>
                   
-                  <div className={`w-full md:w-1/2 pl-20 pr-0 md:px-12 py-2 text-left ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                  <div className={`w-full md:w-1/2 pl-16 md:pl-12 pr-0 md:px-12 py-2 text-left ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
                     <h3 className="text-2xl font-bold text-[var(--color-sage-800)] dark:text-white mb-2">
                       {step.title}
                     </h3>

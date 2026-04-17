@@ -44,7 +44,7 @@ export function WhyChooseUs() {
               </p>
               
               <div className="space-y-6">
-                {benefits.slice(0, 2).map((benefit, idx) => (
+                {benefits.map((benefit, idx) => (
                   <div key={idx} className="flex gap-4">
                     <div className="w-12 h-12 rounded-full bg-white dark:bg-[#243029] flex-shrink-0 flex items-center justify-center shadow-sm">
                       <benefit.icon className="w-6 h-6 text-[#7c9a82] dark:text-[#5b7f63]" />

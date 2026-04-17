@@ -6,13 +6,8 @@ export function FloatingContact() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Show after scrolling past the hero section
     const handleScroll = () => {
-      if (window.scrollY > 400) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      setIsVisible(window.scrollY > 400);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -28,24 +23,24 @@ export function FloatingContact() {
           exit={{ opacity: 0, y: 50, scale: 0.9 }}
           className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 md:hidden"
         >
-          {/* WhatsApp Button */}
+          {/* WhatsApp Button — with pulse animation */}
           <a
             href="https://wa.me/31612345678"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-lg hover:bg-[#128C7E] transition-colors"
+            className="w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-[#128C7E] transition-colors animate-pulse-soft"
             aria-label="Stuur een WhatsApp bericht"
           >
-            <MessageCircle className="w-6 h-6" />
+            <MessageCircle className="w-7 h-7" />
           </a>
           
           {/* Phone Button */}
           <a
             href="tel:+31612345678"
-            className="w-14 h-14 bg-[var(--color-sage-500)] text-white rounded-full flex items-center justify-center shadow-lg hover:bg-[var(--color-sage-600)] transition-colors"
+            className="w-16 h-16 bg-[#E8734A] text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-[#D4603A] transition-colors"
             aria-label="Bel Parkstad Thuiszorg"
           >
-            <Phone className="w-6 h-6" />
+            <Phone className="w-7 h-7" />
           </a>
         </motion.div>
       )}

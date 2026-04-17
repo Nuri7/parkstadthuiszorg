@@ -48,7 +48,7 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <Button asChild variant="primary" size="lg" className="w-full sm:w-auto">
+              <Button asChild variant="cta" size="lg" className="w-full sm:w-auto">
                 <a href="tel:+31612345678" className="group">
                   <Phone className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                   Bel direct

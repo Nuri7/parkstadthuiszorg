@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { HeartPulse, Mail, MapPin, Phone, ArrowRight } from 'lucide-react';
+import { HeartPulse, Mail, MapPin, Phone, ArrowRight, MessageCircle } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -57,7 +57,15 @@ export function Footer() {
                   <div className="w-8 h-8 rounded-full bg-[var(--color-sage-800)] flex items-center justify-center shrink-0">
                     <Phone className="w-4 h-4 text-[var(--color-sage-400)]" />
                   </div>
-                  <span>06 1234 5678</span>
+                  <span>06-12 34 56 78</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://wa.me/31612345678" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-[var(--color-sage-300)] hover:text-[#25D366] transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-[var(--color-sage-800)] flex items-center justify-center shrink-0">
+                    <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                  </div>
+                  <span>WhatsApp ons</span>
                 </a>
               </li>
               <li>

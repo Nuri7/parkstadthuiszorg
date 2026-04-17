@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, Stethoscope, HeartHandshake, Flower2, BrainCircuit, Moon, Pill } from 'lucide-react';
+import { Stethoscope, HeartHandshake, Flower2, BrainCircuit, Moon, Pill } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { AnimatedSection } from '../ui/AnimatedSection';
 import { services } from '../../data/services';
@@ -43,13 +42,6 @@ export function ServicesOverview() {
                   <p className="text-[#4f6b6f] dark:text-[#5cb0bd] flex-grow mb-6">
                     {service.shortDescription}
                   </p>
-                  <Link 
-                    to={`/diensten#${service.id}`}
-                    className="flex items-center text-[#4A9C6E] font-medium group/link mt-auto"
-                  >
-                    Lees meer 
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover/link:translate-x-1 transition-transform" />
-                  </Link>
                 </Card>
               </AnimatedSection>
             );

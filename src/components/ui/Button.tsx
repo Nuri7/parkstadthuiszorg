@@ -8,7 +8,7 @@ function cn(...inputs: ClassValue[]) {
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'whatsapp' | 'cta';
   size?: 'sm' | 'md' | 'lg';
   asChild?: boolean;
 }
@@ -24,6 +24,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       outline: 'border-2 border-[var(--color-sage-500)] text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] hover:bg-[var(--color-sage-50)] dark:hover:bg-[var(--color-sage-900)] focus-visible:ring-[var(--color-sage-500)]',
       ghost: 'text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] hover:bg-[var(--color-sage-50)] dark:hover:bg-[var(--color-sage-900)] focus-visible:ring-[var(--color-sage-500)]',
       whatsapp: 'bg-[#25D366] text-white hover:bg-[#128C7E] hover:shadow-lg hover:-translate-y-0.5 focus-visible:ring-[#25D366]',
+      cta: 'bg-[#E8734A] text-white hover:bg-[#D4603A] hover:shadow-lg hover:-translate-y-0.5 focus-visible:ring-[#E8734A]',
     };
 
     const sizes = {
