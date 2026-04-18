@@ -37,7 +37,7 @@ export function ContactPage() {
                     </div>
                     <div>
                       <h4 className="text-[#b8d1bc] text-sm font-semibold mb-1 uppercase tracking-wider">Telefoon</h4>
-                      <a href="tel:+31612345678" className="text-xl font-medium hover:text-[#4A9C6E] transition-colors block">06 1234 5678</a>
+                      <a href="tel:+31644745471" className="text-xl font-medium hover:text-[#4A9C6E] transition-colors block">06 44 74 54 71</a>
                       <p className="text-[#5cb0bd] text-sm mt-1">24/7 bereikbaar voor spoed</p>
                     </div>
                   </li>

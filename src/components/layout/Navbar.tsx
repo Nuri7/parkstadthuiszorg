@@ -133,18 +133,18 @@ export function Navbar() {
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
             <ThemeToggle />
-            <a href="tel:+31612345678" className="hidden xl:flex items-center gap-2 text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] font-medium text-sm hover:text-[var(--color-sage-500)] transition-colors">
+            <a href="tel:+31644745471" className="hidden xl:flex items-center gap-2 text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] font-medium text-sm hover:text-[var(--color-sage-500)] transition-colors">
               <Phone className="w-4 h-4" />
-              <span>06-12 34 56 78</span>
+              <span>06 44 74 54 71</span>
             </a>
             <Button asChild variant="cta" size="sm">
-              <a href="tel:+31612345678" className="font-semibold">
+              <a href="tel:+31644745471" className="font-semibold">
                 <Phone className="w-4 h-4 mr-2" />
                 Bel direct
               </a>
             </Button>
             <Button asChild variant="whatsapp" size="sm">
-              <a href="https://wa.me/31612345678" target="_blank" rel="noopener noreferrer" className="font-semibold px-4 min-w-[140px] text-center">
+              <a href="https://wa.me/31644745471" target="_blank" rel="noopener noreferrer" className="font-semibold px-4 min-w-[140px] text-center">
                 WhatsApp ons
               </a>
             </Button>
@@ -188,12 +188,12 @@ export function Navbar() {
               );
             })}
             <div className="mt-6 space-y-3 px-3">
-              <a href="tel:+31612345678" className="flex items-center justify-center gap-2 w-full p-3 rounded-xl border border-[var(--color-sage-400)] text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] font-medium">
+              <a href="tel:+31644745471" className="flex items-center justify-center gap-2 w-full p-3 rounded-xl border border-[var(--color-sage-400)] text-[var(--color-sage-600)] dark:text-[var(--color-sage-300)] font-medium">
                 <Phone className="w-5 h-5" />
-                Bel 06-12 34 56 78
+                Bel 06 44 74 54 71
               </a>
               <Button asChild variant="whatsapp" className="w-full justify-center">
-                <a href="https://wa.me/31612345678" target="_blank" rel="noopener noreferrer">WhatsApp ons</a>
+                <a href="https://wa.me/31644745471" target="_blank" rel="noopener noreferrer">WhatsApp ons</a>
               </Button>
             </div>
           </div>

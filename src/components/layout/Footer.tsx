@@ -53,15 +53,15 @@ export function Footer() {
             <h3 className="font-heading text-lg text-[var(--color-beige-50)] mb-4">Contact</h3>
             <ul className="space-y-4 text-sm">
               <li>
-                <a href="tel:+31612345678" className="flex items-center gap-3 text-[var(--color-sage-300)] hover:text-white transition-colors">
+                <a href="tel:+31644745471" className="flex items-center gap-3 text-[var(--color-sage-300)] hover:text-white transition-colors">
                   <div className="w-8 h-8 rounded-full bg-[var(--color-sage-800)] flex items-center justify-center shrink-0">
                     <Phone className="w-4 h-4 text-[var(--color-sage-400)]" />
                   </div>
-                  <span>06-12 34 56 78</span>
+                  <span>06 44 74 54 71</span>
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/31612345678" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-[var(--color-sage-300)] hover:text-[#25D366] transition-colors">
+                <a href="https://wa.me/31644745471" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-[var(--color-sage-300)] hover:text-[#25D366] transition-colors">
                   <div className="w-8 h-8 rounded-full bg-[var(--color-sage-800)] flex items-center justify-center shrink-0">
                     <MessageCircle className="w-4 h-4 text-[#25D366]" />
                   </div>

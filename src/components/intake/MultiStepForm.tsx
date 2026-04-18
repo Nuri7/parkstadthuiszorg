@@ -140,7 +140,7 @@ export function MultiStepForm() {
                       value={formData.phone}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 rounded-xl bg-[var(--color-beige-50)] dark:bg-[#02191c] border border-[var(--color-beige-300)] dark:border-[#086370] focus:outline-none focus:border-[var(--color-sage-400)] focus:ring-2 focus:ring-[var(--color-sage-400)]/20 transition-all text-[var(--color-sage-800)] dark:text-white"
-                      placeholder="06 1234 5678"
+                      placeholder="06 44 74 54 71"
                       required
                     />
                   </div>
@@ -309,7 +309,7 @@ export function MultiStepForm() {
                
                <div className="flex flex-col sm:flex-row gap-4 justify-center">
                  <Button asChild variant="outline">
-                   <a href="tel:+31612345678">Toch Direct Bellen</a>
+                   <a href="tel:+31644745471">Toch Direct Bellen</a>
                  </Button>
                </div>
             </motion.div>

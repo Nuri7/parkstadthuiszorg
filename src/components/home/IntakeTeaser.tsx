@@ -75,7 +75,7 @@ export function IntakeTeaser() {
                 <Link to="/contact">Intake Aanvragen</Link>
               </Button>
                <Button asChild variant="outline" size="lg" className="bg-white dark:bg-[#02191c]">
-                <a href="tel:+31612345678">Bel Ons Direct</a>
+                <a href="tel:+31644745471">Bel Ons Direct</a>
               </Button>
             </div>
           </div>

@@ -32,7 +32,7 @@ export function HomePage() {
               Neem direct contact op
             </h2>
             <p className="text-lg text-[var(--color-sage-600)] dark:text-[var(--color-sage-200)]">
-              Liever bellen? Wij zijn direct bereikbaar op <a href="tel:+31612345678" className="font-bold underline hover:text-[var(--color-sage-500)] text-[var(--color-sage-500)]">06 1234 5678</a>. U kunt ook veilig en snel het formulier hieronder invullen en wij bellen u binnen 24 uur terug (vaak nog dezelfde dag).
+              Liever bellen? Wij zijn direct bereikbaar op <a href="tel:+31644745471" className="font-bold underline hover:text-[var(--color-sage-500)] text-[var(--color-sage-500)]">06 44 74 54 71</a>. U kunt ook veilig en snel het formulier hieronder invullen en wij bellen u binnen 24 uur terug (vaak nog dezelfde dag).
             </p>
           </div>
           <MultiStepForm />
