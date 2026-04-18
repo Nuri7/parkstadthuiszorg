@@ -1,8 +1,25 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HeartPulse, Mail, MapPin, Phone, ArrowRight, MessageCircle } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+    if (path.startsWith('/#') && location.pathname === '/') {
+      e.preventDefault();
+      const id = path.substring(2);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', path);
+      }
+    } else if (path === '/' && location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', '/');
+    }
+  };
 
   return (
     <footer className="bg-[#02191c] text-[#e5f2f4] pt-16 pb-24 md:pb-8 border-t border-[#086370]">
@@ -38,6 +55,7 @@ export function Footer() {
                 <li key={item.name}>
                   <Link 
                     to={item.path}
+                    onClick={(e) => handleNavClick(e, item.path)}
                     className="text-[var(--color-sage-300)] hover:text-white transition-colors flex items-center gap-2 text-sm group"
                   >
                     <ArrowRight className="w-3 h-3 text-[var(--color-sage-400)] group-hover:text-white transition-colors" />
@@ -107,8 +125,8 @@ export function Footer() {
         <div className="pt-8 border-t border-[var(--color-sage-700)] flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[var(--color-sage-400)]">
           <p>&copy; {currentYear} Parkstad Thuiszorg. Alle rechten voorbehouden.</p>
           <div className="flex space-x-4">
-            <Link to="/#contact" className="hover:text-white transition-colors">Privacybeleid</Link>
-            <Link to="/#contact" className="hover:text-white transition-colors">Algemene Voorwaarden</Link>
+            <Link to="/#contact" onClick={(e) => handleNavClick(e, '/#contact')} className="hover:text-white transition-colors">Privacybeleid</Link>
+            <Link to="/#contact" onClick={(e) => handleNavClick(e, '/#contact')} className="hover:text-white transition-colors">Algemene Voorwaarden</Link>
           </div>
         </div>
       </div>
