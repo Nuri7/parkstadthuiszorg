@@ -12,9 +12,9 @@ export function VergoedingenSummary() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative aspect-square lg:aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl bg-[var(--color-sage-500)]"
+              className="relative rounded-[2rem] overflow-hidden shadow-2xl bg-[var(--color-sage-500)] h-full"
             >
-              <div className="absolute inset-0 p-8 lg:p-12 flex flex-col justify-center text-white">
+              <div className="p-8 lg:p-12 flex flex-col justify-center text-white h-full">
                 <h3 className="text-3xl font-heading mb-6">Volledig vergoed door uw zorgverzekeraar</h3>
                 <p className="text-lg font-medium mb-8">Wij hebben contracten met vrijwel alle zorgverzekeraars. Wijkverpleging valt onder het basispakket, wat betekent dat u geen eigen risico betaalt.</p>
                 <ul className="space-y-4">
