@@ -1,14 +1,28 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, HeartPulse, Phone } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Button } from '../ui/Button';
+
+const NAV_LINKS = [
+  { name: 'Zorgvormen', path: '/#diensten' },
+  { name: 'Waarom Wij', path: '/#waarom-ons' },
+  { name: 'Ervaringen', path: '/#ervaringen' },
+  { name: 'Ons Team', path: '/#over-ons' },
+  { name: 'Contact', path: '/#contact' },
+];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const location = useLocation();
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- legitimate: resetting UI state on navigation
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,24 +32,11 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  const navLinks = [
-    { name: 'Zorgvormen', path: '/#diensten' },
-    { name: 'Waarom Wij', path: '/#waarom-ons' },
-    { name: 'Ervaringen', path: '/#ervaringen' },
-    { name: 'Ons Team', path: '/#over-ons' },
-    { name: 'Contact', path: '/#contact' },
-  ];
-
   useEffect(() => {
     if (location.pathname !== '/') return;
     
     // Intersection Observer for scroll-spy
-    const observers = navLinks.map(link => {
+    const observers = NAV_LINKS.map(link => {
       if (!link.path.startsWith('/#')) return null;
       const id = link.path.substring(2);
       const element = document.getElementById(id);
@@ -97,10 +98,12 @@ export function Navbar() {
         <div className="flex justify-between items-center">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="bg-[#7c9a82] dark:bg-[#5b7f63] text-white p-2 rounded-xl group-hover:bg-[#5b7f63] transition-colors">
-              <HeartPulse className="w-6 h-6" />
-            </div>
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <img 
+              src={`${import.meta.env.BASE_URL}images/logo.svg`} 
+              alt="Parkstad Thuiszorg logo" 
+              className="w-10 h-10 group-hover:scale-105 transition-transform"
+            />
             <span className="font-heading text-xl md:text-2xl text-[#064a54] dark:text-[#fefdfc] font-semibold">
               Parkstad Thuiszorg
             </span>
@@ -108,7 +111,7 @@ export function Navbar() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-4">
-            {navLinks.map((link) => {
+            {NAV_LINKS.map((link) => {
               // Determine active state - either by path matching (for separate pages) or scroll-spy matched hash
               const isActive = (location.pathname !== '/' && location.pathname === link.path) || 
                                (location.pathname === '/' && activeSection === link.path);
@@ -168,7 +171,7 @@ export function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-[#02191c] shadow-lg border-b border-[#ede7db] dark:border-[#086370]">
           <div className="px-4 pt-2 pb-6 space-y-1">
-            {navLinks.map((link) => {
+            {NAV_LINKS.map((link) => {
               const isActive = (location.pathname !== '/' && location.pathname === link.path) || 
                                (location.pathname === '/' && activeSection === link.path);
               

@@ -10,7 +10,7 @@ interface AnimatedSectionProps {
 
 export function AnimatedSection({ children, className = '', delay = 0, id }: AnimatedSectionProps) {
   return (
-    <motion.section
+    <motion.div
       id={id}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -19,6 +19,6 @@ export function AnimatedSection({ children, className = '', delay = 0, id }: Ani
       className={className}
     >
       {children}
-    </motion.section>
+    </motion.div>
   );
 }

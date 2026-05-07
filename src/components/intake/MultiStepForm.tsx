@@ -28,22 +28,42 @@ export function MultiStepForm() {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('https://formspree.io/f/dummy-endpoint', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      // Build email body from form data
+      const careLabels: Record<string, string> = {
+        'verpleging': 'Wijkverpleging',
+        'verzorging': 'Persoonlijke verzorging',
+        'herstelzorg': 'Herstelzorg na operatie',
+        'palliatief': 'Palliatieve / Terminale zorg',
+        'begeleiding': 'Individuele begeleiding',
+        'mantelzorg': 'Mantelzorgondersteuning',
+        'nachtzorg': 'Nachtzorg',
+        'medicatie': 'Medicatiebeheer',
+        'weet-niet': 'Weet ik niet / anders',
+      };
+
+      const emailBody = [
+        `Naam: ${formData.name}`,
+        `Telefoon: ${formData.phone}`,
+        `E-mail: ${formData.email || 'Niet opgegeven'}`,
+        `Postcode: ${formData.postcode}`,
+        `Voor wie: ${formData.forWhom === 'myself' ? 'Zichzelf' : 'Een naaste'}`,
+        `Type zorg: ${careLabels[formData.careType] || formData.careType}`,
+        `Situatie: ${formData.situation || 'Niet opgegeven'}`,
+        `Voorkeursdagen: ${formData.preferredDays.join(', ') || 'Geen voorkeur'}`,
+        `Voorkeurstijd: ${formData.preferredTime || 'Geen voorkeur'}`,
+      ].join('\n');
+
+      const mailtoLink = `mailto:info@parkstadthuiszorg.nl?subject=${encodeURIComponent('Nieuwe Intake Aanvraag - ' + formData.name)}&body=${encodeURIComponent(emailBody)}`;
       
-      if (response.ok) {
+      window.location.href = mailtoLink;
+
+      // Show success after brief delay
+      setTimeout(() => {
         setStep(4);
-      } else {
-        alert("Er ging iets mis bij het verzenden. Probeer het later opnieuw of bel ons.");
-      }
-    } catch (error) {
-      alert("Er ging iets mis. Controleer uw internetverbinding.");
-    } finally {
+        setIsSubmitting(false);
+      }, 500);
+    } catch {
+      alert("Er ging iets mis. U kunt ons ook direct bellen op 06 44 74 54 71.");
       setIsSubmitting(false);
     }
   };
@@ -217,10 +237,13 @@ export function MultiStepForm() {
                   <option value="" disabled>Selecteer een zorgvorm...</option>
                   <option value="verpleging">Wijkverpleging (injecties, wondzorg, etc.)</option>
                   <option value="verzorging">Persoonlijke verzorging (wassen, aankleden)</option>
+                  <option value="herstelzorg">Herstelzorg na operatie (tijdelijk, 4-8 weken)</option>
                   <option value="palliatief">Palliatieve / Terminale zorg</option>
                   <option value="begeleiding">Individuele begeleiding</option>
+                  <option value="mantelzorg">Mantelzorgondersteuning / Respijtzorg</option>
                   <option value="nachtzorg">Nachtzorg</option>
-                  <option value="weet-niet">Ik weet het niet / ander</option>
+                  <option value="medicatie">Medicatiebeheer</option>
+                  <option value="weet-niet">Ik weet het niet / anders</option>
                 </select>
               </div>
 

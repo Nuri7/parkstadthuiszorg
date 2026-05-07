@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { CheckCircle2, Stethoscope, HeartHandshake, Flower2, BrainCircuit, Moon, Pill } from 'lucide-react';
+import { CheckCircle2, Stethoscope, HeartHandshake, Flower2, BrainCircuit, Moon, Pill, Activity, HandHeart } from 'lucide-react';
 import { AnimatedSection } from '../components/ui/AnimatedSection';
 import { services } from '../data/services';
 
@@ -9,7 +9,9 @@ const iconMap: Record<string, React.ElementType> = {
   Flower2,
   BrainCircuit,
   Moon,
-  Pill
+  Pill,
+  Activity,
+  HandHeart
 };
 
 export function DienstenPage() {

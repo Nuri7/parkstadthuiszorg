@@ -23,7 +23,7 @@ export function OverOnsPage() {
                 Parkstad Thuiszorg is ontstaan uit de wens om de zorg weer menselijk te maken. Geen stopwatch aan het bed, geen continu wisselende gezichten, maar échte aandacht voor de cliënt.
               </p>
               <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg leading-relaxed">
-                Als klein, lokaal team in de regio (Kerkrade, Heerlen, Landgraaf) kennen we de cultuur en mentaliteit. We maken tijd voor een praatje, kennen de families en bouwen een vertrouwensband op.
+                Als klein, lokaal team in de regio (Kerkrade, Heerlen, Landgraaf, Brunssum, Voerendaal) kennen we de cultuur en mentaliteit. We spreken plat als u dat prettig vindt, maken tijd voor een praatje, kennen de families en bouwen een vertrouwensband op. Of u nu jong of oud bent — wij bieden zorg die bij ú past.
               </p>
             </AnimatedSection>
           </div>
@@ -34,6 +34,7 @@ export function OverOnsPage() {
                 src={`${import.meta.env.BASE_URL}images/team-group.webp`} 
                 alt="Het volledige zorgteam" 
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </AnimatedSection>
           </div>
@@ -87,11 +88,14 @@ export function OverOnsPage() {
              <AnimatedSection key={member.id} delay={index * 0.1}>
               <div className="bg-white dark:bg-[#243029] rounded-2xl overflow-hidden shadow-lg border border-[#ede7db] dark:border-[#086370]">
                 <div className="aspect-square relative overflow-hidden">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
+                  <img src={member.image} alt={member.name} className="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div className="p-6 text-center">
                   <h4 className="text-xl font-bold text-[#064a54] dark:text-[#fefdfc] mb-1">{member.name}</h4>
-                  <p className="text-[#4A9C6E] text-sm font-medium mb-4">{member.role}</p>
+                  <p className="text-[#4A9C6E] text-sm font-medium mb-2">{member.role}</p>
+                  {'qualifications' in member && (
+                    <p className="text-[#8ab0b6] text-xs mb-4">{member.qualifications}</p>
+                  )}
                   <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-sm italic">"{member.quote}"</p>
                 </div>
               </div>

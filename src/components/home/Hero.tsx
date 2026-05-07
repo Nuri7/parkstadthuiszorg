@@ -28,7 +28,7 @@ export function Hero() {
             >
               Parkstad Thuiszorg <br/>
               <span className="text-[var(--color-sage-500)] text-3xl md:text-5xl lg:text-5xl mt-2 block group relative">
-                Persoonlijke thuiszorg met hart
+                Een vertrouwd gezicht, een gerust gevoel
                 <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[var(--color-sage-500)] to-[var(--color-terra-400)] rounded-full hidden lg:block"></span>
               </span>
             </motion.h1>
@@ -39,7 +39,7 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Warme, professionele zorg bij u thuis in Landgraaf, Heerlen en Kerkrade. Een vast gezicht, oprechte aandacht en deskundige medische begeleiding.
+              Warme, professionele zorg bij u thuis in Landgraaf, Heerlen, Kerkrade, Brunssum en omgeving. Een vast gezicht, oprechte aandacht en deskundige medische begeleiding — gewoon in het Limburgs als u dat fijn vindt.
             </motion.p>
             
             <motion.div
@@ -81,6 +81,9 @@ export function Hero() {
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-[#4A9C6E]" /> PGB & ZVW
               </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-[#4A9C6E]" /> 24/7 spoedlijn
+              </div>
             </motion.div>
           </div>
 
@@ -99,6 +102,7 @@ export function Hero() {
                  src={`${import.meta.env.BASE_URL}images/hero-caregiver.webp`} 
                  alt="Vriendelijke verpleegkundige drinkt thee met oudere dame in woonkamer"
                  className="w-full h-full object-cover"
+                 fetchPriority="high"
                />
                
             </div>

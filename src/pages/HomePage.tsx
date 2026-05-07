@@ -3,6 +3,7 @@ import { Hero } from '../components/home/Hero';
 import { TrustBar } from '../components/home/TrustBar';
 import { ServicesOverview } from '../components/home/ServicesOverview';
 import { WhyChooseUs } from '../components/home/WhyChooseUs';
+import { MantelzorgSection } from '../components/home/MantelzorgSection';
 import { ProcessTimeline } from '../components/home/ProcessTimeline';
 import { TeamIntro } from '../components/home/TeamIntro';
 import { Testimonials } from '../components/home/Testimonials';
@@ -13,13 +14,14 @@ export function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Parkstad Thuiszorg | Persoonlijke thuiszorg met hart</title>
-        <meta name="description" content="Parkstad Thuiszorg biedt persoonlijke, professionele thuiszorg en verpleging in Landgraaf, Heerlen, Kerkrade en omgeving. Gratis intakegesprek." />
+        <title>Parkstad Thuiszorg | Een vertrouwd gezicht, een gerust gevoel</title>
+        <meta name="description" content="Parkstad Thuiszorg biedt persoonlijke, professionele thuiszorg en verpleging in Landgraaf, Heerlen, Kerkrade, Brunssum, Voerendaal en omgeving. Gratis intakegesprek." />
       </Helmet>
       <Hero />
       <TrustBar />
       <ServicesOverview />
       <WhyChooseUs />
+      <MantelzorgSection />
       <ProcessTimeline />
       <TeamIntro />
       <Testimonials />

@@ -1,20 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 180" fill="none">
   <defs>
-    <linearGradient id="leftArch" x1="20" y1="0" x2="80" y2="180" gradientUnits="userSpaceOnUse">
+    <linearGradient id="leftArch" x1="30" y1="0" x2="100" y2="170" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#1a9e8f"/>
       <stop offset="100%" stop-color="#2d7a6e"/>
     </linearGradient>
-    <linearGradient id="rightArch" x1="120" y1="0" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+    <linearGradient id="rightArch" x1="100" y1="0" x2="170" y2="170" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#3388dd"/>
       <stop offset="100%" stop-color="#1a5fa0"/>
     </linearGradient>
   </defs>
-  <!-- Left arch of the M -->
-  <path d="M25 170 L25 60 C25 25, 55 0, 80 0 C105 0, 110 20, 100 45 L100 85 C100 85, 95 95, 90 95 L90 170 C90 175, 85 175, 85 170 L85 95 C85 90, 80 85, 75 85 L75 170 C75 175, 70 175, 70 170 L70 85 L55 85 L55 170 C55 175, 50 175, 50 170 L50 60 C50 35, 62 15, 80 15 C93 15, 95 30, 93 50 L80 85 L60 85 L60 60 C60 40, 70 28, 80 28 C88 28, 88 38, 85 55 L80 75"
-        fill="none" stroke="url(#leftArch)" stroke-width="0"/>
-  <!-- Simplified clean M shape -->
   <!-- Left arch -->
-  <path d="M30 170 C30 170 30 55 30 55 C30 22 52 2 78 2 C104 2 110 22 110 55 L110 100" 
+  <path d="M30 170 L30 55 C30 22 52 2 78 2 C104 2 110 22 110 55 L110 100" 
         stroke="url(#leftArch)" stroke-width="28" stroke-linecap="round" fill="none"/>
   <!-- Right arch -->
   <path d="M90 100 L90 55 C90 22 112 2 138 2 C164 2 170 22 170 55 L170 170" 

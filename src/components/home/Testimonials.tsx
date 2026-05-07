@@ -15,7 +15,7 @@ export function Testimonials() {
   };
 
   return (
-    <section id="ervaringen" className="section-padding bg-white dark:bg-[var(--color-sage-900)]">
+    <section id="ervaringen" className="section-padding bg-white dark:bg-[var(--color-sage-900)]" aria-label="Ervaringen van cliënten">
       <div className="max-w-4xl mx-auto">
         <AnimatedSection className="text-center mb-12">
           <h2 className="text-[#4A9C6E] font-semibold tracking-wider text-sm uppercase mb-3">Ervaringen</h2>
@@ -25,7 +25,18 @@ export function Testimonials() {
         </AnimatedSection>
 
         <AnimatedSection delay={0.2} className="relative">
-          <div className="overflow-hidden relative min-h-[300px]">
+          <div 
+            className="overflow-hidden relative min-h-[300px]"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Cliënt ervaringen"
+            aria-live="polite"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowLeft') prev();
+              if (e.key === 'ArrowRight') next();
+            }}
+          >
              {testimonials.map((testimonial, idx) => (
                 <div 
                   key={testimonial.id}

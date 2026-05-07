@@ -1,4 +1,4 @@
-import { Stethoscope, HeartHandshake, Flower2, BrainCircuit, Moon, Pill } from 'lucide-react';
+import { Stethoscope, HeartHandshake, Flower2, BrainCircuit, Moon, Pill, Activity, HandHeart } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { AnimatedSection } from '../ui/AnimatedSection';
 import { services } from '../../data/services';
@@ -9,7 +9,9 @@ const iconMap: Record<string, React.ElementType> = {
   Flower2,
   BrainCircuit,
   Moon,
-  Pill
+  Pill,
+  Activity,
+  HandHeart
 };
 
 export function ServicesOverview() {

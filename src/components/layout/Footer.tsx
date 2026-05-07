@@ -1,25 +1,10 @@
-import { Link, useLocation } from 'react-router-dom';
-import { HeartPulse, Mail, MapPin, Phone, ArrowRight, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Mail, MapPin, Phone, ArrowRight, MessageCircle } from 'lucide-react';
+import { useAnchorNavigation } from '../../hooks/useAnchorNavigation';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const location = useLocation();
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
-    if (path.startsWith('/#') && location.pathname === '/') {
-      e.preventDefault();
-      const id = path.substring(2);
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        window.history.pushState(null, '', path);
-      }
-    } else if (path === '/' && location.pathname === '/') {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      window.history.pushState(null, '', '/');
-    }
-  };
+  const { handleNavClick } = useAnchorNavigation();
 
   return (
     <footer className="bg-[#02191c] text-[#e5f2f4] pt-16 pb-24 md:pb-8 border-t border-[#086370]">
@@ -28,16 +13,18 @@ export function Footer() {
           
           {/* Brand Col */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="bg-[var(--color-sage-400)] text-[var(--color-beige-50)] p-1.5 rounded-lg">
-                <HeartPulse className="w-5 h-5" />
-              </div>
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <img 
+                src={`${import.meta.env.BASE_URL}images/logo.svg`} 
+                alt="Parkstad Thuiszorg logo" 
+                className="w-8 h-8"
+              />
               <span className="font-heading text-xl text-[var(--color-beige-50)] font-semibold">
                 Parkstad Thuiszorg
               </span>
             </Link>
             <p className="text-[var(--color-sage-300)] text-sm leading-relaxed">
-              Persoonlijke, professionele thuiszorg met hart in de regio Parkstad. BIG-geregistreerd en altijd dichtbij als u ons nodig heeft.
+              Een vertrouwd gezicht, een gerust gevoel. Professionele thuiszorg in de regio Parkstad. BIG-geregistreerd en altijd dichtbij als u ons nodig heeft.
             </p>
           </div>
 
@@ -50,6 +37,7 @@ export function Footer() {
                 { name: 'Diensten', path: '/#diensten' },
                 { name: 'Hoe het Werkt', path: '/#hoe-werkt-het' },
                 { name: 'Over Ons', path: '/#over-ons' },
+                { name: 'Kennisbank', path: '/kennisbank' },
                 { name: 'Contact', path: '/#contact' }
               ].map((item) => (
                 <li key={item.name}>
@@ -117,6 +105,8 @@ export function Footer() {
               <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Heerlen</span>
               <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Landgraaf</span>
               <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Brunssum</span>
+              <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Voerendaal</span>
+              <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Simpelveld</span>
             </div>
           </div>
 
@@ -125,8 +115,8 @@ export function Footer() {
         <div className="pt-8 border-t border-[var(--color-sage-700)] flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[var(--color-sage-400)]">
           <p>&copy; {currentYear} Parkstad Thuiszorg. Alle rechten voorbehouden.</p>
           <div className="flex space-x-4">
-            <Link to="/#contact" onClick={(e) => handleNavClick(e, '/#contact')} className="hover:text-white transition-colors">Privacybeleid</Link>
-            <Link to="/#contact" onClick={(e) => handleNavClick(e, '/#contact')} className="hover:text-white transition-colors">Algemene Voorwaarden</Link>
+            <Link to="/privacy" className="hover:text-white transition-colors">Privacybeleid</Link>
+            <Link to="/voorwaarden" className="hover:text-white transition-colors">Algemene Voorwaarden</Link>
           </div>
         </div>
       </div>

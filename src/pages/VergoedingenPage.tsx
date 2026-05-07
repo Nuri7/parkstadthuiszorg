@@ -58,7 +58,7 @@ export function VergoedingenPage() {
                 Heeft u begeleiding nodig bij dagelijkse activiteiten, dagbesteding of het huishouden? Dit gaat via de gemeente waar u woont (bijvoorbeeld Gemeente Heerlen, Kerkrade of Landgraaf).
               </p>
               <ul className="list-disc pl-5 text-[#4f6b6f] dark:text-[#dce8de] space-y-2 mb-4">
-                <li><strong className="text-[#064a54] dark:text-white">Eigen bijdrage:</strong> Ja, er geldt een (vast) abonnementstarief via het CAK (max €20,60 per maand in 2024).</li>
+                <li><strong className="text-[#064a54] dark:text-white">Eigen bijdrage:</strong> Ja, er geldt een (vast) abonnementstarief via het CAK (max €20,60 per maand in 2026).</li>
                 <li><strong className="text-[#064a54] dark:text-white">Aanvraag:</strong> Via het Wmo-loket van uw gemeente.</li>
               </ul>
             </div>

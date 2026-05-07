@@ -40,7 +40,7 @@ export function WhyChooseUs() {
                 Persoonlijk, warm en betrouwbaar
               </h3>
               <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg mb-8">
-                Grote zorgorganisaties voelen vaak onpersoonlijk. Wij doen het anders. Wij zien de mens achter de cliënt en stemmen onze zorg af op úw ritme, niet andersom.
+                Grote zorgorganisaties voelen vaak onpersoonlijk. Wij doen het anders. Of u nu 45 bent of 85 — wij zien de mens achter de cliënt en stemmen onze zorg af op úw ritme, niet andersom. Bij ons spreken we dezelfde taal — letterlijk, want ons team spreekt ook plat.
               </p>
               
               <div className="space-y-6">
@@ -65,6 +65,7 @@ export function WhyChooseUs() {
                 src={`${import.meta.env.BASE_URL}images/team-group.webp`} 
                 alt="Het team van Parkstad Thuiszorg lacht in een tuin" 
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </AnimatedSection>
             

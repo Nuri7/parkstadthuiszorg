@@ -14,7 +14,7 @@ export function TeamIntro() {
               Lokaal talent, landelijke kwaliteit
             </h3>
             <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg">
-              Wij geloven dat goede zorg begint bij goede mensen. Ons team bestaat uit gediplomeerde, gepassioneerde zorgverleners uit de regio Parkstad.
+              Wij geloven dat goede zorg begint bij goede mensen. Ons team bestaat uit gediplomeerde, gepassioneerde zorgverleners uit de regio Parkstad. Ze spreken de taal, kennen de cultuur, en brengen naast vakkennis ook warmte en humor mee.
             </p>
           </AnimatedSection>
           
@@ -37,6 +37,7 @@ export function TeamIntro() {
                   src={member.image} 
                   alt={member.name} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
                 />
                 
                 {/* Gradient Overlay */}
@@ -47,7 +48,12 @@ export function TeamIntro() {
                   <span className="text-[#b8d1bc] text-sm uppercase tracking-wider mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
                     {member.role}
                   </span>
-                  <h4 className="text-2xl font-heading mb-2">{member.name}</h4>
+                  <h4 className="text-2xl font-heading mb-1">{member.name}</h4>
+                  {'qualifications' in member && (
+                    <span className="text-xs text-[#5cb0bd] mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                      {member.qualifications}
+                    </span>
+                  )}
                   <p className="text-sm text-gray-200 line-clamp-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 delay-150">
                     "{member.quote}"
                   </p>

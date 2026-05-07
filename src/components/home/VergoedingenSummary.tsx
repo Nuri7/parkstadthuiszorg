@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '../ui/Button';
 
 export function VergoedingenSummary() {
@@ -36,10 +37,10 @@ export function VergoedingenSummary() {
               Zorg aanvragen kan soms overweldigend zijn door alle regels en instanties. Wij nemen deze administratieve last graag voor u uit handen. We vertellen u precies waar u recht op heeft en regelen de aanvraag bij de wijkverpleegkundige of het CIZ.
             </p>
             <Button asChild variant="outline" size="lg">
-              <a href="#contact" className="group">
+              <Link to="/#contact" className="group">
                 Vraag vrijblijvend advies aan
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </Link>
             </Button>
           </div>
         </div>
