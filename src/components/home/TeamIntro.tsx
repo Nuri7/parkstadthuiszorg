@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+
 import { ArrowRight } from 'lucide-react';
 import { team } from '../../data/team';
 import { AnimatedSection } from '../ui/AnimatedSection';
@@ -14,22 +15,28 @@ export function TeamIntro() {
               Lokaal talent, landelijke kwaliteit
             </h3>
             <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg">
-              Wij geloven dat goede zorg begint bij goede mensen. Ons team bestaat uit gediplomeerde, gepassioneerde zorgverleners uit de regio Parkstad. Ze spreken de taal, kennen de cultuur, en brengen naast vakkennis ook warmte en humor mee.
+              Wij geloven dat goede zorg begint bij goede mensen. Bij Parkstad Thuiszorg krijgt u één vertrouwd gezicht — gediplomeerd, gepassioneerd en geworteld in de regio Parkstad. Iemand die de taal spreekt, de cultuur kent, en naast vakkennis ook warmte en humor meebrengt.
             </p>
           </AnimatedSection>
           
           <AnimatedSection delay={0.2}>
             <Link 
-              to="/over-ons" 
+              href="/over-ons" 
               className="inline-flex items-center text-[#5b7f63] dark:text-[#5cb0bd] font-medium hover:text-[#4A9C6E] transition-colors group"
             >
-              Maak kennis met ons hele team 
+              Lees meer over Parkstad Thuiszorg
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
           </AnimatedSection>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          className={
+            team.length === 1
+              ? "max-w-sm mx-auto"
+              : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          }
+        >
           {team.map((member, index) => (
             <AnimatedSection key={member.id} delay={index * 0.1}>
               <div className="group relative rounded-2xl overflow-hidden aspect-[3/4] shadow-[0_4px_24px_rgba(124,154,130,0.1)] transition-transform duration-300 hover:-translate-y-2 cursor-pointer">

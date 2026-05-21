@@ -1,3 +1,5 @@
+"use client";
+
 import { ShieldCheck, Heart, UserCheck, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 

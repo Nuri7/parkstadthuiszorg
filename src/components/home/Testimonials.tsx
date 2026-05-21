@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { AnimatedSection } from '../ui/AnimatedSection';

@@ -1,4 +1,7 @@
-import { Link } from 'react-router-dom';
+"use client";
+
+import Link from 'next/link';
+
 import { Mail, MapPin, Phone, ArrowRight, MessageCircle } from 'lucide-react';
 import { useAnchorNavigation } from '../../hooks/useAnchorNavigation';
 
@@ -13,9 +16,9 @@ export function Footer() {
           
           {/* Brand Col */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center gap-2.5 group">
+            <Link href="/" className="flex items-center gap-2.5 group">
               <img 
-                src={`${import.meta.env.BASE_URL}images/logo.svg`} 
+                src={`/images/logo.svg`} 
                 alt="Parkstad Thuiszorg logo" 
                 className="w-8 h-8"
               />
@@ -26,6 +29,24 @@ export function Footer() {
             <p className="text-[var(--color-sage-300)] text-sm leading-relaxed">
               Een vertrouwd gezicht, een gerust gevoel. Professionele thuiszorg in de regio Parkstad. BIG-geregistreerd en altijd dichtbij als u ons nodig heeft.
             </p>
+            <dl className="mt-4 text-xs text-[var(--color-sage-400)] space-y-1">
+              <div className="flex gap-2">
+                <dt className="font-semibold text-[var(--color-sage-300)]">Handelsnaam:</dt>
+                <dd>Parkstad Thuiszorg</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="font-semibold text-[var(--color-sage-300)]">KvK:</dt>
+                <dd>42026060</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="font-semibold text-[var(--color-sage-300)]">AGB-code:</dt>
+                <dd>91133634</dd>
+              </div>
+              <div className="flex gap-2">
+                <dt className="font-semibold text-[var(--color-sage-300)]">BIG-nummer:</dt>
+                <dd>19923300630</dd>
+              </div>
+            </dl>
           </div>
 
           {/* Quick Links */}
@@ -42,7 +63,7 @@ export function Footer() {
               ].map((item) => (
                 <li key={item.name}>
                   <Link 
-                    to={item.path}
+                    href={item.path}
                     onClick={(e) => handleNavClick(e, item.path)}
                     className="text-[var(--color-sage-300)] hover:text-white transition-colors flex items-center gap-2 text-sm group"
                   >
@@ -87,8 +108,7 @@ export function Footer() {
                   <MapPin className="w-4 h-4 text-[var(--color-sage-400)]" />
                 </div>
                 <span>
-                  Hoofdstraat 1<br />
-                  6461 AB Kerkrade
+                  Kerkrade, regio Parkstad Limburg
                 </span>
               </li>
             </ul>
@@ -115,8 +135,8 @@ export function Footer() {
         <div className="pt-8 border-t border-[var(--color-sage-700)] flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[var(--color-sage-400)]">
           <p>&copy; {currentYear} Parkstad Thuiszorg. Alle rechten voorbehouden.</p>
           <div className="flex space-x-4">
-            <Link to="/privacy" className="hover:text-white transition-colors">Privacybeleid</Link>
-            <Link to="/voorwaarden" className="hover:text-white transition-colors">Algemene Voorwaarden</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacybeleid</Link>
+            <Link href="/voorwaarden" className="hover:text-white transition-colors">Algemene Voorwaarden</Link>
           </div>
         </div>
       </div>

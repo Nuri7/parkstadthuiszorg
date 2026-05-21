@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model ContactRequest {
+  id        String   @id @default(uuid())
+  userId    String?  // Optional: Links to Clerk user ID if logged in
+  name          String
+  phone         String
+  email         String?
+  zipCode       String?
+  careType      String?
+  forWhom       String?
+  situation     String?
+  preferredDays String?
+  preferredTime String?
+  status        String   @default("new") // e.g., 'new', 'contacted', 'resolved'
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

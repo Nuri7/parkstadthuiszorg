@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from 'framer-motion';
 import { MessageCircle, Phone, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -99,7 +101,7 @@ export function Hero() {
             
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white/40 dark:border-[#243029]/50 aspect-[4/3] max-w-xl mx-auto align-middle flex items-center justify-center bg-gray-100 dark:bg-gray-800">
                <img 
-                 src={`${import.meta.env.BASE_URL}images/hero-caregiver.webp`} 
+                 src={`/images/hero-caregiver.webp`} 
                  alt="Vriendelijke verpleegkundige drinkt thee met oudere dame in woonkamer"
                  className="w-full h-full object-cover"
                  fetchPriority="high"

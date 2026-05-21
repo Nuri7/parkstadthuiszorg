@@ -1,11 +1,14 @@
-import { useLocation } from 'react-router-dom';
+"use client";
+
+import { usePathname } from 'next/navigation';
 
 /**
  * Shared hook for smooth-scrolling anchor navigation.
  * Handles both same-page hash links and cross-page navigation.
  */
 export function useAnchorNavigation() {
-  const location = useLocation();
+  const pathname = usePathname();
+  const location = { pathname }; // mocked for smooth transition
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     if (path.startsWith('/#') && location.pathname === '/') {

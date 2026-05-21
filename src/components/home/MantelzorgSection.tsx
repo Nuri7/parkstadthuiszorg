@@ -1,6 +1,7 @@
 import { AnimatedSection } from '../ui/AnimatedSection';
 import { Heart, Coffee, ShieldCheck, Phone, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+
 import { Button } from '../ui/Button';
 
 export function MantelzorgSection() {
@@ -65,7 +66,7 @@ export function MantelzorgSection() {
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="md">
-                  <Link to="/#contact" className="group">
+                  <Link href="/#contact" className="group">
                     Vraag ondersteuning aan
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Link>

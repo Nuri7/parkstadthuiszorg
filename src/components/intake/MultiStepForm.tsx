@@ -1,9 +1,13 @@
+"use client";
+
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, HeartPulse, Clock, CheckCircle2, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 type Step = 1 | 2 | 3 | 4;
+
+import { submitIntakeForm } from '@/app/actions/intake';
 
 export function MultiStepForm() {
   const [step, setStep] = useState<Step>(1);
@@ -28,42 +32,16 @@ export function MultiStepForm() {
     setIsSubmitting(true);
     
     try {
-      // Build email body from form data
-      const careLabels: Record<string, string> = {
-        'verpleging': 'Wijkverpleging',
-        'verzorging': 'Persoonlijke verzorging',
-        'herstelzorg': 'Herstelzorg na operatie',
-        'palliatief': 'Palliatieve / Terminale zorg',
-        'begeleiding': 'Individuele begeleiding',
-        'mantelzorg': 'Mantelzorgondersteuning',
-        'nachtzorg': 'Nachtzorg',
-        'medicatie': 'Medicatiebeheer',
-        'weet-niet': 'Weet ik niet / anders',
-      };
-
-      const emailBody = [
-        `Naam: ${formData.name}`,
-        `Telefoon: ${formData.phone}`,
-        `E-mail: ${formData.email || 'Niet opgegeven'}`,
-        `Postcode: ${formData.postcode}`,
-        `Voor wie: ${formData.forWhom === 'myself' ? 'Zichzelf' : 'Een naaste'}`,
-        `Type zorg: ${careLabels[formData.careType] || formData.careType}`,
-        `Situatie: ${formData.situation || 'Niet opgegeven'}`,
-        `Voorkeursdagen: ${formData.preferredDays.join(', ') || 'Geen voorkeur'}`,
-        `Voorkeurstijd: ${formData.preferredTime || 'Geen voorkeur'}`,
-      ].join('\n');
-
-      const mailtoLink = `mailto:info@parkstadthuiszorg.nl?subject=${encodeURIComponent('Nieuwe Intake Aanvraag - ' + formData.name)}&body=${encodeURIComponent(emailBody)}`;
+      const response = await submitIntakeForm(formData);
       
-      window.location.href = mailtoLink;
+      if (!response.success) {
+        throw new Error("Submission failed");
+      }
 
-      // Show success after brief delay
-      setTimeout(() => {
-        setStep(4);
-        setIsSubmitting(false);
-      }, 500);
+      setStep(4);
     } catch {
-      alert("Er ging iets mis. U kunt ons ook direct bellen op 06 44 74 54 71.");
+      alert("Er ging iets mis met de database verbinding. U kunt ons ook direct bellen op 06 44 74 54 71.");
+    } finally {
       setIsSubmitting(false);
     }
   };

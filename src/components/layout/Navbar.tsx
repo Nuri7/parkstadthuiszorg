@@ -1,5 +1,9 @@
+"use client";
+
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
 import { Menu, X, Phone } from 'lucide-react';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { Button } from '../ui/Button';
@@ -16,7 +20,8 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
-  const location = useLocation();
+  const pathname = usePathname();
+  const location = { pathname }; // mocked for smooth transition
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -98,9 +103,9 @@ export function Navbar() {
         <div className="flex justify-between items-center">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <img 
-              src={`${import.meta.env.BASE_URL}images/logo.svg`} 
+              src={`/images/logo.svg`} 
               alt="Parkstad Thuiszorg logo" 
               className="w-10 h-10 group-hover:scale-105 transition-transform"
             />
@@ -119,7 +124,7 @@ export function Navbar() {
               return (
                 <Link
                   key={link.name}
-                  to={link.path}
+                  href={link.path}
                   onClick={(e) => handleNavClick(e, link.path)}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
                     isActive
@@ -163,7 +168,7 @@ export function Navbar() {
               return (
                 <Link
                   key={link.name}
-                  to={link.path}
+                  href={link.path}
                   onClick={(e) => handleNavClick(e, link.path)}
                   className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
                     isActive
