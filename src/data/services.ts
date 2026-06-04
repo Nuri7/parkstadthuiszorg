@@ -3,8 +3,8 @@ export const services = [
   {
     id: 'wijkverpleging',
     title: 'Wijkverpleging',
-    shortDescription: 'Medische zorg aan huis door BIG-geregistreerde verpleegkundigen.',
-    fullDescription: 'Onze BIG-geregistreerde verpleegkundigen bieden hoogwaardige medische zorg bij u thuis. Van wondzorg en injecties tot het toedienen van medicatie en het monitoren van uw gezondheid. Wij werken nauw samen met uw huisarts of specialist.',
+    shortDescription: 'Medische zorg aan huis door een BIG-geregistreerde wijkverpleegkundige.',
+    fullDescription: 'Onze BIG-geregistreerde wijkverpleegkundige biedt hoogwaardige medische zorg bij u thuis. Van wondzorg en injecties tot het toedienen van medicatie en het monitoren van uw gezondheid. Wij werken nauw samen met uw huisarts of specialist.',
     icon: 'Stethoscope',
     benefits: ['BIG-geregistreerd personeel', 'Vaste verpleegkundige', 'Korte lijnen met huisarts', 'Zorg na ziekenhuisopname of operatie']
   },
@@ -30,7 +30,7 @@ export const services = [
     shortDescription: 'Liefdevolle en deskundige begeleiding in de laatste levensfase.',
     fullDescription: 'In de laatste levensfase telt maar één ding: kwaliteit van leven en comfort. Ons gespecialiseerde team biedt warme, deskundige palliatieve zorg en pijnbestrijding thuis, met veel aandacht voor zowel de cliënt als de naasten.',
     icon: 'Flower2',
-    benefits: ['24/7 bereikbaarheid', 'Pijnbestrijding', 'Ondersteuning van mantelzorgers']
+    benefits: ['Persoonlijk bereikbaar wanneer het nodig is', 'Pijnbestrijding', 'Ondersteuning van mantelzorgers']
   },
   {
     id: 'begeleiding',

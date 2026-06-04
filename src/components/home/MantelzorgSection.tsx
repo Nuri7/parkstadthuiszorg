@@ -14,7 +14,7 @@ export function MantelzorgSection() {
     {
       icon: ShieldCheck,
       title: 'Professionele Ondersteuning',
-      description: 'Onze verpleegkundigen verlichten uw dagelijkse zorgtaken: persoonlijke verzorging, medicatie, maaltijdbereiding en meer.'
+      description: 'Wij verlichten uw dagelijkse zorgtaken: persoonlijke verzorging, medicatie, maaltijdbereiding en meer.'
     },
     {
       icon: Heart,

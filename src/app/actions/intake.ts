@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
+import { sendIntakeNotification } from "@/lib/email";
 
 export type IntakeFormData = {
   name: string;
@@ -34,6 +35,13 @@ export async function submitIntakeForm(data: IntakeFormData) {
         status: "new",
       },
     });
+
+    // Notificatiemail naar info@ — mag de aanmelding nooit laten mislukken.
+    try {
+      await sendIntakeNotification(data);
+    } catch (mailError) {
+      console.error("Aanmelding opgeslagen, maar notificatiemail mislukt:", mailError);
+    }
 
     return { success: true, request: newRequest };
   } catch (error) {

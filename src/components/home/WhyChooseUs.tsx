@@ -40,7 +40,7 @@ export function WhyChooseUs() {
                 Persoonlijk, warm en betrouwbaar
               </h3>
               <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-lg mb-8">
-                Grote zorgorganisaties voelen vaak onpersoonlijk. Wij doen het anders. Of u nu 45 bent of 85 — wij zien de mens achter de cliënt en stemmen onze zorg af op úw ritme, niet andersom. Bij ons spreken we dezelfde taal — letterlijk, want ons team spreekt ook plat.
+                Grote zorgorganisaties voelen vaak onpersoonlijk. Wij doen het anders. Of u nu 45 bent of 85 — wij zien de mens achter de cliënt en stemmen onze zorg af op úw ritme, niet andersom. Bij ons spreken we dezelfde taal — letterlijk, want wij spreken ook plat.
               </p>
               
               <div className="space-y-6">

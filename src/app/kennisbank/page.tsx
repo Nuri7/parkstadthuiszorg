@@ -45,7 +45,7 @@ const articles = [
   {
     id: 'copd-thuiszorg',
     title: 'Leven met COPD: thuiszorg en ademhalingsondersteuning',
-    summary: 'COPD vraagt om dagelijkse aandacht. Lees hoe onze verpleegkundigen u thuis ondersteunen bij benauwdheid en medicatie.',
+    summary: 'COPD vraagt om dagelijkse aandacht. Lees hoe wij u thuis ondersteunen bij benauwdheid en medicatie.',
     category: 'Chronische Zorg',
     readTime: '4 min',
     date: 'Mei 2026',

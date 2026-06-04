@@ -84,7 +84,7 @@ export function Hero() {
                 <CheckCircle className="w-4 h-4 text-[#4A9C6E]" /> PGB & ZVW
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-[#4A9C6E]" /> 24/7 spoedlijn
+                <CheckCircle className="w-4 h-4 text-[#4A9C6E]" /> Persoonlijk bereikbaar
               </div>
             </motion.div>
           </div>
