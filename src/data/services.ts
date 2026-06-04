@@ -28,17 +28,17 @@ export const services = [
     id: 'palliatieve-zorg',
     title: 'Palliatieve Zorg',
     shortDescription: 'Liefdevolle en deskundige begeleiding in de laatste levensfase.',
-    fullDescription: 'In de laatste levensfase telt maar één ding: kwaliteit van leven en comfort. Ons gespecialiseerde team biedt warme, deskundige palliatieve zorg en pijnbestrijding thuis, met veel aandacht voor zowel de cliënt als de naasten.',
+    fullDescription: 'In de laatste levensfase telt maar één ding: kwaliteit van leven en comfort. Wij bieden warme, deskundige palliatieve zorg en pijnbestrijding thuis, met veel aandacht voor zowel de cliënt als de naasten.',
     icon: 'Flower2',
     benefits: ['Persoonlijk bereikbaar wanneer het nodig is', 'Pijnbestrijding', 'Ondersteuning van mantelzorgers']
   },
   {
     id: 'begeleiding',
     title: 'Individuele Begeleiding',
-    shortDescription: 'Ondersteuning bij dagstructuur, administratie of geheugenproblemen.',
-    fullDescription: 'Heeft u moeite met het organiseren van uw dagelijks leven door dementie, psychische klachten of niet-aangeboren hersenletsel? Wij bieden persoonlijke begeleiding om uw zelfredzaamheid te vergroten en de regie te behouden.',
+    shortDescription: 'Praktische hulp bij de dagelijkse dingen: boodschappen, afspraken en structuur.',
+    fullDescription: 'Soms is het fijn als iemand met u meedenkt en meedoet. Wij ondersteunen u bij de dagelijkse dingen: boodschappen doen, meegaan naar (ziekenhuis)afspraken, structuur in de dag aanbrengen en uw administratie op orde houden. Of het nu gaat om ondersteuning bij dementie of niet-aangeboren hersenletsel, of gewoon een steuntje in de rug — wij vergroten uw zelfredzaamheid zodat u de regie houdt.',
     icon: 'BrainCircuit',
-    benefits: ['Hulp bij dagstructuur', 'Ondersteuning bij dementie', 'Verlichten van eenzaamheid']
+    benefits: ['Boodschappen en dagelijkse ondersteuning', 'Meegaan naar (ziekenhuis)afspraken', 'Hulp bij dagstructuur en administratie', 'Verlichten van eenzaamheid']
   },
   {
     id: 'mantelzorgondersteuning',
