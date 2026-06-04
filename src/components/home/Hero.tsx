@@ -51,13 +51,13 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <Button asChild variant="cta" size="lg" className="w-full sm:w-auto">
-                <a href="tel:+31644745471" className="group">
+                <a href="tel:+31626591818" className="group">
                   <Phone className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                   Bel direct
                 </a>
               </Button>
               <Button asChild variant="whatsapp" size="lg" className="w-full sm:w-auto">
-                <a href="https://wa.me/31644745471" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/31626591818" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5 mr-2" />
                   WhatsApp ons
                 </a>

@@ -27,7 +27,7 @@ export function FloatingContact() {
         >
           {/* WhatsApp Button — with pulse animation */}
           <a
-            href="https://wa.me/31644745471"
+            href="https://wa.me/31626591818"
             target="_blank"
             rel="noopener noreferrer"
             className="w-16 h-16 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-[#128C7E] transition-colors animate-pulse-soft"
@@ -38,7 +38,7 @@ export function FloatingContact() {
           
           {/* Phone Button */}
           <a
-            href="tel:+31644745471"
+            href="tel:+31626591818"
             className="w-16 h-16 bg-[#E8734A] text-white rounded-full flex items-center justify-center shadow-2xl hover:bg-[#D4603A] transition-colors"
             aria-label="Bel Parkstad Thuiszorg"
           >

@@ -31,7 +31,7 @@ export default function VoorwaardenPage() {
             { title: 'Artikel 4 – Verplichtingen cliënt', content: 'De cliënt verstrekt alle informatie die noodzakelijk is voor verantwoorde zorgverlening. De cliënt zorgt voor een veilige werkomgeving. Bij verhindering meldt de cliënt dit uiterlijk 24 uur van tevoren.' },
             { title: 'Artikel 5 – Kosten en betaling', content: 'Zorgkosten worden gedeclareerd bij uw zorgverzekeraar, de gemeente of via de SVB (bij PGB). Eventuele eigen bijdragen worden door het CAK vastgesteld. Bij particuliere zorg worden de tarieven vooraf schriftelijk overeengekomen.' },
             { title: 'Artikel 6 – Beëindiging', content: 'De zorgovereenkomst kan door beide partijen worden beëindigd met inachtneming van een redelijke opzegtermijn. Wij zetten ons in voor een zorgvuldige overdracht.' },
-            { title: 'Artikel 7 – Klachten', content: 'Bent u niet tevreden? Neem contact op via info@parkstadthuiszorg.nl of bel 06 44 74 54 71. Wij beschikken over een klachtenregeling conform de Wkkgz.' },
+            { title: 'Artikel 7 – Klachten', content: 'Bent u niet tevreden? Neem contact op via info@parkstadthuiszorg.nl of bel 06 26 59 18 18. Wij beschikken over een klachtenregeling conform de Wkkgz.' },
           ].map((article, idx) => (
             <AnimatedSection key={idx} delay={idx * 0.1}>
               <div className="bg-white dark:bg-[#243029] p-8 rounded-3xl shadow-md border border-[#ede7db] dark:border-[#086370]">

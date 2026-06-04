@@ -40,7 +40,7 @@ export default function PrivacyPage() {
                 <div className="flex gap-2"><dt className="font-semibold">AGB-code:</dt><dd>91133634</dd></div>
                 <div className="flex gap-2"><dt className="font-semibold">BIG-nummer:</dt><dd>19923300630</dd></div>
                 <div className="flex gap-2"><dt className="font-semibold">E-mail:</dt><dd><a href="mailto:info@parkstadthuiszorg.nl" className="text-[#5b7f63] underline hover:text-[#4A9C6E] transition-colors">info@parkstadthuiszorg.nl</a></dd></div>
-                <div className="flex gap-2"><dt className="font-semibold">Telefoon:</dt><dd><a href="tel:+31644745471" className="text-[#5b7f63] underline">06 44 74 54 71</a></dd></div>
+                <div className="flex gap-2"><dt className="font-semibold">Telefoon:</dt><dd><a href="tel:+31626591818" className="text-[#5b7f63] underline">06 26 59 18 18</a></dd></div>
               </dl>
             </div>
           </AnimatedSection>
@@ -121,7 +121,7 @@ export default function PrivacyPage() {
               <div className="mt-4 text-[#064a54] dark:text-[#fefdfc] font-medium">
                 <p>Parkstad Thuiszorg</p>
                 <p>Hoofdstraat 1, 6461 AB Kerkrade</p>
-                <p>Telefoon: <a href="tel:+31644745471" className="text-[#5b7f63] underline">06 44 74 54 71</a></p>
+                <p>Telefoon: <a href="tel:+31626591818" className="text-[#5b7f63] underline">06 26 59 18 18</a></p>
                 <p>E-mail: <a href="mailto:info@parkstadthuiszorg.nl" className="text-[#5b7f63] underline">info@parkstadthuiszorg.nl</a></p>
               </div>
             </div>

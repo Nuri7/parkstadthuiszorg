@@ -48,6 +48,9 @@ next-env.d.ts
 # Kiwa-keurmerk-documenten (persoonsgegevens, niet committen)
 /docs/
 
+# Interne bedrijfsdocumenten (businessplan, tarieven, onboarding, BIG-nr — niet in publieke repo)
+/business/
+
 # Playwright (testoutput)
 /playwright-report/
 /test-results/

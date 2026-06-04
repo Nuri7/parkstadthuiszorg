@@ -31,7 +31,7 @@ export default function NotFoundPage() {
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <a href="tel:+31644745471">
+            <a href="tel:+31626591818">
               <Phone className="w-5 h-5 mr-2" />
               Bel ons direct
             </a>

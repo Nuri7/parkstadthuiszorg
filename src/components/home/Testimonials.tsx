@@ -8,6 +8,9 @@ import { testimonials } from '../../data/testimonials';
 export function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Geen reviews? Toon de sectie niet (voorkomt lege carousel / fabricatie).
+  if (testimonials.length === 0) return null;
+
   const prev = () => {
     setCurrentIndex((current) => (current === 0 ? testimonials.length - 1 : current - 1));
   };

@@ -60,7 +60,7 @@ export function MantelzorgSection() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild variant="cta" size="md">
-                  <a href="tel:+31644745471" className="group">
+                  <a href="tel:+31626591818" className="group">
                     <Phone className="w-4 h-4 mr-2" />
                     Bel voor respijtzorg
                   </a>
