@@ -51,7 +51,7 @@ export function Testimonials() {
                 >
                   <Quote className="w-12 h-12 text-[#b8d1bc] dark:text-[#086370] mb-6 opacity-50" />
                   <p className="text-xl md:text-2xl text-[#064a54] dark:text-[#e2e8e2] font-medium leading-relaxed mb-8">
-                    "{testimonial.quote}"
+                    &ldquo;{testimonial.quote}&rdquo;
                   </p>
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (

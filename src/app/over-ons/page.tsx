@@ -104,7 +104,7 @@ export default function OverOnsPage() {
                   {'qualifications' in member && (
                     <p className="text-[#8ab0b6] text-xs mb-4">{member.qualifications}</p>
                   )}
-                  <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-sm italic">"{member.quote}"</p>
+                  <p className="text-[#4f6b6f] dark:text-[#5cb0bd] text-sm italic">&ldquo;{member.quote}&rdquo;</p>
                 </div>
               </div>
              </AnimatedSection>

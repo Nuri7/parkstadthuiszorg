@@ -2,7 +2,6 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e',
-  globalSetup: require.resolve('./playwright.global.ts'),
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -23,5 +22,8 @@ export default defineConfig({
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
+    // Dezelfde ADMIN_PASSWORD als de tests typen; zonder deze variabele is de
+    // adminafscherming fail-closed en slaan de inlogtests zichzelf over.
+    env: { ADMIN_PASSWORD: process.env.ADMIN_PASSWORD ?? '' },
   },
 });

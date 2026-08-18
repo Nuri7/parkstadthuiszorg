@@ -62,7 +62,7 @@ export function TeamIntro() {
                     </span>
                   )}
                   <p className="text-sm text-gray-200 line-clamp-2 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 delay-150">
-                    "{member.quote}"
+                    &ldquo;{member.quote}&rdquo;
                   </p>
                 </div>
               </div>
