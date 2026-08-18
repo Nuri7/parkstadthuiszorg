@@ -1,16 +1,15 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
+import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { ADMIN_COOKIE, adminToken } from "@/lib/adminAuth";
 
 export async function updateRequestStatus(id: string, newStatus: string) {
   try {
-    const { userId } = await auth();
-    
-    // Simple protection: only logged in users can update status for now
-    // In the future, we can check for a specific 'admin' role in Clerk metadata
-    if (!userId) {
+    // Alleen een ingelogde admin (geldige wachtwoord-cookie) mag de status wijzigen
+    const token = (await cookies()).get(ADMIN_COOKIE)?.value;
+    if (!process.env.ADMIN_PASSWORD || token !== (await adminToken())) {
       throw new Error("Unauthorized");
     }
 

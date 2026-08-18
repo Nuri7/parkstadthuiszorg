@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { Mail, MapPin, Phone, ArrowRight, MessageCircle } from 'lucide-react';
 import { useAnchorNavigation } from '../../hooks/useAnchorNavigation';
@@ -8,6 +9,12 @@ import { useAnchorNavigation } from '../../hooks/useAnchorNavigation';
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const { handleNavClick } = useAnchorNavigation();
+  const pathname = usePathname();
+
+  // Verberg de footer op de admin- en login-pagina's
+  if (pathname.startsWith('/admin') || pathname === '/login') {
+    return null;
+  }
 
   return (
     <footer className="bg-[#02191c] text-[#e5f2f4] pt-16 pb-24 md:pb-8 border-t border-[#086370]">

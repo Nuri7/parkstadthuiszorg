@@ -1,5 +1,8 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { RequestTable } from "./RequestTable";
+import { ADMIN_COOKIE, adminToken } from "@/lib/adminAuth";
 
 export const metadata = {
   title: "Admin Dashboard | Parkstad Thuiszorg",
@@ -7,6 +10,12 @@ export const metadata = {
 };
 
 export default async function AdminDashboard() {
+  // Echte auth-check (de proxy is alleen een optimistische gate)
+  const token = (await cookies()).get(ADMIN_COOKIE)?.value;
+  if (!process.env.ADMIN_PASSWORD || token !== (await adminToken())) {
+    redirect("/login");
+  }
+
   // Fetch all requests, newest first
   const requests = await db.contactRequest.findMany({
     orderBy: {
@@ -15,7 +24,7 @@ export default async function AdminDashboard() {
   });
 
   return (
-    <div className="bg-[#fefdfc] dark:bg-[#02191c] min-h-screen py-16 pt-32">
+    <div className="min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">

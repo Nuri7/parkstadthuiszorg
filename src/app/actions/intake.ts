@@ -1,7 +1,6 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs/server";
 import { sendIntakeNotification } from "@/lib/email";
 
 export type IntakeFormData = {
@@ -18,11 +17,9 @@ export type IntakeFormData = {
 
 export async function submitIntakeForm(data: IntakeFormData) {
   try {
-    const { userId } = await auth().catch(() => ({ userId: null })); // Don't crash if auth is not ready/available
-
     const newRequest = await db.contactRequest.create({
       data: {
-        userId: userId || null,
+        userId: null,
         name: data.name,
         phone: data.phone,
         email: data.email || null,

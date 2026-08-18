@@ -1,0 +1,5 @@
+# Niet mee-uploaden naar Vercel — gevoelige / interne bestanden
+# (node_modules, .git en .next negeert Vercel automatisch)
+business/
+.env
+.env.*

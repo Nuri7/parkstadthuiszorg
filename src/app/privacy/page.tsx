@@ -120,7 +120,7 @@ export default function PrivacyPage() {
               </p>
               <div className="mt-4 text-[#064a54] dark:text-[#fefdfc] font-medium">
                 <p>Parkstad Thuiszorg</p>
-                <p>Hoofdstraat 1, 6461 AB Kerkrade</p>
+                <p>Kasperenstraat 123, 6466 BH Kerkrade</p>
                 <p>Telefoon: <a href="tel:+31626591818" className="text-[#5b7f63] underline">06 26 59 18 18</a></p>
                 <p>E-mail: <a href="mailto:info@parkstadthuiszorg.nl" className="text-[#5b7f63] underline">info@parkstadthuiszorg.nl</a></p>
               </div>

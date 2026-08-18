@@ -91,6 +91,11 @@ export function Navbar() {
     }
   };
 
+  // Verberg de publieke navigatie op de admin- en login-pagina's
+  if (pathname.startsWith('/admin') || pathname === '/login') {
+    return null;
+  }
+
   return (
     <header
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${

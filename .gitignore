@@ -54,3 +54,6 @@ next-env.d.ts
 # Playwright (testoutput)
 /playwright-report/
 /test-results/
+
+# Lokale wegwerp-scripts (debug/seed)
+/_*.mjs

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { updateRequestStatus } from "@/app/actions/admin";
 
 type RequestType = {
@@ -16,10 +17,13 @@ type RequestType = {
 
 export function RequestTable({ requests }: { requests: RequestType[] }) {
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleStatusChange = async (id: string, newStatus: string) => {
     setLoadingId(id);
-    await updateRequestStatus(id, newStatus);
+    setError(null);
+    const res = await updateRequestStatus(id, newStatus);
+    if (res && !res.success) setError("Status bijwerken mislukt. Probeer het opnieuw.");
     setLoadingId(null);
   };
 
@@ -38,22 +42,27 @@ export function RequestTable({ requests }: { requests: RequestType[] }) {
 
   return (
     <div className="overflow-x-auto">
+      {error ? (
+        <p role="alert" className="mb-3 text-sm text-red-600">{error}</p>
+      ) : null}
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-b border-[#ede7db] dark:border-[#086370] text-[#8a9a8a] text-sm">
-            <th className="py-4 px-4 font-semibold">Naam</th>
-            <th className="py-4 px-4 font-semibold">Contact</th>
-            <th className="py-4 px-4 font-semibold">Zorg Type</th>
-            <th className="py-4 px-4 font-semibold">Datum</th>
-            <th className="py-4 px-4 font-semibold">Status</th>
-            <th className="py-4 px-4 font-semibold text-right">Actie</th>
+            <th scope="col" className="py-4 px-4 font-semibold">Naam</th>
+            <th scope="col" className="py-4 px-4 font-semibold">Contact</th>
+            <th scope="col" className="py-4 px-4 font-semibold">Zorg Type</th>
+            <th scope="col" className="py-4 px-4 font-semibold">Datum</th>
+            <th scope="col" className="py-4 px-4 font-semibold">Status</th>
+            <th scope="col" className="py-4 px-4 font-semibold text-right">Actie</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-[#ede7db] dark:divide-[#086370]">
           {requests.map((req) => (
             <tr key={req.id} className="hover:bg-gray-50 dark:hover:bg-[#02191c]/50 transition-colors">
-              <td className="py-4 px-4 font-medium text-[var(--color-sage-800)] dark:text-white">
-                {req.name}
+              <td className="py-4 px-4 font-medium">
+                <Link href={`/admin/aanvragen/${req.id}`} className="text-[#064a54] dark:text-[#5cb0bd] hover:underline">
+                  {req.name}
+                </Link>
               </td>
               <td className="py-4 px-4 text-sm text-[#4f6b6f] dark:text-[#5cb0bd]">
                 <div>{req.phone}</div>

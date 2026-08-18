@@ -6,14 +6,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model ContactRequest {
-  id        String   @id @default(uuid())
-  userId    String?  // Optional: Links to Clerk user ID if logged in
+  id            String   @id @default(uuid())
+  userId        String? // Optional: Links to Clerk user ID if logged in
   name          String
   phone         String
   email         String?
@@ -24,6 +24,385 @@ model ContactRequest {
   preferredDays String?
   preferredTime String?
   status        String   @default("new") // e.g., 'new', 'contacted', 'resolved'
+  clientId      String? // gezet zodra de aanvraag is omgezet naar een cliënt
+  client        Client?  @relation(fields: [clientId], references: [id], onDelete: SetNull)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+// ---------- Cliëntdossier (MVP) ----------
+
+enum ClientStatus {
+  AANMELDING
+  INTAKE
+  WACHT_FINANCIERING
+  ZORG_ACTIEF
+  ON_HOLD
+  AFGESLOTEN
+}
+
+enum Wet {
+  ZVW
+  WMO
+  WLZ
+}
+
+enum Financieringsvorm {
+  PGB
+  ZIN
+}
+
+enum BudgetBasis {
+  PER_WEEK_UREN // beschikking in uren/week (× tarief = budget)
+  TOTAAL_BUDGET // vast totaalbedrag over de hele periode (geldigVan–geldigTot)
+}
+
+enum BezoekStatus {
+  GEPLAND
+  UITGEVOERD
+  GEANNULEERD
+}
+
+enum Herkomst {
+  INTERN
+  EXTERN
+}
+
+model Client {
+  id              String           @id @default(uuid())
+  status          ClientStatus     @default(AANMELDING)
+  voornaam        String
+  achternaam      String
+  geboortedatum   DateTime?
+  bsn             String? // TEST-fase: NOG NIET versleuteld — vóór echte data versleutelen (AVG)
+  geslacht        String?
+  straat          String?
+  huisnummer      String?
+  postcode        String?
+  plaats          String?
+  telefoon        String?
+  email           String?
+  huisarts        String?
+  apotheek        String?
+  zorgverzekeraar String?
+  polisnummer     String?
+  budgethouder    String?
+  herkomst        Herkomst?
+  herkomstVia     String?
+  verwijzerId     String? // attributie: welke verwijzer leverde deze cliënt
+  verwijzer       Verwijzer?       @relation(fields: [verwijzerId], references: [id], onDelete: SetNull)
+  aandachtspunten String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  financieringen  Financiering[]
+  bezoeken        Bezoek[]
+  contactpersonen Contactpersoon[]
+  medicatie       Medicatie[]
+  zorgplannen     Zorgplan[]
+  wonden          Wond[]
+  aanvragen       ContactRequest[]
+}
+
+model Financiering {
+  id                 String            @id @default(uuid())
+  client             Client            @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId           String
+  wet                Wet
+  vorm               Financieringsvorm
+  verstrekker        String?
+  beschikkingsnummer String?
+  budgetBasis        BudgetBasis       @default(PER_WEEK_UREN)
+  urenPerWeek        Float?
+  tarief             Float?
+  totaalBudget       Float? // alleen bij TOTAAL_BUDGET: totaalbedrag over de periode
+  fase               String?
+  geldigVan          DateTime?
+  geldigTot          DateTime?
+  createdAt          DateTime          @default(now())
+}
+
+model Bezoek {
+  id           String       @id @default(uuid())
+  client       Client       @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId     String
+  datum        DateTime
+  duurMinuten  Int?
+  zorgverlener String?
+  typeZorg     String?
+  rapportage   String?
+  status       BezoekStatus @default(UITGEVOERD)
+  declarabel   Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+}
+
+model Contactpersoon {
+  id                           String   @id @default(uuid())
+  client                       Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId                     String
+  naam                         String
+  relatie                      String?
+  telefoon                     String?
+  email                        String?
+  isBudgethouder               Boolean  @default(false)
+  isWettelijkVertegenwoordiger Boolean  @default(false)
+  createdAt                    DateTime @default(now())
+}
+
+model Medicatie {
+  id         String    @id @default(uuid())
+  client     Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId   String
+  naam       String
+  dosering   String?
+  frequentie String?
+  sinds      DateTime?
+  opmerking  String?
+  createdAt  DateTime  @default(now())
+}
+
+enum DoelStatus {
+  OPEN
+  BEHAALD
+  GESTOPT
+}
+
+enum ZorgplanStatus {
+  CONCEPT // opgesteld, nog niet met cliënt vastgesteld
+  VASTGESTELD // afgestemd/akkoord met cliënt
+  VERVALLEN // vervangen door een nieuwe versie (alleen-lezen historie)
+}
+
+model Zorgplan {
+  id                   String         @id @default(uuid())
+  client               Client         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId             String
+  versie               Int            @default(1)
+  status               ZorgplanStatus @default(CONCEPT)
+  samenvatting         String? // korte situatieschets / hoofddoel
+  opgesteldOp          DateTime       @default(now())
+  besprokenMetClientOp DateTime? // afstemming met cliënt/vertegenwoordiger
+  besprokenMet         String? // met wie afgestemd (cliënt zelf / naam)
+  evaluatiedatum       DateTime? // wanneer het plan herzien moet worden
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  doelen               Zorgdoel[]
+
+  @@unique([clientId, versie]) // voorkomt dubbele versienummers (race bij nieuwe versie)
+}
+
+model Zorgdoel {
+  id           String     @id @default(uuid())
+  zorgplan     Zorgplan   @relation(fields: [zorgplanId], references: [id], onDelete: Cascade)
+  zorgplanId   String
+  omschrijving String
+  actie        String?
+  status       DoelStatus @default(OPEN)
+  streefdatum  DateTime?
+  createdAt    DateTime   @default(now())
+}
+
+enum WondDoel {
+  GENEZING
+  STABILISEREN
+  PALLIATIEF
+}
+
+enum WondStatus {
+  ACTIEF
+  GENEZEN
+  GESTOPT
+}
+
+model Wond {
+  id                 String            @id @default(uuid())
+  client             Client            @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId           String
+  locatie            String
+  soort              String?
+  ontstaanswijze     String?
+  startdatum         DateTime?
+  doel               WondDoel          @default(GENEZING)
+  status             WondStatus        @default(ACTIEF)
+  klachten           String?
+  lokalisatieZijde   String?
+  aantalWonden       String?
+  tijdDuur           String?
+  tijdBeloop         String?
+  eerdereBehandeling String?
+  pijnRust           Int?
+  pijnVerzorging     Int?
+  pijnNacht          Int?
+  impact             String?
+  comorbiditeit      String?
+  medicatieInvloed   String?
+  allergieen         String?
+  voeding            String?
+  leefstijl          String?
+  socialeContext     String?
+  watVerergert       String?
+  watVerzacht        String?
+  doelVerwachting    String?
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  registraties       TimeRegistratie[]
+  fotos              WondFoto[]
+}
+
+model WondFoto {
+  id           String    @id @default(uuid())
+  wond         Wond      @relation(fields: [wondId], references: [id], onDelete: Cascade)
+  wondId       String
+  pathname     String // pad in de (private) Vercel Blob-store — voor get/del
+  url          String // blob-url
+  contentType  String?
+  bestandsnaam String? // originele bestandsnaam
+  datum        DateTime? // datum waarop de foto is gemaakt
+  opmerking    String?
+  createdAt    DateTime  @default(now())
+}
+
+model TimeRegistratie {
+  id              String   @id @default(uuid())
+  wond            Wond     @relation(fields: [wondId], references: [id], onDelete: Cascade)
+  wondId          String
+  datum           DateTime
+  afmetingL       Float?
+  afmetingB       Float?
+  afmetingD       Float?
+  tissueRood      Int?
+  tissueGeel      Int?
+  tissueZwart     Int?
+  debridement     String?
+  infectietekenen String?
+  infectieActie   String?
+  exsudaat        String?
+  exsudaatKleur   String?
+  wondrand        String?
+  omliggendeHuid  String?
+  pijnNRS         Int?
+  verband         String?
+  opmerking       String?
+  createdAt       DateTime @default(now())
+}
+
+// ---------- Sales pipeline: verwijzers (fase 1) ----------
+// Zakelijke contacten die cliënten doorsturen. Bewust GESCHEIDEN van het
+// cliëntdossier: hier horen géén zorggegevens in (AVG). Zie
+// business/sales/sales_pipeline_plan.md.
+
+enum VerwijzerType {
+  HUISARTS
+  POH
+  APOTHEEK
+  FYSIO_ERGO
+  ZIEKENHUIS_TRANSFER
+  WMO_LOKET
+  WIJKTEAM
+  CASEMANAGER_DEMENTIE
+  CIZ
+  WOONZORG
+  WELZIJN_BUURTHUIS
+  GELOOFSGEMEENSCHAP
+  BELANGENVERENIGING
+  PGB_BEMIDDELAAR
+  INDICATIESTELLER
+  OVERIG
+}
+
+enum LeadStatus {
+  KANDIDAAT // uit een harvest, nog niet beoordeeld (fase 2)
+  NIEUW // goedgekeurd, nog niet benaderd
+  BENADERD // gebeld/gemaild, nog geen echt gesprek
+  GESPROKEN // contact gehad
+  MATERIAAL // folders/visitekaartjes liggen er
+  ACTIEF // heeft minstens één cliënt doorgestuurd
+  SLAPEND // langer dan een half jaar niets
+  GEEN_INTERESSE
+  UITGESCHREVEN // opt-out — niet meer benaderen
+}
+
+enum LevertRoute {
+  PGB
+  WMO
+  ZVW_ZIN
+  PARTICULIER
+  ONBEKEND
+}
+
+enum ContactSoort {
+  BEZOEK
+  TELEFOON
+  EMAIL
+  WHATSAPP
+  POST
+  EVENEMENT
+}
+
+model Verwijzer {
+  id          String        @id @default(uuid())
+  naam        String
+  type        VerwijzerType
+  status      LeadStatus    @default(NIEUW)
+  levertRoute LevertRoute   @default(ONBEKEND)
+
+  straat     String?
+  huisnummer String?
+  postcode   String?
+  plaats     String?
+  lat        Float?
+  lon        Float?
+  afstandKm  Float? // hemelsbreed vanaf Kasperenstraat 123 (fase 2 vult dit)
+
+  telefoon String?
+  email    String?
+  website  String?
+  agbCode  String?
+
+  bron     String? // "handmatig" | "osm" | "cibg" | "sociale-kaart"
+  bronId   String? // extern id, voor dedupe bij herhaalde harvest
+  notities String?
+
+  laatsteContactOp DateTime?
+  volgendeActieOp  DateTime?
+  volgendeActie    String?
+
+  optOut   Boolean   @default(false)
+  optOutOp DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  contactpersonen VerwijzerContact[]
+  activiteiten    VerwijzerActiviteit[]
+  clienten        Client[]
+
+  @@unique([bron, bronId])
+  @@index([status, volgendeActieOp])
+}
+
+model VerwijzerContact {
+  id          String    @id @default(uuid())
+  verwijzerId String
+  verwijzer   Verwijzer @relation(fields: [verwijzerId], references: [id], onDelete: Cascade)
+  naam        String
+  functie     String? // "praktijkassistente", "POH-ouderen", "transferverpleegkundige"
+  telefoon    String?
+  email       String?
+  notitie     String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model VerwijzerActiviteit {
+  id           String       @id @default(uuid())
+  verwijzerId  String
+  verwijzer    Verwijzer    @relation(fields: [verwijzerId], references: [id], onDelete: Cascade)
+  soort        ContactSoort
+  datum        DateTime
+  samenvatting String
+  resultaat    String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([verwijzerId, datum])
 }
