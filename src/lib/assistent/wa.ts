@@ -113,6 +113,10 @@ export interface Binnen {
   van: string;
   messageId: string;
   tekst?: string;
+  /** Op welk van onze nummers dit binnenkwam. Eén Meta-app kan er meerdere
+   *  bedienen (FairCTO-portfolio: een nummer per bedrijf), dus hierop routeer
+   *  je later naar het juiste dossier. */
+  naarNummerId?: string;
   /** Ingevuld als er op een ja/nee-knop is getikt. */
   knop?: { toolUseId: string; akkoord: boolean };
 }
@@ -120,11 +124,19 @@ export interface Binnen {
 /** Meta nest het bericht vier lagen diep; dit haalt eruit wat we nodig hebben. */
 export function leesWebhook(body: unknown): Binnen[] {
   const b = body as {
-    entry?: { changes?: { value?: { messages?: Record<string, unknown>[] } }[] }[];
+    entry?: {
+      changes?: {
+        value?: {
+          metadata?: { phone_number_id?: string };
+          messages?: Record<string, unknown>[];
+        };
+      }[];
+    }[];
   };
   const uit: Binnen[] = [];
   for (const entry of b?.entry ?? []) {
     for (const change of entry.changes ?? []) {
+      const naarNummerId = change.value?.metadata?.phone_number_id;
       for (const m of change.value?.messages ?? []) {
         const msg = m as {
           from: string;
@@ -145,6 +157,7 @@ export function leesWebhook(body: unknown): Binnen[] {
         uit.push({
           van: msg.from,
           messageId: msg.id,
+          naarNummerId,
           tekst: msg.text?.body ?? msg.interactive?.button_reply?.title,
           knop,
         });
@@ -152,6 +165,16 @@ export function leesWebhook(body: unknown): Binnen[] {
     }
   }
   return uit;
+}
+
+/**
+ * Is dit bericht voor ons nummer? Zodra er meer nummers onder dezelfde Meta-app
+ * hangen, komt hier de routering naar het juiste dossier — nu nog: alleen het
+ * eigen nummer beantwoorden, de rest laten liggen.
+ */
+export function voorOnsNummer(naarNummerId?: string): boolean {
+  if (!naarNummerId) return true; // oudere payloads zonder metadata
+  return naarNummerId === process.env.WA_PHONE_ID;
 }
 
 /** Alleen deze nummers mogen de assistent aansturen. */

@@ -19,6 +19,7 @@ import {
   markeerGelezen,
   stuurKeuze,
   stuurTekst,
+  voorOnsNummer,
   waConfigured,
   type Binnen,
 } from "@/lib/assistent/wa";
@@ -63,6 +64,10 @@ export async function POST(req: Request) {
   const berichten = leesWebhook(body);
 
   for (const bericht of berichten) {
+    if (!voorOnsNummer(bericht.naarNummerId)) {
+      console.warn("[whatsapp] ander nummer van de app:", bericht.naarNummerId);
+      continue;
+    }
     if (!magSturen(bericht.van)) {
       console.warn("[whatsapp] genegeerd, nummer niet toegestaan:", bericht.van);
       continue;
