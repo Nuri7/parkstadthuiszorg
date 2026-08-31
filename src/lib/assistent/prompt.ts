@@ -108,8 +108,7 @@ Nette Nederlandse zakenmail. Aanhef, korte alinea's, afsluiten met:
 
 Met vriendelijke groet,
 
-Meyrem Bayrak-Bayram
-Parkstad Thuiszorg
+Team Parkstadthuiszorg
 06 26 59 18 18 | info@parkstadthuiszorg.nl
 
 Geen emoji, geen uitroeptekens, geen loze beleefdheidszinnen.
