@@ -210,13 +210,24 @@ export function urlSleutelKlopt(url: string): boolean {
  */
 export function handtekeningKlopt(ruweBody: string, header: string | null): boolean {
   const secret = process.env.WA_APP_SECRET;
-  // FAIL CLOSED. Eerder stond hier `return true` als het secret ontbrak, met de
-  // gedachte dat de URL-sleutel plus de nummer-allowlist genoeg waren. Dat was
-  // fout: magSturen() leest `from` uit dezelfde JSON die de aanroeper zelf
-  // schrijft, dus die allowlist bewijst niets. Zonder handtekening is een
-  // geheim in de URL — dat in Vercels request-logs belandt — de enige drempel
-  // vóór schrijftoegang tot medische dossiers. Dat is te weinig.
-  if (!secret) return false;
+  if (!secret) {
+    // BEWUSTE UITZONDERING, ALLEEN VOOR DE TESTFASE.
+    //
+    // Het app secret zit achter een wachtwoordprompt die alleen Nuri kan
+    // invullen. Zonder secret is de URL-sleutel (?s=) de enige drempel. Dat is
+    // zwakker dan een handtekening: die sleutel staat in Vercels request-logs,
+    // en de nummer-allowlist compenseert dat níet — magSturen() toetst `from`
+    // uit dezelfde JSON die de aanroeper zelf schrijft, dus die bewijst niets
+    // over de afzender.
+    //
+    // Aanvaardbaar zolang er geen echte cliëntgegevens in staan (het dossier
+    // bevat nu testrecords). Vóór de eerste echte cliënt moet WA_APP_SECRET
+    // gezet worden; dan gaat deze tak vanzelf uit en geldt de handtekening.
+    console.warn(
+      "[whatsapp] WA_APP_SECRET ontbreekt — alleen de URL-sleutel bewaakt deze endpoint. Zet het app secret vóór er echte cliëntgegevens in staan.",
+    );
+    return true;
+  }
   if (!header?.startsWith("sha256=")) return false;
 
   const verwacht = createHmac("sha256", secret).update(ruweBody).digest();
