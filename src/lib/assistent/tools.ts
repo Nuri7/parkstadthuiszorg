@@ -17,6 +17,7 @@ import {
   vindModel,
 } from "./schema";
 import {
+  beschikbareAfzenders,
   leesMail,
   lijstMail,
   lijstMappen,
@@ -191,10 +192,17 @@ export const tools: Anthropic.Tool[] = [
       "Verstuur een e-mail namens Parkstad Thuiszorg. Meyrem krijgt de volledige mail " +
       "te zien en moet op versturen klikken. Schrijf een complete, nette Nederlandse " +
       "mail — geen plaatshouders zoals [naam]. Zet nooit een BSN of medische details " +
-      "in een mail aan iemand die daar geen recht op heeft.",
+      "in een mail aan iemand die daar geen recht op heeft. " +
+      `Beschikbare afzenders: ${beschikbareAfzenders().join(", ") || "(nog geen ingesteld)"}.`,
     input_schema: {
       type: "object",
       properties: {
+        van: {
+          type: "string",
+          description:
+            "Afzenderadres. Weglaten = het standaardadres. Vraagt Meyrem om een " +
+            "bepaald adres, zet het dan hier; kan het niet, dan krijg je de lijst terug.",
+        },
         aan: { type: "string", description: "Ontvanger(s), komma-gescheiden." },
         onderwerp: { type: "string" },
         tekst: { type: "string", description: "De volledige mailtekst, platte tekst." },
@@ -400,6 +408,7 @@ async function draai(
 
     case "mail_stuur": {
       const uit: MailUit = {
+        van: invoer.van ? String(invoer.van) : undefined,
         aan: String(invoer.aan),
         onderwerp: String(invoer.onderwerp),
         tekst: String(invoer.tekst),
@@ -415,17 +424,17 @@ async function draai(
           /* geen draadkoppeling; de mail gaat gewoon als nieuw bericht */
         }
       }
-      const { messageId } = await stuurMail(uit);
+      const { messageId, van } = await stuurMail(uit);
       // Bewust voorzichtig geformuleerd: de mailserver heeft hem aangenomen.
       // Of hij ook in de inbox van de ontvanger belandt weten we hier niet —
       // dat blijkt pas uit een bounce (of uuit niets, bij stille spamfilters).
       return {
         tekst:
-          `Afgegeven aan de mailserver voor ${uit.aan} (${messageId}). ` +
+          `Afgegeven aan de mailserver: van ${van} aan ${uit.aan} (${messageId}). ` +
           `Dat betekent verzonden, niet per se afgeleverd: een spamfilter aan de ` +
           `ontvangende kant kan hem alsnog wegfilteren.`,
         fout: false,
-        samenvatting: `mail afgegeven voor ${uit.aan}`,
+        samenvatting: `mail van ${van} afgegeven voor ${uit.aan}`,
       };
     }
 
@@ -481,7 +490,8 @@ export function bevestigingsTekst(
   invoer: Record<string, unknown>,
 ): string {
   if (naam === "mail_stuur") {
-    return `Mail versturen aan ${invoer.aan}`;
+    const van = invoer.van ? String(invoer.van) : beschikbareAfzenders()[0];
+    return `Mail versturen namens ${van ?? "?"} aan ${invoer.aan}`;
   }
   if (naam === "db_verwijder") {
     return `${invoer.model} definitief verwijderen`;

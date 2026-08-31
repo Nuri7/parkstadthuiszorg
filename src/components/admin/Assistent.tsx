@@ -490,6 +490,7 @@ function Bevestiging({
       <div className="px-4 py-3 text-sm text-[#1f3a34] dark:text-[#e7f2ec] space-y-2">
         {isMail ? (
           <>
+            {inv.van && <Rij label="Van" waarde={inv.van} />}
             <Rij label="Aan" waarde={inv.aan} />
             {inv.cc && <Rij label="Cc" waarde={inv.cc} />}
             {/* Bcc hoort zichtbaar te zijn vóór je op versturen klikt. */}

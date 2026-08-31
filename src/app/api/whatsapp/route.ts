@@ -216,6 +216,7 @@ async function verwerk(bericht: Binnen) {
       // Cc én bcc moeten hier staan: wie meeleest hoort zichtbaar te zijn vóór
       // Meyrem op versturen tikt.
       const kop = [
+        inv.van ? `Van: ${inv.van}` : null,
         `Aan: ${inv.aan}`,
         inv.cc ? `Cc: ${inv.cc}` : null,
         inv.bcc ? `Bcc: ${inv.bcc}` : null,

@@ -222,26 +222,59 @@ export async function lijstMappen(): Promise<string[]> {
 
 // ---------- Versturen ----------
 
-let transporter: Transporter | null = null;
-
-function getTransporter(): Transporter | null {
-  const host = process.env.SMTP_HOST;
+/**
+ * Afzenders die de assistent mag gebruiken. Migadu staat niet toe dat een
+ * postvak namens een ander adres verstuurt — zelfs niet namens een eigen alias
+ * (550 sender address rejected) — dus elk afzenderadres heeft eigen
+ * inloggegevens nodig.
+ *
+ * SMTP_AFZENDERS is JSON: {"info@...":"wachtwoord","meyrem@...":"wachtwoord"}
+ * Niet ingesteld? Dan is SMTP_USER/SMTP_PASS de enige afzender.
+ */
+function afzenders(): Record<string, string> {
+  const ruw = process.env.SMTP_AFZENDERS;
+  if (ruw) {
+    try {
+      const uit = JSON.parse(ruw) as Record<string, string>;
+      if (uit && typeof uit === "object" && Object.keys(uit).length > 0) return uit;
+    } catch {
+      console.error("[mail] SMTP_AFZENDERS is geen geldige JSON — genegeerd.");
+    }
+  }
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  if (!host || !user || !pass) return null;
-  if (!transporter) {
+  return user && pass ? { [user]: pass } : {};
+}
+
+/** Adressen waaruit de assistent mag kiezen; de eerste is de standaard. */
+export function beschikbareAfzenders(): string[] {
+  return Object.keys(afzenders());
+}
+
+const transporters = new Map<string, Transporter>();
+
+function getTransporter(van: string): Transporter | null {
+  const host = process.env.SMTP_HOST;
+  const pass = afzenders()[van];
+  if (!host || !pass) return null;
+
+  let tx = transporters.get(van);
+  if (!tx) {
     const port = Number(process.env.SMTP_PORT) || 587;
-    transporter = nodemailer.createTransport({
+    tx = nodemailer.createTransport({
       host,
       port,
       secure: port === 465,
-      auth: { user, pass },
+      auth: { user: van, pass },
     });
+    transporters.set(van, tx);
   }
-  return transporter;
+  return tx;
 }
 
 export interface MailUit {
+  /** Afzenderadres; moet in SMTP_AFZENDERS staan. Leeg = de standaard. */
+  van?: string;
   aan: string;
   onderwerp: string;
   tekst: string;
@@ -251,24 +284,32 @@ export interface MailUit {
 }
 
 /** Verstuurt een mail namens Parkstad Thuiszorg. Alleen ná bevestiging. */
-export async function stuurMail(m: MailUit): Promise<{ messageId: string }> {
-  const tx = getTransporter();
-  if (!tx) {
+export async function stuurMail(m: MailUit): Promise<{ messageId: string; van: string }> {
+  const lijst = beschikbareAfzenders();
+  if (lijst.length === 0) {
     throw new Error(
-      "SMTP is niet ingesteld (SMTP_HOST/SMTP_USER/SMTP_PASS ontbreken), dus versturen kan niet.",
+      "Er is geen afzender ingesteld (SMTP_AFZENDERS of SMTP_USER/SMTP_PASS ontbreken).",
     );
   }
-  const from = process.env.SMTP_FROM || process.env.SMTP_USER!;
+  const van = m.van?.trim().toLowerCase() || lijst[0];
+  if (!lijst.includes(van)) {
+    throw new Error(
+      `Versturen namens ${van} kan niet. Beschikbaar: ${lijst.join(", ")}.`,
+    );
+  }
+  const tx = getTransporter(van);
+  if (!tx) throw new Error(`SMTP is niet ingesteld voor ${van}.`);
+
   const info = await tx.sendMail({
-    from,
+    from: van,
     to: m.aan,
     cc: m.cc || undefined,
     bcc: m.bcc || undefined,
-    replyTo: process.env.SMTP_REPLY_TO || process.env.SMTP_TO || undefined,
+    replyTo: van, // antwoorden komen terug bij de afzender zelf
     subject: m.onderwerp,
     text: m.tekst,
     inReplyTo: m.antwoordOpMessageId || undefined,
     references: m.antwoordOpMessageId || undefined,
   });
-  return { messageId: String(info.messageId ?? "") };
+  return { messageId: String(info.messageId ?? ""), van };
 }
