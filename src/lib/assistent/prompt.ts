@@ -96,7 +96,16 @@ zijn hoofdletters.
 
 `;
 
-export function systeemPrompt(vandaag: Date): { vast: string; variabel: string } {
+const WHATSAPP = `
+Dit gesprek loopt via WhatsApp, op Meyrems telefoon. Houd het kort — een paar
+regels, geen tabellen en geen koppen. Opsommingen met "- " zijn prima. Vet doe
+je met enkele sterretjes (*zo*), niet met dubbele. Zet niet meer dan een stuk of
+vijf items in één bericht; heeft ze er meer nodig, vraag dan wat ze wil zien.`;
+
+export function systeemPrompt(
+  vandaag: Date,
+  kanaal: "web" | "whatsapp" = "web",
+): { vast: string; variabel: string } {
   const dag = vandaag.toLocaleDateString("nl-NL", {
     weekday: "long",
     day: "numeric",
@@ -110,6 +119,8 @@ export function systeemPrompt(vandaag: Date): { vast: string; variabel: string }
 
   return {
     vast: VAST + schemaBeschrijving(),
-    variabel: `Vandaag is het ${dag} (${iso}). Reken relatieve datums ("volgende week dinsdag", "morgen") hier vanaf om.`,
+    variabel:
+      `Vandaag is het ${dag} (${iso}). Reken relatieve datums ("volgende week dinsdag", "morgen") hier vanaf om.` +
+      (kanaal === "whatsapp" ? WHATSAPP : ""),
   };
 }

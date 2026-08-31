@@ -415,6 +415,7 @@ model VerwijzerActiviteit {
 model AssistentGesprek {
   id        String             @id @default(uuid())
   titel     String? // korte samenvatting, gezet na het eerste antwoord
+  waVan     String? // telefoonnummer als dit gesprek via WhatsApp loopt
   // Openstaande bevestigingen + al uitgevoerde tool-resultaten uit dezelfde beurt.
   // Vorm: { klaar: { <tool_use_id>: <content> }, open: [{ id, naam, invoer }] }
   wachtOp   Json?
@@ -424,6 +425,7 @@ model AssistentGesprek {
   acties    AssistentActie[]
 
   @@index([updatedAt])
+  @@index([waVan, updatedAt])
 }
 
 model AssistentBericht {
@@ -450,6 +452,17 @@ model AssistentActie {
   gelukt    Boolean           @default(true)
   schrijft  Boolean           @default(false) // true = wijzigt data of stuurt mail
   createdAt DateTime          @default(now())
+
+  @@index([createdAt])
+}
+
+// Meta levert een webhook opnieuw als hij niet snel genoeg een 200 krijgt.
+// Het message-id hier wegschrijven is de sluis: lukt de insert niet (unique),
+// dan is dit bericht al eens verwerkt. In-memory zou niet werken — elke
+// serverless-aanroep kan een koud proces zijn.
+model WaVerwerkt {
+  messageId String   @id
+  createdAt DateTime @default(now())
 
   @@index([createdAt])
 }

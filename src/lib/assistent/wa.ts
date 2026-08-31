@@ -1,0 +1,182 @@
+/**
+ * WhatsApp Cloud API — heen en weer praten met Meta's Graph.
+ *
+ * Nodig in de omgeving:
+ *   WA_TOKEN          permanent toegangstoken van de Meta-app (system user)
+ *   WA_PHONE_ID       phone number id van het WhatsApp-nummer
+ *   WA_VERIFY_TOKEN   zelfgekozen string, ook invullen bij de webhook in Meta
+ *   WA_APP_SECRET     app secret; wordt gebruikt om de handtekening te checken
+ *   WA_TOEGESTAAN     komma-gescheiden telefoonnummers die mogen sturen
+ */
+
+import { createHmac, timingSafeEqual } from "node:crypto";
+
+const V = process.env.WA_GRAPH_VERSION ?? "v23.0";
+// WA_GRAPH_BASE bestaat alleen om lokaal tegen een nep-Graph te kunnen testen.
+const BASE = process.env.WA_GRAPH_BASE ?? `https://graph.facebook.com/${V}`;
+
+export const waConfigured = () =>
+  Boolean(process.env.WA_TOKEN && process.env.WA_PHONE_ID);
+
+const auth = () => ({ Authorization: `Bearer ${process.env.WA_TOKEN}` });
+
+async function graph(pad: string, init?: RequestInit) {
+  const res = await fetch(`${BASE}/${pad}`, {
+    ...init,
+    headers: { ...auth(), ...(init?.headers ?? {}) },
+  });
+  if (!res.ok) {
+    throw new Error(
+      `WhatsApp ${pad}: ${res.status} ${(await res.text()).slice(0, 300)}`,
+    );
+  }
+  return res;
+}
+
+async function send(payload: Record<string, unknown>) {
+  const res = await graph(`${process.env.WA_PHONE_ID}/messages`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      messaging_product: "whatsapp",
+      recipient_type: "individual",
+      ...payload,
+    }),
+  });
+  return res.json();
+}
+
+/** WhatsApp kapt af boven 4096 tekens; knip op alinea's, anders op regels. */
+export function knip(tekst: string, max = 3500): string[] {
+  const uit: string[] = [];
+  let rest = tekst.trim();
+  while (rest.length > max) {
+    let snee = rest.lastIndexOf("\n\n", max);
+    if (snee < max * 0.5) snee = rest.lastIndexOf("\n", max);
+    if (snee < max * 0.5) snee = rest.lastIndexOf(" ", max);
+    if (snee <= 0) snee = max;
+    uit.push(rest.slice(0, snee).trim());
+    rest = rest.slice(snee).trim();
+  }
+  if (rest) uit.push(rest);
+  return uit;
+}
+
+export async function stuurTekst(aan: string, tekst: string) {
+  for (const stuk of knip(tekst)) {
+    await send({ to: aan, type: "text", text: { preview_url: false, body: stuk } });
+  }
+}
+
+/**
+ * Ja/nee-knoppen. Zo werkt de bevestiging voor mail versturen en verwijderen
+ * ook op de telefoon: het id van de knop draagt het tool_use_id mee terug.
+ */
+export async function stuurKeuze(
+  aan: string,
+  vraag: string,
+  jaLabel: string,
+  toolUseId: string,
+) {
+  await send({
+    to: aan,
+    type: "interactive",
+    interactive: {
+      type: "button",
+      body: { text: vraag.slice(0, 1024) },
+      action: {
+        buttons: [
+          // Knoplabels mogen maar 20 tekens zijn.
+          { type: "reply", reply: { id: `ja:${toolUseId}`, title: jaLabel.slice(0, 20) } },
+          { type: "reply", reply: { id: `nee:${toolUseId}`, title: "Nee, niet doen" } },
+        ],
+      },
+    },
+  });
+}
+
+export async function markeerGelezen(messageId: string) {
+  await graph(`${process.env.WA_PHONE_ID}/messages`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      messaging_product: "whatsapp",
+      status: "read",
+      message_id: messageId,
+    }),
+  }).catch(() => undefined);
+}
+
+// ---------- Binnenkomend ----------
+
+export interface Binnen {
+  van: string;
+  messageId: string;
+  tekst?: string;
+  /** Ingevuld als er op een ja/nee-knop is getikt. */
+  knop?: { toolUseId: string; akkoord: boolean };
+}
+
+/** Meta nest het bericht vier lagen diep; dit haalt eruit wat we nodig hebben. */
+export function leesWebhook(body: unknown): Binnen[] {
+  const b = body as {
+    entry?: { changes?: { value?: { messages?: Record<string, unknown>[] } }[] }[];
+  };
+  const uit: Binnen[] = [];
+  for (const entry of b?.entry ?? []) {
+    for (const change of entry.changes ?? []) {
+      for (const m of change.value?.messages ?? []) {
+        const msg = m as {
+          from: string;
+          id: string;
+          type: string;
+          text?: { body: string };
+          interactive?: { button_reply?: { id: string; title: string } };
+        };
+
+        const knopId = msg.interactive?.button_reply?.id;
+        const knop = knopId?.includes(":")
+          ? {
+              toolUseId: knopId.slice(knopId.indexOf(":") + 1),
+              akkoord: knopId.startsWith("ja:"),
+            }
+          : undefined;
+
+        uit.push({
+          van: msg.from,
+          messageId: msg.id,
+          tekst: msg.text?.body ?? msg.interactive?.button_reply?.title,
+          knop,
+        });
+      }
+    }
+  }
+  return uit;
+}
+
+/** Alleen deze nummers mogen de assistent aansturen. */
+export function magSturen(nummer: string): boolean {
+  const lijst = (process.env.WA_TOEGESTAAN ?? "")
+    .split(",")
+    .map((n) => n.replace(/\D/g, ""))
+    .filter(Boolean);
+  if (lijst.length === 0) return false; // fail closed: niets ingesteld = niemand
+  return lijst.includes(nummer.replace(/\D/g, ""));
+}
+
+/**
+ * Meta ondertekent elke webhook met het app secret. Zonder deze controle kan
+ * iedereen die de URL kent de assistent laten draaien — en die assistent mag
+ * in het cliëntdossier schrijven.
+ */
+export function handtekeningKlopt(ruweBody: string, header: string | null): boolean {
+  const secret = process.env.WA_APP_SECRET;
+  if (!secret) return false; // fail closed
+  if (!header?.startsWith("sha256=")) return false;
+
+  const verwacht = createHmac("sha256", secret).update(ruweBody).digest();
+  const gekregen = Buffer.from(header.slice(7), "hex");
+  return (
+    verwacht.length === gekregen.length && timingSafeEqual(verwacht, gekregen)
+  );
+}
