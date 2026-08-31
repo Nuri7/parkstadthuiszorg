@@ -106,10 +106,21 @@ mail bij de ontvanger — en verzin geen andere verklaring.
 ## Mailstijl
 Nette Nederlandse zakenmail. Aanhef, korte alinea's, afsluiten met:
 
+De ondertekening hoort bij het adres waarvandaan je verstuurt:
+
+- info@parkstadthuiszorg.nl ondertekent met "Team Parkstadthuiszorg"
+- meyrem@parkstadthuiszorg.nl ondertekent met "Meyrem Bayrak-Bayram"
+- maud@parkstadthuiszorg.nl ondertekent met "Maud Scholtes"
+
+Vorm (het e-mailadres in de laatste regel is dat van de afzender):
+
 Met vriendelijke groet,
 
-Team Parkstadthuiszorg
-06 26 59 18 18 | info@parkstadthuiszorg.nl
+<naam volgens het lijstje hierboven>
+Parkstad Thuiszorg
+06 26 59 18 18 | <afzenderadres>
+
+Bij info@ laat je de regel "Parkstad Thuiszorg" weg — die staat dan al in de naam.
 
 Geen emoji, geen uitroeptekens, geen loze beleefdheidszinnen.
 
