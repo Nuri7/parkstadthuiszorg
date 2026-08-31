@@ -406,3 +406,50 @@ model VerwijzerActiviteit {
 
   @@index([verwijzerId, datum])
 }
+
+// ---------- Assistent (chat met Claude over het hele dossier) ----------
+// Gesprekken worden bewaard zodat Meyrem een draad kan hervatten, en zodat een
+// bevestiging (mail versturen / verwijderen) later kan worden afgehandeld dan
+// het bericht waarin de assistent erom vroeg.
+
+model AssistentGesprek {
+  id        String             @id @default(uuid())
+  titel     String? // korte samenvatting, gezet na het eerste antwoord
+  // Openstaande bevestigingen + al uitgevoerde tool-resultaten uit dezelfde beurt.
+  // Vorm: { klaar: { <tool_use_id>: <content> }, open: [{ id, naam, invoer }] }
+  wachtOp   Json?
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  berichten AssistentBericht[]
+  acties    AssistentActie[]
+
+  @@index([updatedAt])
+}
+
+model AssistentBericht {
+  id        String           @id @default(uuid())
+  gesprek   AssistentGesprek @relation(fields: [gesprekId], references: [id], onDelete: Cascade)
+  gesprekId String
+  rol       String // "user" | "assistant"
+  inhoud    Json // Anthropic ContentBlockParam[] — ruwe blokken, incl. tool_use/tool_result
+  createdAt DateTime         @default(now())
+
+  @@index([gesprekId, createdAt])
+}
+
+// Auditspoor: wat heeft de assistent precies gedaan. Nodig om wijzigingen in het
+// cliëntdossier herleidbaar te houden (Wgbo/AVG) — de assistent schrijft immers
+// rechtstreeks in de database.
+model AssistentActie {
+  id        String            @id @default(uuid())
+  gesprek   AssistentGesprek? @relation(fields: [gesprekId], references: [id], onDelete: SetNull)
+  gesprekId String?
+  tool      String
+  invoer    Json
+  resultaat String? // korte samenvatting van het resultaat (of de foutmelding)
+  gelukt    Boolean           @default(true)
+  schrijft  Boolean           @default(false) // true = wijzigt data of stuurt mail
+  createdAt DateTime          @default(now())
+
+  @@index([createdAt])
+}

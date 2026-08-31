@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Inbox, Users, CalendarDays, Wallet, Target, Handshake } from "lucide-react";
+import { Inbox, Users, CalendarDays, Wallet, Target, Handshake, Sparkles } from "lucide-react";
 import { adminLogout } from "@/app/actions/adminLogout";
 
 const items = [
   { href: "/admin", label: "Aanvragen", Icon: Inbox, match: (p: string) => p === "/admin" },
+  { href: "/admin/assistent", label: "Assistent", Icon: Sparkles, match: (p: string) => p.startsWith("/admin/assistent") },
   { href: "/admin/pipeline", label: "Pipeline", Icon: Target, match: (p: string) => p.startsWith("/admin/pipeline") },
   { href: "/admin/verwijzers", label: "Verwijzers", Icon: Handshake, match: (p: string) => p.startsWith("/admin/verwijzers") },
   { href: "/admin/agenda", label: "Agenda", Icon: CalendarDays, match: (p: string) => p.startsWith("/admin/agenda") },

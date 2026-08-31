@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // react-pdf niet door de bundler laten verwerken (eigen layout-engine)
-  serverExternalPackages: ["@react-pdf/renderer"],
+  // react-pdf + de mailpakketten niet door de bundler laten verwerken
+  serverExternalPackages: ["@react-pdf/renderer", "imapflow", "mailparser"],
   experimental: {
     serverActions: {
       // Wondfoto's worden client-side verkleind (~1600px) vóór upload, maar geef
