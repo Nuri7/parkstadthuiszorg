@@ -416,10 +416,16 @@ async function draai(
         }
       }
       const { messageId } = await stuurMail(uit);
+      // Bewust voorzichtig geformuleerd: de mailserver heeft hem aangenomen.
+      // Of hij ook in de inbox van de ontvanger belandt weten we hier niet —
+      // dat blijkt pas uit een bounce (of uuit niets, bij stille spamfilters).
       return {
-        tekst: `Verstuurd aan ${uit.aan} (${messageId}).`,
+        tekst:
+          `Afgegeven aan de mailserver voor ${uit.aan} (${messageId}). ` +
+          `Dat betekent verzonden, niet per se afgeleverd: een spamfilter aan de ` +
+          `ontvangende kant kan hem alsnog wegfilteren.`,
         fout: false,
-        samenvatting: `mail verstuurd aan ${uit.aan}`,
+        samenvatting: `mail afgegeven voor ${uit.aan}`,
       };
     }
 
