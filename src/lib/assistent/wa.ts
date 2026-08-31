@@ -188,13 +188,29 @@ export function magSturen(nummer: string): boolean {
 }
 
 /**
- * Meta ondertekent elke webhook met het app secret. Zonder deze controle kan
- * iedereen die de URL kent de assistent laten draaien — en die assistent mag
- * in het cliëntdossier schrijven.
+ * Slot 1 — geheim in de webhook-URL. Meta roept exact de URL aan die in de
+ * app-instellingen staat, dus wie `?s=` niet kent, komt hier niet binnen. Dit
+ * staat er omdat het App Secret achter een wachtwoordprompt zit; het is een
+ * gangbaar webhook-patroon, maar zwakker dan een handtekening (de URL kan in
+ * logs belanden). Altijd vereist.
+ */
+export function urlSleutelKlopt(url: string): boolean {
+  const verwacht = process.env.WA_WEBHOOK_SLEUTEL;
+  if (!verwacht) return false; // fail closed
+  const gekregen = new URL(url).searchParams.get("s") ?? "";
+  const a = Buffer.from(verwacht);
+  const b = Buffer.from(gekregen);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
+/**
+ * Slot 2 — Meta ondertekent elke webhook met het app secret. Sterker dan de
+ * URL-sleutel, dus zodra WA_APP_SECRET gezet is, moet die controle óók slagen.
+ * Is hij niet gezet, dan blijft alleen slot 1 over.
  */
 export function handtekeningKlopt(ruweBody: string, header: string | null): boolean {
   const secret = process.env.WA_APP_SECRET;
-  if (!secret) return false; // fail closed
+  if (!secret) return true; // geen secret ingesteld -> deze controle staat uit
   if (!header?.startsWith("sha256=")) return false;
 
   const verwacht = createHmac("sha256", secret).update(ruweBody).digest();

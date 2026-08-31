@@ -2,8 +2,9 @@
 // als in /admin/assistent — zelfde tools, zelfde dossier, zelfde geheugen.
 //
 // Drie dingen die hier echt moeten:
-// 1. Handtekening controleren. Deze URL is publiek en er hangt schrijftoegang
-//    tot het cliëntdossier achter.
+// 1. Afzender bewijzen. Altijd de geheime `?s=` uit de URL; staat WA_APP_SECRET
+//    ingesteld, dan óók Meta's HMAC-handtekening. Deze URL is publiek en er
+//    hangt schrijftoegang tot het cliëntdossier achter.
 // 2. Nummer-allowlist. Iedereen kan een zakelijk WhatsApp-nummer aanschrijven.
 // 3. Snel 200 teruggeven en het echte werk in after() doen — de assistent doet
 //    er soms een halve minuut over en Meta levert na ~20 s opnieuw.
@@ -14,6 +15,7 @@ import { draaiLus } from "@/lib/assistent/lus";
 import { leesWachtOp } from "@/lib/assistent/gesprek";
 import {
   handtekeningKlopt,
+  urlSleutelKlopt,
   leesWebhook,
   magSturen,
   markeerGelezen,
@@ -34,6 +36,10 @@ export async function GET(req: Request) {
   const token = url.searchParams.get("hub.verify_token");
   const challenge = url.searchParams.get("hub.challenge");
 
+  if (!urlSleutelKlopt(req.url)) {
+    return new Response("Verificatie mislukt", { status: 403 });
+  }
+
   const verwacht = process.env.WA_VERIFY_TOKEN;
   if (verwacht && mode === "subscribe" && token === verwacht) {
     return new Response(challenge ?? "", {
@@ -47,6 +53,9 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const ruw = await req.text();
 
+  if (!urlSleutelKlopt(req.url)) {
+    return new Response("Ongeldige sleutel", { status: 401 });
+  }
   if (!handtekeningKlopt(ruw, req.headers.get("x-hub-signature-256"))) {
     return new Response("Ongeldige handtekening", { status: 401 });
   }
