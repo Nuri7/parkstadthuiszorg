@@ -8,7 +8,14 @@
 
 import type Anthropic from "@anthropic-ai/sdk";
 import { db } from "@/lib/db";
-import { coerceer, delegate, modelNamen, serialiseer, vindModel } from "./schema";
+import {
+  coerceer,
+  delegate,
+  modelNamen,
+  schrijfbareVelden,
+  serialiseer,
+  vindModel,
+} from "./schema";
 import {
   leesMail,
   lijstMail,
@@ -223,6 +230,46 @@ function json(waarde: unknown): string {
 
 const label = (model: string, n: number) => `${n}× ${model}`;
 
+/**
+ * `gegevens` gaat rechtstreeks naar Prisma. Zonder deze zeef is
+ * {"bezoeken":{"deleteMany":{}}} een geldige db_wijzig — en die wist alle
+ * bezoeken van een cliënt zonder ooit langs de verwijder-bevestiging te komen.
+ * Daarom: alleen gewone velden en enums van dit model, geen relaties, geen
+ * geneste objecten.
+ */
+function zeefGegevens(
+  modelNaam: string,
+  gegevens: unknown,
+): Record<string, unknown> {
+  if (!gegevens || typeof gegevens !== "object" || Array.isArray(gegevens)) {
+    throw new Error("`gegevens` moet een object met veldwaarden zijn.");
+  }
+  const toegestaan = schrijfbareVelden(modelNaam);
+  const uit: Record<string, unknown> = {};
+  const geweigerd: string[] = [];
+
+  for (const [k, v] of Object.entries(gegevens as Record<string, unknown>)) {
+    if (!toegestaan.has(k)) {
+      geweigerd.push(k);
+      continue;
+    }
+    if (v !== null && typeof v === "object") {
+      geweigerd.push(k);
+      continue;
+    }
+    uit[k] = v;
+  }
+
+  if (geweigerd.length > 0) {
+    throw new Error(
+      `Deze velden kunnen hier niet gezet worden: ${geweigerd.join(", ")}. ` +
+        `Gebruik alleen gewone velden van ${modelNaam}; een gekoppeld record ` +
+        `maak of verwijder je met een eigen db_maak / db_verwijder.`,
+    );
+  }
+  return uit;
+}
+
 async function draai(
   naam: string,
   invoer: Record<string, unknown>,
@@ -266,7 +313,10 @@ async function draai(
       const model = vindModel(String(invoer.model));
       if (!model) throw new Error(`Onbekend model: ${invoer.model}`);
       const rij = await delegate(model.name).create({
-        data: coerceer(model.name, invoer.gegevens) as Record<string, unknown>,
+        data: coerceer(
+          model.name,
+          zeefGegevens(model.name, invoer.gegevens),
+        ) as Record<string, unknown>,
       });
       return {
         tekst: json(rij),
@@ -280,7 +330,10 @@ async function draai(
       if (!model) throw new Error(`Onbekend model: ${invoer.model}`);
       const rij = await delegate(model.name).update({
         where: { id: String(invoer.id) },
-        data: coerceer(model.name, invoer.gegevens) as Record<string, unknown>,
+        data: coerceer(
+          model.name,
+          zeefGegevens(model.name, invoer.gegevens),
+        ) as Record<string, unknown>,
       });
       return {
         tekst: json(rij),

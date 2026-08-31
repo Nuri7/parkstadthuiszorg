@@ -13,7 +13,7 @@ import { after } from "next/server";
 import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { draaiLus } from "@/lib/assistent/lus";
-import { leesWachtOp } from "@/lib/assistent/gesprek";
+import { gesprekMetOpenBevestiging } from "@/lib/assistent/gesprek";
 import {
   handtekeningKlopt,
   urlSleutelKlopt,
@@ -96,6 +96,12 @@ export async function POST(req: Request) {
           await verwerk(bericht);
         } catch (e) {
           console.error("[whatsapp]", e);
+          // Dedupe-rij terugdraaien: zonder dit is één harde fout genoeg om dit
+          // bericht voorgoed te laten verdwijnen, want Meta's herlevering ziet
+          // hem dan als "al verwerkt".
+          await db.waVerwerkt
+            .delete({ where: { messageId: bericht.messageId } })
+            .catch(() => undefined);
           await stuurTekst(
             bericht.van,
             "Er ging iets mis aan mijn kant. Probeer het zo nog eens.",
@@ -143,7 +149,12 @@ async function verwerk(bericht: Binnen) {
 
   const gesprekId = await gesprekVoor(bericht);
   if (!gesprekId) {
-    await stuurTekst(bericht.van, "Nieuw gesprek. Waar wil je mee beginnen?");
+    await stuurTekst(
+      bericht.van,
+      bericht.knop
+        ? "Die vraag is al beantwoord — er is niets opnieuw gedaan."
+        : "Nieuw gesprek. Waar wil je mee beginnen?",
+    );
     return;
   }
 
@@ -165,6 +176,9 @@ async function verwerk(bericht: Binnen) {
         break;
       case "bevestiging":
         openstaand = data.open as typeof openstaand;
+        break;
+      case "verlopen":
+        fout = "Die bevestiging was al afgehandeld — er is niets dubbel gedaan.";
         break;
       case "fout":
         fout = String(data.bericht);
@@ -247,10 +261,11 @@ async function gesprekVoor(bericht: Binnen): Promise<string | null> {
     return null;
   }
 
-  // Een knop hoort altijd bij de draad waarin hij gesteld is.
-  if (bericht.knop && laatste) {
-    const wacht = await leesWachtOp(laatste.id);
-    if (wacht?.open.some((o) => o.id === bericht.knop!.toolUseId)) return laatste.id;
+  // Een knop hoort bij de draad waarin hij gesteld is — die zoeken we op id op.
+  // WhatsApp-knoppen blijven eeuwig tikbaar, dus een oude knop mag nooit stilletjes
+  // in de nieuwste draad belanden.
+  if (bericht.knop) {
+    return gesprekMetOpenBevestiging(bericht.van, bericht.knop.toolUseId);
   }
 
   if (laatste && Date.now() - laatste.updatedAt.getTime() < VERS_MS) {

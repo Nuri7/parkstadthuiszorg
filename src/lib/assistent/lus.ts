@@ -12,6 +12,7 @@ import {
 import { systeemPrompt } from "@/lib/assistent/prompt";
 import {
   bewaarBericht,
+  claimWachtOp,
   laadBerichten,
   leesWachtOp,
   zetTitelIndienLeeg,
@@ -35,7 +36,21 @@ export type Stuur = (data: Record<string, unknown>) => void;
 
 export async function draaiLus(gesprekId: string, body: Verzoek, stuur: Stuur) {
   // ---- 1. Afhandelen wat er nog openstond ----
-  const wachtOp = await leesWachtOp(gesprekId);
+  // Claimen, niet alleen lezen: twee tikken op dezelfde knop draaien naast
+  // elkaar, en zonder claim gaat de mail twee keer de deur uit.
+  const heeftBesluit = (body.besluiten?.length ?? 0) > 0;
+  const wachtOp =
+    heeftBesluit || body.bericht?.trim()
+      ? await claimWachtOp(gesprekId)
+      : await leesWachtOp(gesprekId);
+
+  if (heeftBesluit && !wachtOp) {
+    // Iemand anders (of een tweede tik) heeft deze bevestiging al opgepakt.
+    stuur({ type: "verlopen" });
+    stuur({ type: "klaar" });
+    return;
+  }
+
   if (wachtOp && wachtOp.open.length > 0) {
     const besluiten = new Map(
       (body.besluiten ?? []).map((b) => [b.id, b.akkoord]),
@@ -66,6 +81,7 @@ export async function draaiLus(gesprekId: string, body: Verzoek, stuur: Stuur) {
     }
 
     if (nogOpen.length > 0) {
+      // De claim heeft wachtOp leeggemaakt; wat nog openstaat zetten we terug.
       wachtOp.open = nogOpen;
       await zetWachtOp(gesprekId, wachtOp);
       stuur({ type: "bevestiging", open: nogOpen });

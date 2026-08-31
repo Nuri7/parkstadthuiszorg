@@ -42,6 +42,28 @@ export function delegate(modelNaam: string) {
   };
 }
 
+/**
+ * Velden die via db_maak/db_wijzig gezet mogen worden: gewone waarden en enums.
+ * Relaties vallen af (die zouden geneste Prisma-schrijfacties toelaten), net als
+ * id en de automatische tijdstempels.
+ */
+export function schrijfbareVelden(modelNaam: string): Set<string> {
+  const m = vindModel(modelNaam);
+  if (!m) return new Set();
+  return new Set(
+    m.fields
+      .filter(
+        (f) =>
+          (f.kind === "scalar" || f.kind === "enum") &&
+          !f.isList &&
+          !f.isId &&
+          !f.isUpdatedAt &&
+          f.name !== "createdAt",
+      )
+      .map((f) => f.name),
+  );
+}
+
 // ---------- Beschrijving voor de systeemprompt ----------
 
 function veldRegel(f: Prisma.DMMF.Field): string | null {
