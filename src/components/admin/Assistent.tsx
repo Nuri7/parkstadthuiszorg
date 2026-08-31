@@ -183,7 +183,7 @@ export function Assistent({
   const antwoorden = useRef<{ id: string; akkoord: boolean }[]>([]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-1px)] max-h-screen">
+    <div className="flex flex-col h-[calc(100dvh-9.5rem)] lg:h-screen">
       <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6">
         <div className="mx-auto max-w-3xl space-y-5">
           {regels.length === 0 && open.length === 0 && (

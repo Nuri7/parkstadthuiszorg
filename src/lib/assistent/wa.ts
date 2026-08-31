@@ -121,6 +121,40 @@ export interface Binnen {
   knop?: { toolUseId: string; akkoord: boolean };
 }
 
+/**
+ * Afleverstatussen die Meta terugstuurt. Een 200 op /messages betekent alleen
+ * "aangenomen"; of een bericht écht aankomt blijkt pas hieruit. Zonder dit is
+ * een niet-afgeleverd bericht volledig onzichtbaar.
+ */
+export function leesStatussen(body: unknown): string[] {
+  const b = body as {
+    entry?: {
+      changes?: {
+        value?: {
+          statuses?: {
+            status?: string;
+            recipient_id?: string;
+            errors?: { code?: number; title?: string; message?: string }[];
+          }[];
+        };
+      }[];
+    }[];
+  };
+  const uit: string[] = [];
+  for (const entry of b?.entry ?? []) {
+    for (const change of entry.changes ?? []) {
+      for (const st of change.value?.statuses ?? []) {
+        const fout = st.errors?.[0];
+        uit.push(
+          `${st.status ?? "?"} -> ${st.recipient_id ?? "?"}` +
+            (fout ? ` | ${fout.code} ${fout.title ?? ""} ${fout.message ?? ""}` : ""),
+        );
+      }
+    }
+  }
+  return uit;
+}
+
 /** Meta nest het bericht vier lagen diep; dit haalt eruit wat we nodig hebben. */
 export function leesWebhook(body: unknown): Binnen[] {
   const b = body as {

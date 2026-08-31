@@ -18,6 +18,7 @@ import {
   handtekeningKlopt,
   urlSleutelKlopt,
   leesWebhook,
+  leesStatussen,
   magSturen,
   markeerGelezen,
   stuurKeuze,
@@ -69,6 +70,12 @@ export async function POST(req: Request) {
     body = JSON.parse(ruw);
   } catch {
     return Response.json({ ok: true }); // niets te doen, maar Meta niet laten herleveren
+  }
+
+  // Afleverstatussen zijn geen opdracht, maar wel het enige spoor als een
+  // bericht niet aankomt (bv. buiten het 24-uursvenster, of zonder betaalmethode).
+  for (const st of leesStatussen(body)) {
+    console.warn("[whatsapp][status]", st);
   }
 
   const berichten = leesWebhook(body);

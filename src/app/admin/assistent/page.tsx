@@ -33,20 +33,11 @@ export default async function AssistentPage({
 
   const wachtOp = (huidig?.wachtOp as unknown as WachtOp | null) ?? null;
 
-  return (
-    <div className="flex flex-col lg:flex-row min-h-screen">
-      <aside className="lg:w-60 lg:shrink-0 lg:border-r border-b lg:border-b-0 border-[#ede7db] dark:border-[#086370] p-3 lg:max-h-screen lg:overflow-y-auto">
-        <form action={nieuwGesprek}>
-          <button
-            type="submit"
-            className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-[#4A9C6E] text-white px-3 py-2 text-sm font-medium hover:bg-[#3d8a5f] transition-colors"
-          >
-            <Plus className="w-4 h-4" /> Nieuw gesprek
-          </button>
-        </form>
-
-        <ul className="mt-3 space-y-0.5">
-          {gesprekken.map((gesp) => {
+  // Op de telefoon staat de gesprekkenlijst ingeklapt: anders scrol je eerst
+  // langs alle oude draden voordat je kunt typen.
+  const lijst = (
+    <ul className="mt-3 space-y-0.5">
+      {gesprekken.map((gesp) => {
             const actief = gesp.id === g;
             return (
               <li key={gesp.id} className="group flex items-center gap-1">
@@ -72,12 +63,49 @@ export default async function AssistentPage({
                   </button>
                 </form>
               </li>
-            );
-          })}
-        </ul>
+        );
+      })}
+    </ul>
+  );
+
+  const nieuwKnop = (
+    <form action={nieuwGesprek}>
+      <button
+        type="submit"
+        className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-[#4A9C6E] text-white px-3 py-2 text-sm font-medium hover:bg-[#3d8a5f] transition-colors"
+      >
+        <Plus className="w-4 h-4" /> Nieuw gesprek
+      </button>
+    </form>
+  );
+
+  return (
+    <div className="flex flex-col lg:flex-row lg:h-screen">
+      <aside className="lg:w-60 lg:shrink-0 lg:border-r border-b lg:border-b-0 border-[#ede7db] dark:border-[#086370] p-3 lg:max-h-screen lg:overflow-y-auto">
+        {/* telefoon: ingeklapt achter een regel */}
+        <details className="lg:hidden">
+          <summary className="cursor-pointer list-none flex items-center justify-between rounded-lg px-2.5 py-2 text-sm text-[#4f6b6f] dark:text-[#9fc7b5] hover:bg-[#f0f6f1] dark:hover:bg-[#0b2b30]">
+            <span className="truncate">
+              {huidig?.titel ?? "Nieuw gesprek"}
+            </span>
+            <span className="ml-2 shrink-0 text-xs text-[#a9b8ac]">
+              {gesprekken.length} gesprekken ▾
+            </span>
+          </summary>
+          <div className="mt-2">
+            {nieuwKnop}
+            {lijst}
+          </div>
+        </details>
+
+        {/* desktop: gewoon zichtbaar */}
+        <div className="hidden lg:block">
+          {nieuwKnop}
+          {lijst}
+        </div>
       </aside>
 
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 min-h-0">
         <Assistent
           key={g ?? "nieuw"}
           gesprekId={huidig?.id ?? null}
