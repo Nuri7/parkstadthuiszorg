@@ -10,6 +10,7 @@
 //    er soms een halve minuut over en Meta levert na ~20 s opnieuw.
 
 import { after } from "next/server";
+import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { draaiLus } from "@/lib/assistent/lus";
 import { leesWachtOp } from "@/lib/assistent/gesprek";
@@ -71,6 +72,7 @@ export async function POST(req: Request) {
   }
 
   const berichten = leesWebhook(body);
+  const teVerwerken: Binnen[] = [];
 
   for (const bericht of berichten) {
     if (!voorOnsNummer(bericht.naarNummerId)) {
@@ -82,33 +84,62 @@ export async function POST(req: Request) {
       continue;
     }
     if (await alVerwerkt(bericht.messageId)) continue;
-
-    after(
-      verwerk(bericht).catch(async (e) => {
-        console.error("[whatsapp]", e);
-        await stuurTekst(
-          bericht.van,
-          "Er ging iets mis aan mijn kant. Probeer het zo nog eens.",
-        ).catch(() => undefined);
-      }),
-    );
+    teVerwerken.push(bericht);
   }
 
-  return Response.json({ ontvangen: berichten.length });
+  // Eén after() met een lus erin: twee berichten in dezelfde levering horen ná
+  // elkaar door de assistent, niet tegelijk — ze delen hetzelfde gesprek.
+  if (teVerwerken.length > 0) {
+    after(async () => {
+      for (const bericht of teVerwerken) {
+        try {
+          await verwerk(bericht);
+        } catch (e) {
+          console.error("[whatsapp]", e);
+          await stuurTekst(
+            bericht.van,
+            "Er ging iets mis aan mijn kant. Probeer het zo nog eens.",
+          ).catch(() => undefined);
+        }
+      }
+    });
+  }
+
+  return Response.json({ ontvangen: teVerwerken.length });
 }
 
-/** Insert lukt maar één keer — dat is meteen de sluis tegen herlevering. */
+/**
+ * Insert lukt maar één keer — dat is meteen de sluis tegen herlevering.
+ * Alleen P2002 (unique violation) betekent "al gezien". Elke andere fout is een
+ * echte storing: die gooien we door, zodat de route een 5xx geeft en Meta het
+ * bericht opnieuw aanbiedt. Anders zou een tijdelijke databasestoring elk
+ * bericht stil laten verdwijnen achter een 200.
+ */
 async function alVerwerkt(messageId: string): Promise<boolean> {
   try {
     await db.waVerwerkt.create({ data: { messageId } });
     return false;
-  } catch {
-    return true;
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") {
+      return true;
+    }
+    throw e;
   }
 }
 
 async function verwerk(bericht: Binnen) {
   await markeerGelezen(bericht.messageId);
+
+  // Foto's, spraakberichten, locaties: leesWebhook levert dan geen tekst. Zonder
+  // deze afslag zou de lus draaien op een lege vraag en botsen op een draad die
+  // op een assistent-beurt eindigt.
+  if (!bericht.knop && !bericht.tekst?.trim()) {
+    await stuurTekst(
+      bericht.van,
+      "Ik kan op WhatsApp alleen tekst lezen. Foto's en spraakberichten nog niet — typ het even, of zet de foto in het dossier via de site.",
+    );
+    return;
+  }
 
   const gesprekId = await gesprekVoor(bericht);
   if (!gesprekId) {
@@ -128,7 +159,9 @@ async function verwerk(bericht: Binnen) {
         stukken.push(String(data.tekst));
         break;
       case "tool":
-        if (data.fout) acties.push(`⚠︎ ${data.samenvatting}`);
+        // Ook geslaagde acties tonen: anders is het model zelf de enige bron
+        // over wat er in het dossier is veranderd.
+        acties.push(`${data.fout ? "⚠︎" : "✓"} ${data.samenvatting}`);
         break;
       case "bevestiging":
         openstaand = data.open as typeof openstaand;
@@ -159,18 +192,30 @@ async function verwerk(bericht: Binnen) {
   for (const item of openstaand) {
     if (item.naam === "mail_stuur") {
       const inv = item.invoer as Record<string, string>;
-      await stuurTekst(
-        bericht.van,
-        `*Concept-mail*\nAan: ${inv.aan}\nOnderwerp: ${inv.onderwerp}\n\n${inv.tekst}`,
-      );
+      // Cc én bcc moeten hier staan: wie meeleest hoort zichtbaar te zijn vóór
+      // Meyrem op versturen tikt.
+      const kop = [
+        `Aan: ${inv.aan}`,
+        inv.cc ? `Cc: ${inv.cc}` : null,
+        inv.bcc ? `Bcc: ${inv.bcc}` : null,
+        `Onderwerp: ${inv.onderwerp}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+      await stuurTekst(bericht.van, `*Concept-mail*\n${kop}\n\n${inv.tekst}`);
       await stuurKeuze(bericht.van, "Zal ik deze mail versturen?", "Versturen", item.id);
     } else {
-      await stuurKeuze(
-        bericht.van,
-        `${item.omschrijving}. Dit kan niet ongedaan gemaakt worden.`,
-        "Ja, verwijderen",
-        item.id,
-      );
+      const inv = item.invoer as Record<string, string>;
+      // Zonder id en reden keurt ze een verwijdering goed die ze niet kan thuisbrengen.
+      const wat = [
+        `${item.omschrijving}:`,
+        `${inv.model} ${inv.id}`,
+        inv.reden ? `Reden: ${inv.reden}` : null,
+        "Dit kan niet ongedaan gemaakt worden; gekoppelde gegevens verdwijnen mee.",
+      ]
+        .filter(Boolean)
+        .join("\n");
+      await stuurKeuze(bericht.van, wat, "Ja, verwijderen", item.id);
     }
   }
 

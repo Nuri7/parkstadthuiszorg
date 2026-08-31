@@ -492,6 +492,8 @@ function Bevestiging({
           <>
             <Rij label="Aan" waarde={inv.aan} />
             {inv.cc && <Rij label="Cc" waarde={inv.cc} />}
+            {/* Bcc hoort zichtbaar te zijn vóór je op versturen klikt. */}
+            {inv.bcc && <Rij label="Bcc" waarde={inv.bcc} />}
             <Rij label="Onderwerp" waarde={inv.onderwerp} />
             <div className="rounded-lg bg-white dark:bg-[#02191c] border border-[#dce8de] dark:border-[#086370] px-3 py-2 whitespace-pre-wrap text-[13px] leading-relaxed max-h-72 overflow-y-auto">
               {inv.tekst}

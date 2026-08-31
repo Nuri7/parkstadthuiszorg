@@ -60,6 +60,11 @@ export const tools: Anthropic.Tool[] = [
           description: "Maximum aantal records (standaard 25, hoogstens 100).",
         },
         overslaan: { type: "integer", description: "Sla de eerste N records over." },
+        metBsn: {
+          type: "boolean",
+          description:
+            "Alleen op true zetten als Meyrem uitdrukkelijk om het BSN vraagt. Standaard blijft dat veld weg.",
+        },
       },
       required: ["model"],
     },
@@ -226,10 +231,18 @@ async function draai(
     case "db_zoek": {
       const model = vindModel(String(invoer.model));
       if (!model) throw new Error(`Onbekend model: ${invoer.model}`);
+      // Het BSN blijft standaard in de database. Het is zelden nodig om een
+      // vraag te beantwoorden, en alles wat hier uitkomt kan in een mail of een
+      // WhatsApp-bericht belanden.
+      const omit =
+        model.name === "Client" && invoer.metBsn !== true
+          ? { bsn: true as const }
+          : undefined;
       const rijen = await delegate(model.name).findMany({
         where: coerceer(model.name, invoer.waar) ?? undefined,
         include: invoer.meenemen ?? undefined,
         orderBy: invoer.sorteren ?? undefined,
+        omit,
         take: Math.min(Number(invoer.aantal) || 25, 100),
         skip: Number(invoer.overslaan) || 0,
       });

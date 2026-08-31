@@ -204,13 +204,19 @@ export function urlSleutelKlopt(url: string): boolean {
 }
 
 /**
- * Slot 2 — Meta ondertekent elke webhook met het app secret. Sterker dan de
- * URL-sleutel, dus zodra WA_APP_SECRET gezet is, moet die controle óók slagen.
- * Is hij niet gezet, dan blijft alleen slot 1 over.
+ * Slot 2 — Meta ondertekent elke webhook met het app secret. Dit is het slot dat
+ * echt bewijst dat Meta de afzender is; de URL-sleutel is er alleen als extra
+ * laag. Beide zijn verplicht.
  */
 export function handtekeningKlopt(ruweBody: string, header: string | null): boolean {
   const secret = process.env.WA_APP_SECRET;
-  if (!secret) return true; // geen secret ingesteld -> deze controle staat uit
+  // FAIL CLOSED. Eerder stond hier `return true` als het secret ontbrak, met de
+  // gedachte dat de URL-sleutel plus de nummer-allowlist genoeg waren. Dat was
+  // fout: magSturen() leest `from` uit dezelfde JSON die de aanroeper zelf
+  // schrijft, dus die allowlist bewijst niets. Zonder handtekening is een
+  // geheim in de URL — dat in Vercels request-logs belandt — de enige drempel
+  // vóór schrijftoegang tot medische dossiers. Dat is te weinig.
+  if (!secret) return false;
   if (!header?.startsWith("sha256=")) return false;
 
   const verwacht = createHmac("sha256", secret).update(ruweBody).digest();
