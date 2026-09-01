@@ -1,4 +1,5 @@
 import { AdminNav } from "@/components/admin/AdminNav";
+import { WaStoringBanner } from "@/components/admin/WaStoringBanner";
 
 export const metadata = {
   robots: {
@@ -15,7 +16,10 @@ export default function AdminLayout({
   return (
     <div className="flex flex-col sm:flex-row min-h-screen bg-[#fefdfc] dark:bg-[#02191c]">
       <AdminNav />
-      <main className="flex-1 min-w-0">{children}</main>
+      <main className="flex-1 min-w-0">
+        <WaStoringBanner />
+        {children}
+      </main>
     </div>
   );
 }

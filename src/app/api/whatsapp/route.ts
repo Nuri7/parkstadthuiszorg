@@ -19,6 +19,7 @@ import {
   urlSleutelKlopt,
   leesWebhook,
   leesStatussen,
+  logWaFout,
   magSturen,
   markeerGelezen,
   stuurKeuze,
@@ -74,8 +75,10 @@ export async function POST(req: Request) {
 
   // Afleverstatussen zijn geen opdracht, maar wel het enige spoor als een
   // bericht niet aankomt (bv. buiten het 24-uursvenster, of zonder betaalmethode).
+  // Mislukte afleveringen vastleggen zodat de admin ze kan tonen.
   for (const st of leesStatussen(body)) {
-    console.warn("[whatsapp][status]", st);
+    console.warn("[whatsapp][status]", st.regel);
+    if (st.mislukt) after(() => logWaFout("aflevering", st.regel));
   }
 
   const berichten = leesWebhook(body);

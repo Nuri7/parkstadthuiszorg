@@ -21,7 +21,8 @@ export function MultiStepForm() {
     forWhom: 'myself',
     situation: '',
     preferredDays: [] as string[],
-    preferredTime: ''
+    preferredTime: '',
+    company: '' // honeypot — blijft leeg bij echte bezoekers
   });
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 4) as Step);
@@ -97,6 +98,20 @@ export function MultiStepForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="min-h-[350px] relative">
+        {/* Honeypot: onzichtbaar voor mensen, bots vullen het in. Server negeert
+            de inzending als dit veld gevuld is. */}
+        <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-0 w-0 overflow-hidden">
+          <label htmlFor="company">Bedrijf (niet invullen)</label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            value={formData.company}
+            onChange={handleInputChange}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
         <AnimatePresence mode="wait">
           
           {/* STEP 1: Personal Details */}
@@ -329,7 +344,15 @@ export function MultiStepForm() {
             ) : <div></div>}
 
             {step < 3 ? (
-              <Button type="button" variant="primary" onClick={nextStep} disabled={step === 1 && (!formData.name || !formData.phone || !formData.postcode)}>
+              <Button
+                type="button"
+                variant="primary"
+                onClick={nextStep}
+                disabled={
+                  (step === 1 && (!formData.name || !formData.phone || !formData.postcode)) ||
+                  (step === 2 && !formData.careType)
+                }
+              >
                 Volgende stap
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
