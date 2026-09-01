@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import { AlertTriangle } from "lucide-react";
 import { db } from "@/lib/db";
 
@@ -26,6 +27,9 @@ async function recenteFouten() {
 }
 
 export async function WaStoringBanner() {
+  // Nooit tijdens de build draaien: prerender-workers zouden anders de
+  // productie-database raken (en de pool leegtrekken).
+  await connection();
   const { aantal, laatste } = await recenteFouten();
   if (aantal === 0 || !laatste) return null;
   const wanneer = laatste.createdAt.toLocaleString("nl-NL", {
