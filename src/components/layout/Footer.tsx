@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import { Mail, MapPin, Phone, ArrowRight, MessageCircle } from 'lucide-react';
 import { useAnchorNavigation } from '../../hooks/useAnchorNavigation';
+import { gemeenten } from '../../data/gemeenten';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -128,12 +129,15 @@ export function Footer() {
               Wij zijn voornamelijk actief in de regio Parkstad Limburg:
             </p>
             <div className="flex flex-wrap gap-2 text-xs">
-              <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Kerkrade</span>
-              <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Heerlen</span>
-              <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Landgraaf</span>
-              <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Brunssum</span>
-              <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Voerendaal</span>
-              <span className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)]">Simpelveld</span>
+              {gemeenten.map((g) => (
+                <Link
+                  key={g.slug}
+                  href={`/thuiszorg/${g.slug}`}
+                  className="px-3 py-1 rounded-full bg-[var(--color-sage-800)] text-[var(--color-sage-200)] hover:bg-[var(--color-sage-700)] hover:text-white transition-colors"
+                >
+                  {g.name}
+                </Link>
+              ))}
             </div>
           </div>
 

@@ -17,6 +17,8 @@
 
 Regio Parkstad Limburg: Kerkrade, Heerlen, Landgraaf, Brunssum, Voerendaal en Simpelveld.
 
+Pagina's per gemeente: https://parkstadthuiszorg.nl/thuiszorg/kerkrade, https://parkstadthuiszorg.nl/thuiszorg/heerlen, https://parkstadthuiszorg.nl/thuiszorg/landgraaf, https://parkstadthuiszorg.nl/thuiszorg/brunssum, https://parkstadthuiszorg.nl/thuiszorg/voerendaal, https://parkstadthuiszorg.nl/thuiszorg/simpelveld
+
 ## Vergoedingen
 
 - Zvw (Zorgverzekeringswet): wijkverpleging en persoonlijke verzorging vanuit de basisverzekering; geen eigen risico en geen eigen bijdrage; indicatie door een wijkverpleegkundige.
