@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MessageCircle, Phone, CheckCircle } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -106,11 +107,13 @@ export function Hero() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-[#b8d1bc]/30 dark:bg-[#5b7f63]/20 blur-3xl rounded-full mix-blend-multiply dark:mix-blend-screen" />
             
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white/40 dark:border-[#243029]/50 aspect-[4/3] max-w-xl mx-auto align-middle flex items-center justify-center bg-gray-100 dark:bg-gray-800">
-               <img 
-                 src={`/images/hero-caregiver.webp`} 
+               <Image
+                 src="/images/hero-caregiver.webp"
                  alt="Vriendelijke verpleegkundige drinkt thee met oudere dame in woonkamer"
-                 className="w-full h-full object-cover"
-                 fetchPriority="high"
+                 fill
+                 preload
+                 sizes="(max-width: 1024px) 100vw, 36rem"
+                 className="object-cover"
                />
                
             </div>

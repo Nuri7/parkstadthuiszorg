@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { gemeenten } from "@/data/gemeenten";
+import { kennisbankArtikelen } from "@/data/kennisbank";
 
 const BASE_URL = "https://parkstadthuiszorg.nl";
 
@@ -13,6 +14,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/over-ons`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/vergoedingen`, lastModified, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE_URL}/kennisbank`, lastModified, changeFrequency: "weekly", priority: 0.6 },
+    ...kennisbankArtikelen.map((a) => ({
+      url: `${BASE_URL}/kennisbank/${a.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
     ...gemeenten.map((g) => ({
       url: `${BASE_URL}/thuiszorg/${g.slug}`,
       lastModified,

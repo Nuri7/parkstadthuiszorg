@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { ArrowRight } from 'lucide-react';
@@ -40,11 +41,12 @@ export function TeamIntro() {
           {team.map((member, index) => (
             <AnimatedSection key={member.id} delay={index * 0.1}>
               <div className="group relative rounded-2xl overflow-hidden aspect-[3/4] shadow-[0_4px_24px_rgba(124,154,130,0.1)] transition-transform duration-300 hover:-translate-y-2 cursor-pointer">
-                <img 
-                  src={member.image} 
-                  alt={member.name} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 
                 {/* Gradient Overlay */}

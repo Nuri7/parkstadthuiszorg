@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -25,9 +26,11 @@ export function Footer() {
           {/* Brand Col */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <img 
-                src={`/images/logo.svg`} 
-                alt="Parkstad Thuiszorg logo" 
+              <Image
+                src="/images/logo.svg"
+                alt="Parkstad Thuiszorg logo"
+                width={32}
+                height={32}
                 className="w-8 h-8"
               />
               <span className="font-heading text-xl text-[var(--color-beige-50)] font-semibold">

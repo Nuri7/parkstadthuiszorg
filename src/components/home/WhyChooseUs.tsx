@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { AnimatedSection } from '../ui/AnimatedSection';
 import { Heart, Users2, Clock, CheckCircle2 } from 'lucide-react';
 
@@ -61,11 +63,12 @@ export function WhyChooseUs() {
 
           <div className="w-full lg:w-7/12 relative">
             <AnimatedSection delay={0.2} className="relative z-10 rounded-2xl overflow-hidden aspect-[4/3] shadow-2xl">
-              <img 
-                src={`/images/team-group.webp`} 
-                alt="Het team van Parkstad Thuiszorg lacht in een tuin" 
-                className="w-full h-full object-cover"
-                loading="lazy"
+              <Image
+                src="/images/team-group.webp"
+                alt="Het team van Parkstad Thuiszorg lacht in een tuin"
+                fill
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="object-cover"
               />
             </AnimatedSection>
             

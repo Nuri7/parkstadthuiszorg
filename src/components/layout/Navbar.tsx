@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -107,9 +108,11 @@ export function Navbar() {
           
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <img 
-              src={`/images/logo.svg`} 
-              alt="Parkstad Thuiszorg logo" 
+            <Image
+              src="/images/logo.svg"
+              alt="Parkstad Thuiszorg logo"
+              width={40}
+              height={40}
               className="w-10 h-10 group-hover:scale-105 transition-transform"
             />
             <span className="font-heading text-xl md:text-2xl text-[#064a54] dark:text-[#fefdfc] font-semibold">

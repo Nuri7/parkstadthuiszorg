@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { HeartPulse, Target, ShieldCheck } from 'lucide-react';
 import { team } from '@/data/team';
@@ -35,11 +37,12 @@ export default function OverOnsPage() {
           
           <div className="w-full lg:w-1/2">
             <AnimatedSection delay={0.2} className="relative rounded-[2rem] overflow-hidden aspect-[4/3] shadow-2xl">
-              <img 
-                src={`/images/team-group.webp`} 
-                alt="Het volledige zorgteam" 
-                className="w-full h-full object-cover"
-                loading="lazy"
+              <Image
+                src="/images/team-group.webp"
+                alt="Het volledige zorgteam"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
               />
             </AnimatedSection>
           </div>
@@ -99,7 +102,13 @@ export default function OverOnsPage() {
              <AnimatedSection key={member.id} delay={index * 0.1}>
               <div className="bg-white dark:bg-[#243029] rounded-2xl overflow-hidden shadow-lg border border-[#ede7db] dark:border-[#086370]">
                 <div className="aspect-square relative overflow-hidden">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover" loading="lazy" />
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover"
+                  />
                 </div>
                 <div className="p-6 text-center">
                   <h4 className="text-xl font-bold text-[#064a54] dark:text-[#fefdfc] mb-1">{member.name}</h4>

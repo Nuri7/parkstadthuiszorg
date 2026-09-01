@@ -51,6 +51,14 @@ export async function generateMetadata({
       type: 'website',
       locale: 'nl_NL',
       siteName: 'Parkstad Thuiszorg',
+      images: [
+        {
+          url: '/opengraph-image.png',
+          width: 1200,
+          height: 630,
+          alt: 'Parkstad Thuiszorg — een vertrouwd gezicht, een gerust gevoel.',
+        },
+      ],
     },
   };
 }
