@@ -2,6 +2,10 @@ import { adminLogin } from "@/app/actions/adminLogin";
 
 export const metadata = {
   title: "Inloggen | Parkstad Thuiszorg",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default async function LoginPage({

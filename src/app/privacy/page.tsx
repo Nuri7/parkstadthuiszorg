@@ -2,6 +2,9 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { ShieldCheck } from 'lucide-react';
 
 export const metadata = {
+  alternates: {
+    canonical: "/privacy",
+  },
   title: "Privacybeleid | Parkstad Thuiszorg",
   description: "Lees hoe Parkstad Thuiszorg omgaat met uw persoonsgegevens. Wij beschermen uw privacy conform de AVG.",
 };

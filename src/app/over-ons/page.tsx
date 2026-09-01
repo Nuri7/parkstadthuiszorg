@@ -3,6 +3,9 @@ import { HeartPulse, Target, ShieldCheck } from 'lucide-react';
 import { team } from '@/data/team';
 
 export const metadata = {
+  alternates: {
+    canonical: "/over-ons",
+  },
   title: "Over Ons | Parkstad Thuiszorg",
   description: "Maak kennis met ons zorgteam. Zorg met aandacht en een Limburgs hart in o.a. Kerkrade, Heerlen en Landgraaf.",
 };

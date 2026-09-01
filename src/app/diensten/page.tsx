@@ -3,6 +3,9 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { services } from '@/data/services';
 
 export const metadata = {
+  alternates: {
+    canonical: "/diensten",
+  },
   title: "Onze Zorgvormen & Diensten | Parkstad Thuiszorg",
   description: "Bekijk ons zorgaanbod: van wijkverpleging en persoonlijke verzorging tot palliatieve zorg en nachtzorg in Landgraaf, Heerlen en Kerkrade.",
 };

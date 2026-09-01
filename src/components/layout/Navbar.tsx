@@ -10,7 +10,6 @@ import { ThemeToggle } from '../ui/ThemeToggle';
 const NAV_LINKS = [
   { name: 'Zorgvormen', path: '/#diensten' },
   { name: 'Waarom Wij', path: '/#waarom-ons' },
-  { name: 'Ervaringen', path: '/#ervaringen' },
   { name: 'Ons Team', path: '/#over-ons' },
   { name: 'Contact', path: '/#contact' },
 ];

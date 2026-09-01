@@ -23,17 +23,23 @@ export function Hero() {
             </motion.div>
             
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-heading mb-6 text-[#064a54] dark:text-[#fefdfc]"
+              className="text-4xl md:text-5xl lg:text-6xl font-heading mb-2 text-[#064a54] dark:text-[#fefdfc]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Parkstad Thuiszorg <br/>
-              <span className="text-[var(--color-sage-500)] text-3xl md:text-5xl lg:text-5xl mt-2 block group relative">
-                Een vertrouwd gezicht, een gerust gevoel
-                <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[var(--color-sage-500)] to-[var(--color-terra-400)] rounded-full hidden lg:block"></span>
-              </span>
+              Thuiszorg in Parkstad
             </motion.h1>
+
+            <motion.p
+              className="font-heading text-[var(--color-sage-500)] text-3xl md:text-5xl lg:text-5xl mb-6 block group relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+            >
+              Een vertrouwd gezicht, een gerust gevoel
+              <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[var(--color-sage-500)] to-[var(--color-terra-400)] rounded-full hidden lg:block"></span>
+            </motion.p>
             
             <motion.p
               className="text-lg md:text-xl text-[#4f6b6f] dark:text-[#5cb0bd] mb-8 max-w-2xl mx-auto lg:mx-0"

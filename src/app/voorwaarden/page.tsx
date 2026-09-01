@@ -2,6 +2,9 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { FileText } from 'lucide-react';
 
 export const metadata = {
+  alternates: {
+    canonical: "/voorwaarden",
+  },
   title: "Algemene Voorwaarden | Parkstad Thuiszorg",
   description: "Lees de algemene voorwaarden van Parkstad Thuiszorg.",
 };

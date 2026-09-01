@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 
 export const metadata = {
+  alternates: {
+    canonical: "/vergoedingen",
+  },
   title: "Zorgvergoedingen (PGB, WMO, ZVW, WLZ) | Parkstad Thuiszorg",
   description: "Alles wat u moet weten over de financiering van uw thuiszorg. Uitleg over PGB, ZVW, WMO en WLZ in regio Parkstad.",
 };
@@ -106,7 +109,7 @@ export default function VergoedingenPage() {
                  <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
                     <p className="text-white font-medium">Hulp nodig bij de aanvraag?</p>
                     <Button asChild variant="primary" className="bg-[#4A9C6E] hover:bg-[#0A7C8C] border-none">
-                      <Link href="/contact">Neem contact op</Link>
+                      <Link href="/#contact">Neem contact op</Link>
                     </Button>
                  </div>
                </div>

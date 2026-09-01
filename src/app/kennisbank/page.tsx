@@ -4,6 +4,9 @@ import Link from 'next/link';
 import { BookOpen, ArrowRight, Clock, User } from 'lucide-react';
 
 export const metadata = {
+  alternates: {
+    canonical: "/kennisbank",
+  },
   title: "Kennisbank & Tips | Parkstad Thuiszorg",
   description: "Handige artikelen over thuiszorg, mantelzorg, PGB, dementie en revalidatie. Kennisbank van Parkstad Thuiszorg.",
 };
@@ -119,7 +122,7 @@ export default function BlogPage() {
               <p className="text-[#5cb0bd] mb-6 max-w-lg mx-auto">
                 Staat uw onderwerp er niet tussen? Neem gerust contact met ons op — wij helpen u graag persoonlijk verder.
               </p>
-              <Link href="/contact" className="inline-flex items-center gap-2 bg-[#4A9C6E] hover:bg-[#3b7c58] text-white px-8 py-3 rounded-full font-medium transition-colors">
+              <Link href="/#contact" className="inline-flex items-center gap-2 bg-[#4A9C6E] hover:bg-[#3b7c58] text-white px-8 py-3 rounded-full font-medium transition-colors">
                 Neem contact op <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
